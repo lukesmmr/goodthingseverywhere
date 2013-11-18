@@ -6,7 +6,7 @@
   			<li><a href="http://instagram.com/lukelucky" target="_blank">Pictures</a></li>
   			<li><a href="http://github.com/lukesmmr" target="_blank">Code</a></li>
   		</ul>
-  		<span class="footer-comment">This website grows while i travel. Come back soon.</span>
+  		<span class="footer-comment">This website evolves while i travel. Come back soon.</span>
 
   	</div>
   	<div id="legal-stuff">

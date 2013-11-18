@@ -27,7 +27,9 @@
 
 <!--  latest journal posts -->
 <div class="home-journal">
-	<h2>Latest travel journal</h2>
+	<!-- <a href="<?php bloginfo('url') ?>/travel-journal" class="see-journal-link"> -->
+		<h2>Latest travel journal <i class="glyphicon glyphicon-chevron-down"></i></h2>
+	<!-- </a> -->
 	<?php 
 	$wp_query= null;
 	$wp_query = new WP_Query(); $wp_query->query('showposts=2');
