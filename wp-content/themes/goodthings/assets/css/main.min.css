@@ -190,6 +190,9 @@ h1.giant-title {
 
 .home-journal {margin: 50px 0 0 0; display:block;}
 .home-journal h2 {margin-bottom: 25px; font-weight: 700; color: #e1e1e1;}
+/*.home-journal h2:hover {color: #efefef;}*/
+.home-journal h2 .glyphicon {font-size: 0.7em; vertical-align: 1px;}
+/*.home-journal a.see-journal-link {text-decoration: none;}*/
 .home-journal-post {display: inline-block;margin-bottom:30px;}
 h3.home-journal-title {
 	padding: 0;
@@ -276,7 +279,10 @@ footer a:hover {
 #legal-stuff li {margin-left: 10px;}
 span.footer-comment {text-transform: initial; display: block; font-size: 14px; font-weight:500;}
 #legal-stuff span.footer-comment {text-align: right;}
-
+@media (min-width: 768px) {
+	.journal-thumbnail {width:50%;}
+	.journal-thumbnail img {width: 100%; height: auto !important;}
+}
 @media (max-width: 768px) {
 	/*journal*/
 	.journal-thumbnail {width:50%;}
