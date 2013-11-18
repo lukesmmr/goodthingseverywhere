@@ -40,6 +40,18 @@ function goodthings_cmb($meta_boxes) {
         'id'   => 'current_loc',
         'type' => 'text'
       ),
+       array(
+        'name' => 'Current location (latitude)',
+        'desc' => 'latitude of current location',
+        'id'   => 'current_loc_lat',
+        'type' => 'text'
+      ),
+      array(
+        'name' => 'Current location (longitude)',
+        'desc' => 'longitude of current location',
+        'id'   => 'current_loc_lng',
+        'type' => 'text'
+      ),
       array(
         'name' => 'Next location',
         'desc' => '',
