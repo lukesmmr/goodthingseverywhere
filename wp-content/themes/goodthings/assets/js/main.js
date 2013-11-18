@@ -1,6 +1,6 @@
 // Modified http://paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/
 // Only fires on body class (working off strictly WordPress body_class)
-
+var posLocated = false;
 var GoodThingsSite = {
   // // All pages
   // common: {
@@ -14,7 +14,8 @@ var GoodThingsSite = {
   // Home page
   home: {
     init: function() {
-      $(".giant-title").fitText();      
+      $(".giant-title").fitText();
+      calculateDistance();   
     }
   }
 };
@@ -33,7 +34,6 @@ var UTIL = {
       UTIL.fire(classnm);
     });
     UTIL.fire('common', 'finalize');
-    calculateDistance();
   }
 };
 
@@ -41,6 +41,8 @@ $(document).ready(UTIL.loadEvents);
 
 // check distances
 function calculateDistance() {
+  if(posLocated) return;
+  posLocated = true;
   if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error);
   } else {
@@ -49,13 +51,11 @@ function calculateDistance() {
 }
 
 function success(position) {
-  var userPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-  var currentPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng'));
-  // distance to me in KM
-  var distanceToMe = (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
-  console.log(distanceToMe.toFixed(2));
-  $('.map-icon').after( '<span class="distance-to-me">You are ' + distanceToMe.toFixed(2) + ' Kms away</span');
-  $('.distance-to-me').fadeTo( "slow" , 1);
+    var userPos =       new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+    currentPos =    new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng')),
+    distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
+    $('.map-icon').after( '<span class="distance-to-me">You are ' + distanceToMe.toFixed(2) + ' Kms away</span');
+    $('.distance-to-me').fadeTo( "slow" , 1);
 }
 
 function error(msg) {
