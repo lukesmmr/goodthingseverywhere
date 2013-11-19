@@ -234,7 +234,7 @@ h3.journal-title a:hover {text-decoration: none; color: #252525;}
 .journal-category .glyphicon {color: #ef4b36; margin-left:5px;}
 .entry-content img {
 	width: 100%; 
-	height: auto !important; margin: 10px 0;
+	height: auto !important; margin: 5px 0;
 	line-height: 1.45em;
 }
 .pager li>a, .pager li>span {border: none; text-decoration: none; text-transform: uppercase;border-radius: 0; padding: 0;}
