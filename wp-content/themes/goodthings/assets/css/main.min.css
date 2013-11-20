@@ -232,6 +232,7 @@ h3.journal-title a:hover {text-decoration: none; color: #252525;}
 .journal-category a {text-decoration: none; color: #ef4b36;font-size: 18px;}
 .journal-category a:hover {text-decoration: underline;}
 .journal-category .glyphicon {color: #ef4b36; margin-left:5px;}
+.comment-count {margin-left: 10px;color: #e1e1e1;}
 .entry-content img {
 	width: 100%; 
 	height: auto !important; margin: 5px 0;
