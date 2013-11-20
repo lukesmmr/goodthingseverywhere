@@ -3,7 +3,7 @@
 		<?php echo get_the_date('j. M y'); ?>
 	</time>
 	<span class="comment-count">
-  		<?php comments_number( '', '1 Comment', '(% comments' ); ?>
+  		<?php comments_number( '', '1 Comment', '% Comments' ); ?>
 	</span>
 	<div class="journal-category">
 		<?php the_category(', '); ?>
