@@ -2,9 +2,9 @@
   	<div id="more-social">
   		More good things
   		<ul class="social-icons">
-  			<li><a href="http://ohgoodthings.tumblr.com" target="_blank">Music</a></li>
-  			<li><a href="https://instagram.com/lukelucky" target="_blank">Pictures</a></li>
-        <li><a href="https://twitter.com/goodthngs" target="_blank">Twitter</a></li>
+        <li><a href="https://twitter.com/goodthngs" target="_blank">News</a></li>
+        <li><a href="http://ohgoodthings.tumblr.com" target="_blank">Music</a></li>
+        <li><a href="https://instagram.com/lukelucky" target="_blank">Pictures</a></li>
   			<li><a href="https://github.com/lukesmmr" target="_blank">Code</a></li>
   		</ul>
   		<span class="footer-comment">This website evolves while i travel. Come back soon.</span>
@@ -29,8 +29,6 @@
   })();
 
 </script>
-<script src="//use.typekit.net/kzp6vsx.js"></script>
-<script>try{Typekit.load();}catch(e){}</script>
 <script src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 <?php wp_footer(); ?>
 <script src="<?php bloginfo('template_url') ?>/assets/js/main.js"></script>

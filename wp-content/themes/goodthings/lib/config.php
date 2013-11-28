@@ -58,7 +58,8 @@ function roots_display_sidebar() {
       'is_front_page', 
       'is_single',
       'is_page',
-      'is_home'
+      'is_home',
+      'is_category'
     ),
     /**
      * Page template checks (via is_page_template())

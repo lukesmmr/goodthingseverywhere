@@ -192,8 +192,7 @@ h1.giant-title {
 .home-journal h2 {margin-bottom: 25px; font-weight: 700; color: #e1e1e1;}
 /*.home-journal h2:hover {color: #efefef;}*/
 .home-journal h2 .glyphicon {font-size: 0.7em; vertical-align: 1px;}
-/*.home-journal a.see-journal-link {text-decoration: none;}*/
-.home-journal-post {display: inline-block;margin-bottom:30px;}
+.home-journal-post {display: inline-block;margin-bottom:20px;}
 h3.home-journal-title {
 	padding: 0;
 	margin: 0 0 10px 0;
@@ -211,6 +210,21 @@ h3.home-journal-title a:hover {
 .home-journal-thumbnail {
 	float: left; margin-right: 20px; 
 }
+a.read-more-journal {
+	text-transform: uppercase;
+	color:#e1e1e1;
+	font-family: "proxima-nova", "Helvetica Neue",Helvetica, sans-serif !important;
+	text-decoration: none;
+	font-weight:600;
+	font-size: 1.2em;
+	display: block;
+	top: -5px;
+	position: relative;
+}
+.read-more-journal i {
+	font-size: 0.65em;
+ 	vertical-align: 2px;
+ }
 
 /* journal */
 .journal-post {display: inline-block;margin-bottom:20px;}
@@ -308,7 +322,7 @@ span.footer-comment {text-transform: initial; display: block; font-size: 14px; f
 	.navbar-nav>li:first-child {float:inherit;padding-top:10px;}
 	.navbar-nav>li:last-child {float:inherit;}
 
-	footer {height: 130px; padding-left: 0px !important; padding-right: 0px !important; padding-top:20px;margin-top: 10px;}
+	footer {height: 130px; padding-left: 0px !important; padding-right: 0px !important; padding-top:20px;margin-top: 30px;}
 }
 @media (max-width:540px) {
 	#legal-stuff {float: left;}

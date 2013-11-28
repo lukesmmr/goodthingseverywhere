@@ -27,9 +27,7 @@
 
 <!--  latest journal posts -->
 <div class="home-journal">
-	<!-- <a href="<?php bloginfo('url') ?>/travel-journal" class="see-journal-link"> -->
-		<h2>Latest travel journal <i class="glyphicon glyphicon-chevron-down"></i></h2>
-	<!-- </a> -->
+	<h2>Latest travel journal <i class="glyphicon glyphicon-chevron-down"></i></h2>
 	<?php 
 	$wp_query= null;
 	$wp_query = new WP_Query(); $wp_query->query('showposts=2');
@@ -47,5 +45,6 @@
 		</div>
 	</div>
 	<?php endwhile; ?>
+	<a href="<?php bloginfo('url') ?>/travel-journal" class="read-more-journal">See all <i class="glyphicon glyphicon-chevron-right"></i></a>
 </div>
 	
