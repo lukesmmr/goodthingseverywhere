@@ -12,8 +12,13 @@
 		<span class="map-icon glyphicon glyphicon-map-marker"></span>
 		<div id="getloc" class="display-loc" data-lat="<?php echo $current_loc_lat ?>" data-lng="<?php echo $current_loc_lng; ?>">Current location: <?php echo $current_loc; ?></div>
 		<div class="next-loc">Next stop: <?php echo $next_loc ?></div>
+		<div id="journal-map">
+			<div id="map-overlay"></div>
+			<div id="map-canvas"></div>
+		</div>
 	</div>
 </div>
+
 
 <div class="home-intro">
 	<?php echo $home_intro; ?>
