@@ -325,6 +325,7 @@ span.footer-comment {text-transform: initial; display: block; font-size: 14px; f
 	footer {height: 130px; padding-left: 0px !important; padding-right: 0px !important; padding-top:20px;margin-top: 30px;}
 }
 @media (max-width:540px) {
+	.journal-category {float:none;}
 	#legal-stuff {float: left;}
 	#legal-stuff li {margin-left: 0;margin-right:10px;}
 	span.footer-comment {font-size: 12px;padding-bottom:15px;}
