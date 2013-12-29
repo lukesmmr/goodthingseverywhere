@@ -61,6 +61,36 @@ function goodthings_cmb($meta_boxes) {
     ),
   );
 
+$meta_boxes[] = array(
+    'id'         => 'post_meta',
+    'title'      => 'Journal Additionals',
+    'pages'      => array('post'),
+    'show_on'    => array('post'),
+    'context'    => 'normal',
+    'priority'   => 'high',
+    'show_names' => true,
+    'fields'     => array(
+      array(
+        'name' => 'Article location',
+        'desc' => 'Maps marker title',
+        'id'   => 'post_loc',
+        'type' => 'text'
+      ),
+       array(
+        'name' => 'Location latitude',
+        'desc' => 'Maps marker latitude',
+        'id'   => 'post_loc_lat',
+        'type' => 'text'
+      ),
+      array(
+        'name' => 'Location longitude',
+        'desc' => 'Maps marker longitude',
+        'id'   => 'post_loc_lng',
+        'type' => 'text'
+      ),
+    ),
+  );
+
   return $meta_boxes;
 }
 add_filter('cmb_meta_boxes', 'goodthings_cmb');
