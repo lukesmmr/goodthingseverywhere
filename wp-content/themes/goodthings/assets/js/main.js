@@ -16,7 +16,7 @@ var GoodThingsSite = {
     init: function() {
       $(".giant-title").fitText();
       calculateDistance();
-      google.maps.event.addDomListener(window, 'load', goodThingsMap);   
+      google.maps.event.addDomListener(window, 'load', goodThingsMap);
     }
   }
 };
@@ -91,31 +91,68 @@ function goodThingsMap() {
   var customStyles = new google.maps.StyledMapType(styles, {name: "Good Things Map"});
   var mapOptions = {
     center: currentPos,
-    zoom: 12,
+    zoom: 5,
     mapTypeControlOptions: {
         mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
     },
-    disableDefaultUI: true
+    disableDefaultUI: false
   };
+
+  // build array from journal locations
+  var journalLocs = $(".marker-coords > span").map(function() {
+      return [$.map($(this).data(), function(v) {
+          return v;
+      })];
+  }).get();
+
   var map = new google.maps.Map(document.getElementById("map-canvas"),
       mapOptions);
+    
+  // Add the markers and infowindows to the map
+  for (var i = 0; i < journalLocs.length; i++) {  
 
-  // SVG Marker
-  // var currentPosMarker = new google.maps.Marker({
-  //     position: currentPos,
-  //     map: map,
-  //     icon: {
-  //       path: 'M 100 0 L 0 0 L 0 100 L 35 100 L 50 120 L 65 100 L 100 100 Z',
-  //       fillColor: '#129adb',
-  //       fillOpacity: 1,
-  //       strokeColor: '',
-  //       strokeWeight: 0,
-  //       scale: 1/2
-  //   }
-  // });
+    var journalLocLabel = "<label><span class='locnr'>" + (i + 1) +"</span> <a href='" + journalLocs[i][3] + "'>" + journalLocs[i][0] + "</a></label>";
+    marker = new MarkerWithLabel({
+      position: new google.maps.LatLng(journalLocs[i][1], journalLocs[i][2]),
+      map: map,
+      icon : new google.maps.MarkerImage('wp-content/themes/goodthings/assets/img/maps-marker.svg',
+    null, null, null, null),
+      draggable: false,
+      labelContent: journalLocLabel,
+      labelAnchor: new google.maps.Point(-20, 22),
+      labelClass: "marker-label", // the CSS class for the label
+      labelInBackground: true
+    });
+  }
+
+  // external SVG Marker
+  var currentPostMarker = new MarkerWithLabel({
+    position: currentPos,
+    icon: new google.maps.MarkerImage('wp-content/themes/goodthings/assets/img/maps-marker.svg',
+      null, null, null, null),
+    draggable: false,
+    map: map,
+    labelContent: "Current",
+    labelAnchor: new google.maps.Point(-20, 22),
+    labelClass: "marker-label", // the CSS class for the label
+    labelInBackground: false
+  });
 
   map.mapTypes.set('map_style', customStyles);
   map.setMapTypeId('map_style');
-  map.panBy(200, 200);
+  map.panBy(-50, -50);
 
 }
+
+$(document).ready(function() {
+  $("#journal-map-toggle").on('click', function() {
+    // temporary map toggle
+    if ( $('#journal-map').css('z-index') < 12345 ) {
+      $('#journal-map').css('z-index', 123456);
+      $('#map-overlay').hide();
+    } else {
+      $('#journal-map').css('z-index', -3);      
+      $('#map-overlay').show();
+    }
+  }); 
+});
