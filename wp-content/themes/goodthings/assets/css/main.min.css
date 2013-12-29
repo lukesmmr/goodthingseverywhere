@@ -188,9 +188,37 @@ h1.giant-title {
 	margin-bottom: 50px;
 }
 
-#journal-map {position: absolute;height: 100%; width: 97.5%; z-index: -3; top: -170px;}
+#journal-map {position: absolute; width: 97.5%; z-index: -3; top: -170px;}
 #map-canvas {width: 100%; height: 420px;z-index:-2;}
 #map-overlay {width: 100%; height: 100%; background: white; opacity: 0.8; position: absolute;z-index: -1;}
+.journal-map-btn-container { z-index: 1234567; width: 100%; margin-top:-30px;}
+.journal-map-btn-container button {
+	text-align: center; 
+	display: block; 
+	margin: 0 auto; 
+	font-size: 12px; 
+	text-transform: uppercase; 
+	padding: 2px 5px; 
+	border: 0; 
+	background: #ef4b36; 
+	border-radius: 3px; 
+	color: white;
+}
+.marker-label, .marker-label a, .marker-label label span.locnr {
+	color: #ef4b36;
+	font-size: 14px !important;
+	text-align: center;    
+	white-space: nowrap;
+	font-family: "proxima-nova", "Helvetica Neue", Helvetica, sans-serif !important;
+	font-weight: 700 !important;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+.marker-label label span.locnr {
+	font-size: 18px !important;
+	margin: -10px 0 0 0;
+}
+.marker-coords span {display: none;}
 
 .home-journal {margin: 50px 0 0 0; display:block;}
 .home-journal h2 {margin-bottom: 25px; font-weight: 700; color: #e1e1e1;}
