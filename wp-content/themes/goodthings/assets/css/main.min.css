@@ -178,6 +178,7 @@ h1.giant-title {
 .distance-to-me {color: #129adb; padding: 5px 0 10px 10px; font-size:16px; opacity: 0;}
 .display-loc, .next-loc {text-align:center;}
 .display-loc {font-size: 18px; padding-top:5px;}
+.hidden-loc {display: none;}
 .next-loc {font-size:14px;}
 .home-content {
 	font-size: 20px;
@@ -188,7 +189,7 @@ h1.giant-title {
 	margin-bottom: 50px;
 }
 
-#journal-map {position: absolute; width: 97.5%; z-index: -3; top: -170px;}
+#journal-map {position: absolute; width: 97.5%; z-index: -3; top: -420px;}
 #map-canvas {width: 100%; height: 420px;z-index:-2;}
 #map-overlay {width: 100%; height: 100%; background: white; opacity: 0.8; position: absolute;z-index: -1;}
 .journal-map-btn-container { z-index: 1234567; width: 100%; margin-top:-30px;}
@@ -200,14 +201,14 @@ h1.giant-title {
 	text-transform: uppercase; 
 	padding: 2px 5px; 
 	border: 0; 
-	background: #ef4b36; 
-	border-radius: 3px; 
+	background: #ef4b36;
 	color: white;
+	margin-top:30px;
 }
-.marker-label, .marker-label a, .marker-label label span.locnr {
+.marker-label, .marker-label label.loclabel a, .marker-label label span.locnr, .marker-label-user {
 	color: #ef4b36;
-	font-size: 14px !important;
-	text-align: center;    
+	font-size: 12px !important;
+	text-align: left;    
 	white-space: nowrap;
 	font-family: "proxima-nova", "Helvetica Neue", Helvetica, sans-serif !important;
 	font-weight: 700 !important;
@@ -215,10 +216,12 @@ h1.giant-title {
 	text-decoration: none;
 }
 .marker-label label span.locnr {
-	font-size: 18px !important;
+	font-size: 12px !important;
 	margin: -10px 0 0 0;
 }
-.marker-coords span {display: none;}
+/*.loc-rollover {display: none;}
+*/.marker-label-user {color: #129adb;}
+select.marker-coords {position: absolute; z-index: 12345678; top: 30px; right: 5px;}
 
 .home-journal {margin: 50px 0 0 0; display:block;}
 .home-journal h2 {margin-bottom: 25px; font-weight: 700; color: #e1e1e1;}
@@ -279,6 +282,8 @@ h3.journal-title a:hover {text-decoration: none; color: #252525;}
 .journal-category a:hover {text-decoration: underline;}
 .journal-category .glyphicon {color: #ef4b36; margin-left:5px;}
 .comment-count {margin-left: 10px;color: #e1e1e1;}
+a.maps-link {text-decoration: none; color: #129adb;}
+a.maps-link:hover {text-decoration: underline;}
 .entry-content img {
 	width: 100%; 
 	height: auto !important; margin: 5px 0;
