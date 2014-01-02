@@ -3,11 +3,21 @@
 var posLocated = false,
     userPos,
     posDenied = false,
+    mapOpen = false,
     infowindow = null,
+    captiontimer,
     currentPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng')),
     websitePath = "http://localhost/goodthingseverywhere/"
     markerPath = websitePath + "wp-content/themes/goodthings/assets/img/maps-marker.svg",
-    userMarkerPath = websitePath + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg";
+    userMarkerPath = websitePath + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg", 
+    mapHeight = $(window).height() - 40, 
+    currentLocMsg = "This is my current location!", 
+    userLocMsg = "This is where you are (detected by your Browser)!",
+    posMatchMsg = "Nice, we're pretty close. Maybe we should meet!?";
+    var randomTips = function () {
+      var tipArray = randomFrom(['Explore the world based on my journal entries. Click on the markers to see places i visited', 'You can also navigate with your cursor keys and zoom with +/-', 'With geolocation enabled you can see your position on the map']);
+      return tipArray; 
+    }
 
 
 var GoodThingsSite = {
@@ -92,20 +102,36 @@ function goodThingsMap(position) {
     {
       stylers: [
         { hue: "#129adb"},
-        { saturation: "-10"}
+        { saturation: "-10"}/*,
+        { invert_lightness: true} think about adding time based inversion
+        var currentTime = new Date().getHours();
+        if (0 <= currentTime&&currentTime < 5) {
+        document.write("<link rel='stylesheet' href='night.css' type='text/css'>");
+      }*/
       ]
     }, {
       featureType: "road", 
       elementType: "geometry", 
       stylers : [
-        {lightness: 100},
-        {visibility: "simplified"}
+        {visibility: "off"}
       ]
     }, {
-      featureType: "road",
-      elementType: "labels",
+      featureType: "road", 
+      elementType: "geometry", 
+      stylers : [
+        {visibility: "off"}
+      ]
+    }, {
+      featureType: "transit",
+      elementType: "all",
       stylers: [
         { visibility: "off" }
+      ]
+    }, {
+      featureType: "all", 
+      elementType: "all",
+      styles: [
+        {visibiility: "simplified"}
       ]
     }
   ];
@@ -113,7 +139,7 @@ function goodThingsMap(position) {
   var customStyles = new google.maps.StyledMapType(styles, {name: "Good Things Map"});
   var mapOptions = {
     center: currentPos,
-    zoom: 6,
+    zoom: 5,
     minZoom: 2,
     maxZoom: 12,
     mapTypeControlOptions: {
@@ -129,13 +155,29 @@ function goodThingsMap(position) {
       })];
   }).get();
 
+  // build array for polylines
+  var journalCoords = []
+  for(var y = 1; y < journalLocs.length; y++) {
+      journalCoords.push(new google.maps.LatLng(journalLocs[y][1], journalLocs[y][2]));
+  }
+  console.log(journalCoords);
+
+  // polyline test
+  var travelItinerary = new google.maps.Polyline({
+    path: journalCoords,
+    geodesic: true,
+    strokeColor: '#129adb',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+
   var map = new google.maps.Map(document.getElementById("map-canvas"),
       mapOptions);
   
   // Add the markers and infowindows to the map
-  for (var i = 0; i < journalLocs.length; i++) {  
+  for (var i = 1; i < journalLocs.length; i++) {  
 
-    var journalLocLabel = "<label class='loclabel'><span class='locnr'>" + (i + 1) +"</span></label>";
+    var journalLocLabel = "<label class='loclabel'><span class='locnr'>" + (i) +"</span></label>";
     var marker = new MarkerWithLabel({
       url: journalLocs[i][3],
       position: new google.maps.LatLng(journalLocs[i][1], journalLocs[i][2]),
@@ -146,18 +188,17 @@ function goodThingsMap(position) {
       labelContent: journalLocLabel,
       labelAnchor: new google.maps.Point(4, 37),
       labelClass: "marker-label", // the CSS class for the label
-      labelInBackground: true,
-      html: "<a href='" + journalLocs[i][3] + "'><div class='loctitle'>" + (i + 1) +". " + journalLocs[i][0] + "</div></a>"
+      labelZIndex: i+1,
+      html: "<span class='locpost-location'>" + journalLocs[i][0] + ' - ' + journalLocs[i][7] + "</span><a class='locpost-link' href='" + journalLocs[i][3] + "'><h4 class='locpost-title'>" + journalLocs[i][6] + "</h4></a><div class='locpost-preview'><img style='width: 250px; height: auto !important;' src='" + journalLocs[i][5] + "'' /><p>'" + journalLocs[i][4] + "</p><a class='locpost-link' href='" + journalLocs[i][3] + "'>Continue reading</a></div>",
+      zIndex: i
     });
 
     infowindow = new google.maps.InfoWindow({
-        content: "loading..."
+        content: "loading...",
+        maxWidth: 400
     });
 
-    google.maps.event.addListener(marker, 'mouseover', function() {
-    
-      $(this.labelContent).css('color', 'red');
-      
+    google.maps.event.addListener(marker, 'click', function() {      
       infowindow.setContent(this.html);
       infowindow.open(map, this);
     });
@@ -230,25 +271,101 @@ function goodThingsMap(position) {
   map.setMapTypeId('map_style');
   map.panBy(-50, -50);
 
+  // add polyline
+  travelItinerary.setMap(map);
+
   // quick jump
   $( "select.marker-coords" ).change(function() {
       var selected_lat = $(this).find(':selected').data('post-loc-lat'),
           selected_lng = $(this).find(':selected').data('post-loc-lng');
       map.setZoom(8);
       map.panTo(new google.maps.LatLng(selected_lat, selected_lng));
+      infowindow.close();
   });
 
+  $('#current-loc-btn').on('click', function() {
+    posMsg(currentPos, currentLocMsg);
+  });
+
+  $('#user-loc-btn').on('click', function() {
+    posMsg(userPos, userLocMsg);
+  });
+
+
+  if ("geolocation" in navigator && posDenied == false) {
+    // whoo
+  } else {
+    $('#user-loc-btn').prop('disabled', true);
+  }
+
+  function posMsg(geodata, posMsg) {
+    clearTimeout(captiontimer);
+    if ("geolocation" in navigator && posDenied == false) {
+      if (distanceToMe < 20) {
+        $('span.map-msg').text(posMatchMsg);
+      } else {
+        $('span.map-msg').text(posMsg);
+      }
+    } else {
+      $('#user-loc-btn').prop('disabled', true);
+      $('span.map-msg').text(posMsg);
+    }
+    $('#journal-map-caption').delay(200).slideDown(300);
+    captiontimer = setTimeout(function() {
+          $('#journal-map-caption').delay(200).slideUp(300);  
+    }, 2000);
+    map.setZoom(9);
+    map.panTo(geodata);
+    infowindow.close();
+  }
 }
 
 $(document).ready(function() {
-  $('#journal-map').css('z-index', 123456);
-  $('#map-overlay').hide();
+  // bootstrap select
+  $('.selectpicker').selectpicker();
+  $('span.map-msg').text(randomTips());
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+      $('.selectpicker').selectpicker('mobile');
+  }
+  // map toggle
+  $('#journal-map, #map-canvas').css('height', mapHeight);
+  $('#journal-map').css({'z-index': 123456, 'top' : -(mapHeight)});
   $("#journal-map-toggle").on('click', function() {
-    console.log($('.site-head').css("margin-top"));
-    if( $('.site-head').css("margin-top")!='0px' ) {
-      $('.site-head').animate({marginTop: "0px"}, 500);
-    } else {
-      $('.site-head').animate({marginTop: "420px"}, 500);
-    }
+    toggleMap();
   }); 
+  $('a.maps-link').on('click', function(e) {
+    e.preventDefault();
+    console.log('map link clicked');
+  });
 });
+
+$(window).resize(function() {
+    // resizedMapHeight = $(window).height();
+    // $('#journal-map, #map-canvas').css('height', resizedMapHeight);
+    // $('#journal-map').css('top', -(resizedMapHeight) );
+    // $('.site-head').animate({marginTop: mapHeight}, 500);
+}); 
+
+function toggleMap() {
+  console.log(mapOpen);
+  if(mapOpen) {
+    $('span.map-msg').text(randomTips());
+    $('.site-head').animate({marginTop: "0px"}, 300);
+    $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
+    $('#arrow-pos').removeClass('close-btn');
+    $('#journal-map-caption').slideUp(300);
+    $('#journal-map-toggle').text('Map');
+    mapOpen = false
+  } else {
+    clearTimeout(captiontimer);
+    $('.site-head').animate({marginTop: mapHeight}, 300);
+    $('#map-arrow').removeClass('arrow-down').addClass('arrow-up');
+    $('#arrow-pos').addClass('close-btn');
+    $('#journal-map-caption').delay(200).slideDown(300);
+    captiontimer = setTimeout(function() {
+          $('#journal-map-caption').slideUp(300);  
+    }, 6000);
+    $('#journal-map-toggle').text('Close');
+    mapOpen = true;
+  }
+}

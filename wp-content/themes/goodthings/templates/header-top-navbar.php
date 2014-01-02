@@ -2,29 +2,46 @@
 
 <header class="banner navbar navbar-default navbar-static-top" role="banner">
   
+  <?php // get current loc
+  $page_id = 4;
+  $page_data = get_page( $page_id ); 
+  echo '<span id="getloc" data-lat="' . $page_data->current_loc_lat . '" data-lng="' . $page_data->current_loc_lng . '"></span>';
+  ?>
 
   <div class="container site-head">
     
-   <?php //if ( !is_front_page() ) : ?>
-      <!-- <div id="getloc" class="hidden-loc" data-lat="<?php //echo $current_loc_lat ?>" data-lng="<?php //echo $current_loc_lng; ?>"></div>
-    <?php //endif; ?> -->
     <div id="journal-map">
-       <div id="map-overlay"></div>     
-      <div id="map-canvas"></div>
-      <select class="marker-coords">
-        <?php $wp_query= null;
-        $wp_query = new WP_Query(); $wp_query->query(array ('showposts' => '-1', 'orderby' => 'date', 'order' => 'ASC'));
-        while ($wp_query->have_posts()) : $wp_query->the_post(); 
-        $post_loc = get_post_meta($post->ID, 'post_loc', true);
-        $post_loc_lat = get_post_meta($post->ID, 'post_loc_lat', true);
-        $post_loc_lng = get_post_meta($post->ID, 'post_loc_lng', true);
-        ?>
-        <option id="post-<?php the_ID(); ?>" data-post-loc="<?php echo $post_loc; ?>" data-post-loc-lat="<?php echo $post_loc_lat; ?>" data-post-loc-lng="<?php echo $post_loc_lng; ?>" data-post-url="<?php echo get_permalink(); ?>"><?php echo $post_loc; ?></option>
-        <?php endwhile; ?>
-      </select>
+    <div id="map-canvas">loading map...</div>
+      <div id="dropdown-pos">
+        <div class="btn-group" style="margin-top:-10px">
+          <button id="current-loc-btn" type="button" class="btn btn-default">Lukas</button>
+          <button id="user-loc-btn" type="button" class="btn btn-default">Me</button>
+        </div>
+        <select class="marker-coords selectpicker show-tick" data-width="auto" data-live-search="true">
+          <option selected="selected" data-post-loc="" data-post-loc-lat="<?php echo $page_data->current_loc_lat ?>" data-post-loc-lng="<?php echo $page_data->current_loc_lng; ?>" data-post-url="">Travel to article...</option>
+          <?php $wp_query= null;
+          $counter = 0;
+          $wp_query = new WP_Query(); $wp_query->query(array ('showposts' => '-1', 'orderby' => 'date', 'order' => 'ASC'));
+          while ($wp_query->have_posts()) : $wp_query->the_post(); 
+          $counter++;
+          $post_loc = get_post_meta($post->ID, 'post_loc', true);
+          $post_loc_lat = get_post_meta($post->ID, 'post_loc_lat', true);
+          $post_loc_lng = get_post_meta($post->ID, 'post_loc_lng', true);
+          $excerpt = substr(strip_tags(get_the_excerpt()),0,100) . "...";
+          $thumb_id = get_post_thumbnail_id();
+          $thumb_url = wp_get_attachment_image_src($thumb_id,'journal-home-thumb', true);
+          ?>
+          <option id="post-<?php the_ID(); ?>" data-post-loc="<?php echo $post_loc; ?>" data-post-loc-lat="<?php echo $post_loc_lat; ?>" data-post-loc-lng="<?php echo $post_loc_lng; ?>" data-post-url="<?php echo get_permalink(); ?>" data-post-excerpt="<?php echo $excerpt; ?>" data-post-thumb="<?php echo $thumb_url[0]; ?>" data-post-title="<?php the_title(); ?>" data-post-date="<?php echo get_the_date('j. M y'); ?>"><?php echo $counter . ". " . $post_loc; ?></option>
+          <?php endwhile; ?>
+        </select>      
+      </div>
       <?php wp_reset_query(); ?>
       <div class="journal-map-btn-container">
-        <button id="journal-map-toggle">Toggle journal map</button>
+        <div id="journal-map-caption"><i class="glyphicon glyphicon-info-sign"></i> <span class="map-msg"></span></div>
+        <div id="arrow-pos">
+          <button id="journal-map-toggle">Map</button>
+          <div id="map-arrow" class="arrow-down"></div>
+        </div>
       </div>
     </div>
 
