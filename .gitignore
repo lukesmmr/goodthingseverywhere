@@ -1,3 +1,4 @@
 .htaccess
 wp-config.php
 wp-content/plugins/*
+media/*
