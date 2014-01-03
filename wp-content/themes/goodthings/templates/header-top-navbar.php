@@ -5,20 +5,20 @@
   <?php // get current loc
   $page_id = 4;
   $page_data = get_page( $page_id ); 
-  echo '<span id="getloc" data-lat="' . $page_data->current_loc_lat . '" data-lng="' . $page_data->current_loc_lng . '"></span>';
+  echo '<span id="getloc" class="hidden" data-lat="' . $page_data->current_loc_lat . '" data-lng="' . $page_data->current_loc_lng . '"></span>';
   ?>
 
   <div class="container site-head">
     
     <div id="journal-map">
-    <div id="map-canvas">loading map...</div>
+    <div id="map-canvas"><span class="map-loader">Loading map...</span></div>
       <div id="dropdown-pos">
         <div class="btn-group" style="margin-top:-10px">
-          <button id="current-loc-btn" type="button" class="btn btn-default">Lukas</button>
-          <button id="user-loc-btn" type="button" class="btn btn-default">Me</button>
+          <button id="current-loc-btn" type="button" class="btn btn-default">Me</button>
+          <button id="user-loc-btn" type="button" class="btn btn-default">You</button>
         </div>
-        <select class="marker-coords selectpicker show-tick" data-width="auto" data-live-search="true">
-          <option selected="selected" data-post-loc="" data-post-loc-lat="<?php echo $page_data->current_loc_lat ?>" data-post-loc-lng="<?php echo $page_data->current_loc_lng; ?>" data-post-url="">Travel to article...</option>
+        <select class="marker-coords selectpicker show-tick" data-width="150px" data-live-search="true">
+          <option selected="selected" data-post-loc="" data-post-loc-lat="<?php echo $page_data->current_loc_lat ?>" data-post-loc-lng="<?php echo $page_data->current_loc_lng; ?>" data-post-url="">Travel to...</option>
           <?php $wp_query= null;
           $counter = 0;
           $wp_query = new WP_Query(); $wp_query->query(array ('showposts' => '-1', 'orderby' => 'date', 'order' => 'ASC'));
@@ -36,6 +36,7 @@
         </select>      
       </div>
       <?php wp_reset_query(); ?>
+      <!--  <span id="resize-icon" class="glyphicon glyphicon-resize-vertical"></span> -->      
       <div class="journal-map-btn-container">
         <div id="journal-map-caption"><i class="glyphicon glyphicon-info-sign"></i> <span class="map-msg"></span></div>
         <div id="arrow-pos">

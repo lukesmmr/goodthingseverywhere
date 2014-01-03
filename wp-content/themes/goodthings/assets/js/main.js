@@ -4,19 +4,31 @@ var posLocated = false,
     userPos,
     posDenied = false,
     mapOpen = false,
+    mapResized = false,
+    mapHeight,
     infowindow = null,
+    infowinWidth,
     captiontimer,
     currentPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng')),
     websitePath = "http://localhost/goodthingseverywhere/"
     markerPath = websitePath + "wp-content/themes/goodthings/assets/img/maps-marker.svg",
     userMarkerPath = websitePath + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg", 
-    mapHeight = $(window).height() - 40, 
-    currentLocMsg = "This is my current location!", 
-    userLocMsg = "This is where you are (detected by your Browser)!",
-    posMatchMsg = "Nice, we're pretty close. Maybe we should meet!?";
+    currentLocMsg = "This is my current location", 
+    userLocMsg = "This is where you are (detected by your Browser)",
+    posMatchMsg = "Nice, our locations match. Maybe we should meet";
     var randomTips = function () {
-      var tipArray = randomFrom(['Explore the world based on my journal entries. Click on the markers to see places i visited', 'You can also navigate with your cursor keys and zoom with +/-', 'With geolocation enabled you can see your position on the map']);
+      var tipArray = randomFrom(['Explore the world based on my journal entries. Click on the markers to see places i visited', 'You can navigate with your cursor keys and zoom with +/-', 'With geolocation enabled you can see your position on the map', 'Drag the border bottom of the map to resize it on your screen']);
       return tipArray; 
+    }
+    if( /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+      mapHeight = $(window).height() - 80;
+      infowinWidth = 220;
+    } else if( /iPad/i.test(navigator.userAgent) ) {
+      mapHeight = $(window).height() - 250;
+      infowinWidth = 400;
+    } else {
+      mapHeight = $(window).height() - 40;
+      infowinWidth = 400;  
     }
 
 
@@ -72,7 +84,6 @@ function initMap() {
     // set map
     goodThingsMap();    
   }
-
 }
 
 function error(err) {
@@ -186,7 +197,7 @@ function goodThingsMap(position) {
     null, null, null, null),
       draggable: false,
       labelContent: journalLocLabel,
-      labelAnchor: new google.maps.Point(4, 37),
+      labelAnchor: new google.maps.Point(4, 40),
       labelClass: "marker-label", // the CSS class for the label
       labelZIndex: i+1,
       html: "<span class='locpost-location'>" + journalLocs[i][0] + ' - ' + journalLocs[i][7] + "</span><a class='locpost-link' href='" + journalLocs[i][3] + "'><h4 class='locpost-title'>" + journalLocs[i][6] + "</h4></a><div class='locpost-preview'><img style='width: 250px; height: auto !important;' src='" + journalLocs[i][5] + "'' /><p>'" + journalLocs[i][4] + "</p><a class='locpost-link' href='" + journalLocs[i][3] + "'>Continue reading</a></div>",
@@ -195,14 +206,14 @@ function goodThingsMap(position) {
 
     infowindow = new google.maps.InfoWindow({
         content: "loading...",
-        maxWidth: 400
+        maxWidth: infowinWidth
     });
 
     google.maps.event.addListener(marker, 'click', function() {      
       infowindow.setContent(this.html);
       infowindow.open(map, this);
+      map.panBy(-50, 0);
     });
-
   }
 
   if ("geolocation" in navigator && posDenied == false) {
@@ -215,7 +226,7 @@ function goodThingsMap(position) {
           null, null, null, null),
         draggable: false,
         map: map,
-        labelContent: "Yay, you're only " + distanceToMe.toFixed(2) + "km away!",
+        labelContent: "You're only " + distanceToMe.toFixed(2) + "km away!",
         labelAnchor: new google.maps.Point(-20, 22),
         labelClass: "marker-label-user", // the CSS class for the label
         labelInBackground: false
@@ -231,8 +242,8 @@ function goodThingsMap(position) {
             null, null, null, null),
           draggable: false,
           map: map,
-          labelContent: "My current position",
-          labelAnchor: new google.maps.Point(-20, 22),
+          labelContent: "My position",
+          labelAnchor: new google.maps.Point(-20, 32),
           labelClass: "marker-label", // the CSS class for the label
           labelInBackground: false
         });
@@ -245,7 +256,7 @@ function goodThingsMap(position) {
           map: map,
           labelContent: "You",
           labelAnchor: new google.maps.Point(-20, 22),
-          labelClass: "marker-label", // the CSS class for the label
+          labelClass: "marker-label-user", // the CSS class for the label
           labelInBackground: false
         });
 
@@ -281,6 +292,7 @@ function goodThingsMap(position) {
       map.setZoom(8);
       map.panTo(new google.maps.LatLng(selected_lat, selected_lng));
       infowindow.close();
+      //infowindow.open(map, new google.maps.LatLng(selected_lat, selected_lng));
   });
 
   $('#current-loc-btn').on('click', function() {
@@ -292,9 +304,7 @@ function goodThingsMap(position) {
   });
 
 
-  if ("geolocation" in navigator && posDenied == false) {
-    // whoo
-  } else {
+  if (!"geolocation" in navigator && posDenied == true) {
     $('#user-loc-btn').prop('disabled', true);
   }
 
@@ -313,20 +323,46 @@ function goodThingsMap(position) {
     $('#journal-map-caption').delay(200).slideDown(300);
     captiontimer = setTimeout(function() {
           $('#journal-map-caption').delay(200).slideUp(300);  
-    }, 2000);
+    }, 3000);
     map.setZoom(9);
     map.panTo(geodata);
     infowindow.close();
   }
+
+  // make map resizable
+  if (mapOpen) {
+    $( "#map-canvas" ).resizable({
+      handles: 's',
+      stop: function(event, ui) {
+          $(this).css("width", '');
+      },
+      maxHeight: 700,
+      minHeight: 200
+    });
+  }
+
+  $( "#map-canvas").resize(function() {
+    console.log('map resized');
+    mapResized = true;
+    var newHeight = $(this).height();
+    if (mapOpen) {
+      console.log('map resized');
+      console.log(newHeight - 40);
+      $('#journal-map').css({'height': newHeight, 'top' : -(newHeight)});
+      google.maps.event.trigger(map, 'resize');
+    }
+    $('.site-head').css('marginTop', newHeight); 
+  });
+
 }
 
 $(document).ready(function() {
   // bootstrap select
   $('.selectpicker').selectpicker();
   $('span.map-msg').text(randomTips());
-  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-      $('.selectpicker').selectpicker('mobile');
-  }
+  // if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+  //     $('.selectpicker').selectpicker('mobile');
+  // }
   // map toggle
   $('#journal-map, #map-canvas').css('height', mapHeight);
   $('#journal-map').css({'z-index': 123456, 'top' : -(mapHeight)});
@@ -358,7 +394,11 @@ function toggleMap() {
     mapOpen = false
   } else {
     clearTimeout(captiontimer);
-    $('.site-head').animate({marginTop: mapHeight}, 300);
+    if(mapResized) {
+      $('.site-head').animate({ marginTop: $( "#map-canvas").height() }, 300);
+    } else {
+      $('.site-head').animate({marginTop: mapHeight}, 300);      
+    }
     $('#map-arrow').removeClass('arrow-down').addClass('arrow-up');
     $('#arrow-pos').addClass('close-btn');
     $('#journal-map-caption').delay(200).slideDown(300);
