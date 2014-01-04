@@ -116,25 +116,29 @@ function goodThingsMap(position) {
         { saturation: "-10"}/*,
         { invert_lightness: true} think about adding time based inversion
         var currentTime = new Date().getHours();
-        if (0 <= currentTime&&currentTime < 5) {
-        document.write("<link rel='stylesheet' href='night.css' type='text/css'>");
-      }*/
+        if (0 <= currentTime&&currentTime < 21) { // invertlightness }*/
       ]
     }, {
-      featureType: "road", 
-      elementType: "geometry", 
+      featureType: "road.local", 
+      elementType: "goemetry", 
       stylers : [
         {visibility: "off"}
       ]
     }, {
-      featureType: "road", 
-      elementType: "geometry", 
+      featureType: "road.highway", 
+      elementType: "goemetry", 
+      stylers : [
+        {visibility: "off"}
+      ]
+    }, {
+      featureType: "road.highway.controlled_access", 
+      elementType: "goemetry", 
       stylers : [
         {visibility: "off"}
       ]
     }, {
       featureType: "transit",
-      elementType: "all",
+      elementType: "labels.icon",
       stylers: [
         { visibility: "off" }
       ]
