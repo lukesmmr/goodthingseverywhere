@@ -9,6 +9,7 @@ var posLocated = false,
     newMapHeight,
     infowindow = null,
     infowinWidth,
+    infoWinMinHeight,
     captiontimer,
     currentPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng')),
     websitePath = "http://localhost/goodthingseverywhere/"
@@ -22,6 +23,16 @@ var posLocated = false,
     var randomTips = function () {
       var tipArray = randomFrom(['Explore the world based on my journal entries. Click on the markers to see places i visited'/*, 'You can navigate with your cursor keys and zoom with +/-', 'With geolocation enabled you can see your position on the map'*/]);
       return tipArray; 
+    }
+    if( /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+      infowinWidth = 220;
+      infoWinMinHeight = "";
+    } else if( /iPad/i.test(navigator.userAgent) ) {
+      infowinWidth = 400;
+      infoWinMinHeight = "165px"
+    } else {
+      infowinWidth = 400;  
+      infoWinMinHeight = "165px"
     }
 
 var GoodThingsSite = {
@@ -180,11 +191,14 @@ function goodThingsMap(position) {
   var map = new google.maps.Map(document.getElementById("map-canvas"),
       mapOptions);
   
+  var marker = [];
+
   // Add the markers and infowindows to the map
   for (var i = 1; i < journalLocs.length; i++) {  
+    var journalLocLabel = "<label class='loclabel'><span class='locnr'>" + (i) +"</span></label>", 
+        infoWindowPreview = "<span class='locpost-location'>" + journalLocs[i][0] + ' - ' + journalLocs[i][7] + "</span><a class='locpost-link' href='" + journalLocs[i][3] + "'><h4 class='locpost-title'>" + journalLocs[i][6] + "</h4></a><div class='locpost-preview' style='min-height:" + infoWinMinHeight + "'><img style='width: 250px; height: auto !important;' src='" + journalLocs[i][5] + "'' /><p>'" + journalLocs[i][4] + "</p><a class='locpost-link' href='" + journalLocs[i][3] + "'>Continue reading</a></div>";
 
-    var journalLocLabel = "<label class='loclabel'><span class='locnr'>" + (i) +"</span></label>";
-    var marker = new MarkerWithLabel({
+    marker[i] = new MarkerWithLabel({
       url: journalLocs[i][3],
       position: new google.maps.LatLng(journalLocs[i][1], journalLocs[i][2]),
       map: map,
@@ -195,16 +209,17 @@ function goodThingsMap(position) {
       labelAnchor: new google.maps.Point(4, 40),
       labelClass: "marker-label", // the CSS class for the label
       labelZIndex: i+1,
-      html: "<span class='locpost-location'>" + journalLocs[i][0] + ' - ' + journalLocs[i][7] + "</span><a class='locpost-link' href='" + journalLocs[i][3] + "'><h4 class='locpost-title'>" + journalLocs[i][6] + "</h4></a><div class='locpost-preview'><img style='width: 250px; height: auto !important;' src='" + journalLocs[i][5] + "'' /><p>'" + journalLocs[i][4] + "</p><a class='locpost-link' href='" + journalLocs[i][3] + "'>Continue reading</a></div>",
+      html: infoWindowPreview,
       zIndex: i
     });
 
     infowindow = new google.maps.InfoWindow({
-        content: "loading...",
+        content: "<span>loading...",
         maxWidth: infowinWidth
     });
 
-    google.maps.event.addListener(marker, 'click', function() {      
+    google.maps.event.addListener(marker[i], 'click', function() {      
+      console.log(marker[i]);
       infowindow.setContent(this.html);
       infowindow.open(map, this);
       map.panBy(-50, 0);
