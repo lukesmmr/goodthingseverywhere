@@ -5,7 +5,8 @@ var posLocated = false,
     posDenied = false,
     mapOpen = false,
     mapResized = false,
-    mapHeight,
+    mapHeight = $(window).height() - 40,
+    newMapHeight,
     infowindow = null,
     infowinWidth,
     captiontimer,
@@ -15,22 +16,13 @@ var posLocated = false,
     userMarkerPath = websitePath + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg", 
     currentLocMsg = "This is my current location", 
     userLocMsg = "This is where you are (detected by your Browser)",
-    posMatchMsg = "Nice, our locations match. Maybe we should meet";
+    posMatchMsg = "Nice, our locations match. Maybe we should meet", 
+    dropdownMsg = "Click on the Marker to see the article preview";
+    // add more tips will ya!
     var randomTips = function () {
-      var tipArray = randomFrom(['Explore the world based on my journal entries. Click on the markers to see places i visited', 'You can navigate with your cursor keys and zoom with +/-', 'With geolocation enabled you can see your position on the map', 'Drag the border bottom of the map to resize it on your screen']);
+      var tipArray = randomFrom(['Explore the world based on my journal entries. Click on the markers to see places i visited'/*, 'You can navigate with your cursor keys and zoom with +/-', 'With geolocation enabled you can see your position on the map'*/]);
       return tipArray; 
     }
-    if( /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-      mapHeight = $(window).height() - 80;
-      infowinWidth = 220;
-    } else if( /iPad/i.test(navigator.userAgent) ) {
-      mapHeight = $(window).height() - 250;
-      infowinWidth = 400;
-    } else {
-      mapHeight = $(window).height() - 40;
-      infowinWidth = 400;  
-    }
-
 
 var GoodThingsSite = {
   // All pages
@@ -87,11 +79,10 @@ function initMap() {
 }
 
 function error(err) {
-    console.log(err.code);
     if (err.code == 1) { // user denied
-      console.log("Geolocation was denied!");
       posDenied = true;
       goodThingsMap();   
+      console.log("Geolocation was denied!");
     } else {
       // other error
       console.log("Geolocation failed!");
@@ -175,7 +166,6 @@ function goodThingsMap(position) {
   for(var y = 1; y < journalLocs.length; y++) {
       journalCoords.push(new google.maps.LatLng(journalLocs[y][1], journalLocs[y][2]));
   }
-  console.log(journalCoords);
 
   // polyline test
   var travelItinerary = new google.maps.Polyline({
@@ -291,12 +281,17 @@ function goodThingsMap(position) {
 
   // quick jump
   $( "select.marker-coords" ).change(function() {
+      clearTimeout(captiontimer);
       var selected_lat = $(this).find(':selected').data('post-loc-lat'),
           selected_lng = $(this).find(':selected').data('post-loc-lng');
       map.setZoom(8);
       map.panTo(new google.maps.LatLng(selected_lat, selected_lng));
+      $('span.map-msg').text(dropdownMsg);
+      $('#journal-map-caption').delay(200).slideDown(300);
+      captiontimer = setTimeout(function() {
+            $('#journal-map-caption').delay(200).slideUp(300);  
+      }, 5000);
       infowindow.close();
-      //infowindow.open(map, new google.maps.LatLng(selected_lat, selected_lng));
   });
 
   $('#current-loc-btn').on('click', function() {
@@ -308,7 +303,7 @@ function goodThingsMap(position) {
   });
 
 
-  if (!"geolocation" in navigator && posDenied == true) {
+  if (!"geolocation" in navigator || posDenied == true) {
     $('#user-loc-btn').prop('disabled', true);
   }
 
@@ -333,29 +328,12 @@ function goodThingsMap(position) {
     infowindow.close();
   }
 
-  // make map resizable
-  if (mapOpen) {
-    $( "#map-canvas" ).resizable({
-      handles: 's',
-      stop: function(event, ui) {
-          $(this).css("width", '');
-      },
-      maxHeight: 700,
-      minHeight: 200
-    });
-  }
-
-  $( "#map-canvas").resize(function() {
-    console.log('map resized');
-    mapResized = true;
-    var newHeight = $(this).height();
-    if (mapOpen) {
-      console.log('map resized');
-      console.log(newHeight - 40);
-      $('#journal-map').css({'height': newHeight, 'top' : -(newHeight)});
-      google.maps.event.trigger(map, 'resize');
-    }
-    $('.site-head').css('marginTop', newHeight); 
+  $(window).resize(function() {
+    $('#journal-map, #map-canvas').css('height', $(window).height() - 40);
+    if (!mapOpen) {
+      $('#journal-map').css({marginTop: -($('#journal-map').height()) });
+    } 
+    google.maps.event.trigger(map, 'resize');
   });
 
 }
@@ -364,52 +342,45 @@ $(document).ready(function() {
   // bootstrap select
   $('.selectpicker').selectpicker();
   $('span.map-msg').text(randomTips());
-  // if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-  //     $('.selectpicker').selectpicker('mobile');
-  // }
   // map toggle
   $('#journal-map, #map-canvas').css('height', mapHeight);
-  $('#journal-map').css({'z-index': 123456, 'top' : -(mapHeight)});
+  $('#journal-map').css({'z-index': 123456, 'margin-top' : -(mapHeight)});
   $("#journal-map-toggle").on('click', function() {
     toggleMap();
-  }); 
+  });
+  if (window.location.hash == '#map') {
+    toggleMap();
+  }
   $('a.maps-link').on('click', function(e) {
     e.preventDefault();
-    console.log('map link clicked');
   });
 });
-
-$(window).resize(function() {
-    // resizedMapHeight = $(window).height();
-    // $('#journal-map, #map-canvas').css('height', resizedMapHeight);
-    // $('#journal-map').css('top', -(resizedMapHeight) );
-    // $('.site-head').animate({marginTop: mapHeight}, 500);
-}); 
 
 function toggleMap() {
   console.log(mapOpen);
   if(mapOpen) {
+    $('#journal-map').animate({marginTop: -($('#journal-map').height()) }, 300);
     $('span.map-msg').text(randomTips());
-    $('.site-head').animate({marginTop: "0px"}, 300);
-    $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
     $('#arrow-pos').removeClass('close-btn');
+    $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
     $('#journal-map-caption').slideUp(300);
     $('#journal-map-toggle').text('Map');
+    // $("#journal-map").resizable('disable');
+    window.location.hash = '';
+    
     mapOpen = false
   } else {
     clearTimeout(captiontimer);
-    if(mapResized) {
-      $('.site-head').animate({ marginTop: $( "#map-canvas").height() }, 300);
-    } else {
-      $('.site-head').animate({marginTop: mapHeight}, 300);      
-    }
-    $('#map-arrow').removeClass('arrow-down').addClass('arrow-up');
+    $('#journal-map').animate({ marginTop: "0px" }, 300);
     $('#arrow-pos').addClass('close-btn');
+    $('#map-arrow').removeClass('arrow-down').addClass('arrow-up');
     $('#journal-map-caption').delay(200).slideDown(300);
+    $('#journal-map-toggle').text('Close');
     captiontimer = setTimeout(function() {
           $('#journal-map-caption').slideUp(300);  
     }, 6000);
-    $('#journal-map-toggle').text('Close');
+    // set anchor
+    window.location.hash = 'map';
     mapOpen = true;
   }
 }
