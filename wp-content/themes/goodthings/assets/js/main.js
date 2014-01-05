@@ -68,6 +68,8 @@ function initMap() {
     if(posLocated) return;
     posLocated = true;
     if (navigator.geolocation) {
+        $('.map-icon').after( '<span class="distance-to-me">Locating...</span>');
+        $('.distance-to-me').fadeTo( "slow" , 1);
         navigator.geolocation.getCurrentPosition(goodThingsMap, error);
     } else {
         error('Geolocation not supported!');
@@ -95,8 +97,7 @@ function goodThingsMap(position) {
   if ("geolocation" in navigator && posDenied == false) { 
       userPos =  new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       var distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
-      $('.map-icon').after( '<span class="distance-to-me">You are ' + distanceToMe.toFixed(2) + ' Kms away</span');
-      $('.distance-to-me').fadeTo( "slow" , 1);
+      $('.distance-to-me').text( 'You are ' + distanceToMe.toFixed(2) + ' Kms away');
   }
   
   // set map styles
