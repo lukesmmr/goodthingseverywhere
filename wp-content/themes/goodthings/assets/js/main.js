@@ -84,9 +84,6 @@ $(document).ready(function() {
   if (window.location.hash == '#map') {
     toggleMap();
   }
-  $('a.maps-link').on('click', function(e) {
-    e.preventDefault();
-  });
 });
 
 /* Good Things Journal Map v0.1 - 01.2014

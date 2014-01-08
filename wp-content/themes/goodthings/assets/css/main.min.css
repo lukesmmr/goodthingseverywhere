@@ -367,14 +367,14 @@ h3.journal-title a {text-decoration: none;}
 h3.journal-title a:hover {text-decoration: none; color: #252525;}
 .journal-thumbnail { float: left; margin-right: 20px;}
 .journal-thumbnail img, .home-journal-thumbnail img {margin-bottom:10px;}
-.post-meta {margin-bottom: 10px;}
-.journal-date {color: #129adb; font-size: 18px;}
-.journal-category {float: right;}
-.journal-category a {text-decoration: none; color: #ef4b36;font-size: 18px;}
+.post-meta {margin-bottom: 10px; font-size: 16px;}
+.journal-date {color: #129adb; font-size: 16px;}
+.journal-category {display: block; float:none;margin-top:5px;}
+.journal-category a {text-decoration: none; color: #ef4b36;font-size: 16px;}
 .journal-category a:hover {text-decoration: underline;}
 .journal-category .glyphicon {color: #ef4b36; margin-left:5px;}
 .comment-count {margin-left: 10px;color: #e1e1e1;}
-a.maps-link {text-decoration: none; color: #129adb;}
+a.maps-link {text-decoration: none; color: #e1e1e1;}
 a.maps-link:hover {text-decoration: underline;}
 .entry-content img {
 	width: 100%; 
@@ -457,6 +457,7 @@ span.footer-comment {text-transform: initial; display: block; font-size: 14px; f
 	footer {height: 130px; padding-left: 0px !important; padding-right: 0px !important; padding-top:20px;margin-top: 30px;}
 }
 @media (max-width:540px) {
+	.home-journal-thumbnail img {width:280px !important; height: auto !important;}
 	#legal-stuff {float: left;}
 	#legal-stuff li {margin-left: 0;margin-right:10px;}
 	span.footer-comment {font-size: 12px;padding-bottom:15px;}
@@ -464,9 +465,11 @@ span.footer-comment {text-transform: initial; display: block; font-size: 14px; f
 	#legal-stuff span.footer-comment {text-align: left;}
 }
 @media only screen and (max-device-width: 480px) and (orientation: landscape) {
+	.home-journal-thumbnail img {width:250px !important; height: auto !important;}
 	#legal-stuff {float: left;}
 	#legal-stuff li {margin-left: 0;margin-right:10px;}
 	span.footer-comment {font-size: 12px;padding-bottom:15px;}
+	.comment-count {display: block; margin-left: 0;}
 	#legal-stuff span.footer-comment {text-align: left;}
 	h4.locpost-title {font-size: 13px !important;width: 220px !important;}
 	.locpost-preview  {width: 220px;}
@@ -482,9 +485,10 @@ span.footer-comment {text-transform: initial; display: block; font-size: 14px; f
 	.navbar-header, #logo {margin-top: 30px;}
 	.home-intro {font-size: 24px;}
 	.page-header h1 {font-size: 2.2em;}
+	.comment-count {display: block; margin-left: 0;}
 	.home-journal-post {margin-bottom: 50px;}
 	.home-journal-thumbnail {width: 100%;}
-	.home-journal-thumbnail img {width: 100%; height: auto !important; margin-bottom: 10px;}
+	.home-journal-thumbnail img-circle {width: 100%; height: auto !important; margin-bottom: 10px;}
 	.journal-thumbnail {width:100%;}
 	.main img {width: 100%; height: auto !important; margin: 10px 0 10px 0; padding: 0;}
 	.btn-group {padding-bottom:5px !important;}
