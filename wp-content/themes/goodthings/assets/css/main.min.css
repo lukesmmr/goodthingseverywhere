@@ -183,8 +183,9 @@ h1.giant-title {
 .current-loc {color: #e1e1e1;text-align: center;}
 .map-icon {
 	color: #129adb; 
-	font-size: 1.6em;
+	font-size: 1.5em;
 }
+.distance-calc {display: block; margin:5px 0 5px 0;}
 .distance-to-me {color: #129adb; padding: 5px 0 10px 10px; font-size:16px; opacity: 0;}
 .display-loc, .next-loc {text-align:center;}
 .display-loc {font-size: 18px; padding-top:5px;}
@@ -472,6 +473,8 @@ span.footer-comment {text-transform: initial; display: block; font-size: 14px; f
 	.comment-count {display: block; margin-left: 0;}
 	#legal-stuff span.footer-comment {text-align: left;}
 	h4.locpost-title {font-size: 13px !important;width: 220px !important;}
+	.bootstrap-select[style] {right: -275px !important;}
+	.bootstrap-select.btn-group .dropdown-menu {margin-left: -84px; max-height: 200px;}
 	.locpost-preview  {width: 220px;}
 	.locpost-preview img {display: none;}
 	.locpost-preview p {font-size: 12px !important;}
@@ -481,6 +484,7 @@ span.footer-comment {text-transform: initial; display: block; font-size: 14px; f
 
 @media (max-width: 480px) {
 	.display-loc {font-size: 14px;}
+	.map-icon {font-size: 1.3em;}
 	.next-loc {font-size: 12px;}
 	.navbar-header, #logo {margin-top: 30px;}
 	.home-intro {font-size: 24px;}
@@ -493,8 +497,9 @@ span.footer-comment {text-transform: initial; display: block; font-size: 14px; f
 	.main img {width: 100%; height: auto !important; margin: 10px 0 10px 0; padding: 0;}
 	.btn-group {padding-bottom:5px !important;}
 	.bootstrap-select[style] {width: 160px !important;}
-	#journal-map-caption {height: 45px; font-size: 11px;}
+	#journal-map-caption {height: auto; font-size: 13px;}
 	#dropdown-pos {bottom: 35px;}
+	.bootstrap-select.btn-group .dropdown-menu {margin-left: -65px; max-height: 200px;}
 	ul.selectpicker {width: 220px !important;}
 	h4.locpost-title {font-size: 13px !important;width: 220px !important;}
 	.locpost-preview  {width: 220px;}

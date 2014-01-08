@@ -11,38 +11,41 @@ var posLocated = false,
     markers = new Array(),
     infowinWidth,
     infoWinMinHeight,
+    dropdownMsg,
     captiontimer,
     currentPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng')),
     markerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker.svg",
     userMarkerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg", 
     currentLocMsg = "This is my current location", 
     userLocMsg = "This is where you are (detected by your Browser)",
-    posMatchMsg = "Nice, our locations match. Maybe we should meet", 
-    dropdownMsg = "Click on the Marker to see the article preview";
+    posMatchMsg = "Nice, our locations match. Maybe we should meet"; 
     // add more tips will ya!
     var randomTips = function () {
       var tipArray = randomFrom(['Explore the world based on my journal entries. Click on the markers to see places i visited'/*, 'You can navigate with your cursor keys and zoom with +/-', 'With geolocation enabled you can see your position on the map'*/]);
       return tipArray; 
     }
     if( /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+      dropdownMsg = "Tap on the Marker to see the article preview";
       infowinWidth = 220;
       infoWinMinHeight = "";
     } else if( /iPad/i.test(navigator.userAgent) ) {
+      dropdownMsg = "Tap on the Marker to see the article preview";
       infowinWidth = 400;
-      infoWinMinHeight = "170px"
+      infoWinMinHeight = "170px";
     } else {
+      dropdownMsg = "Click on the Marker to see the article preview";
       infowinWidth = 400;  
-      infoWinMinHeight = "170px"
+      infoWinMinHeight = "170px";
     }
 
 // init
 var GoodThingsSite = {
   // all
-  common: {
-    init: function() {
-      initMap();
-    }
-  },
+  // common: {
+  //   init: function() {
+      
+  //   }
+  // },
   // specific pages
   home: {
     init: function() {
@@ -71,6 +74,7 @@ var UTIL = {
 $(document).ready(UTIL.loadEvents);
 // other ready events
 $(document).ready(function() {
+  initMap();
   // bootstrap select
   $('.selectpicker').selectpicker();
   $('.selectpicker').selectpicker('deselectAll');
@@ -128,7 +132,7 @@ function goodThingsMap(position) {
   if ("geolocation" in navigator && posDenied == false) { 
       userPos =  new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       var distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
-      $('.distance-to-me').text( 'You are ' + distanceToMe.toFixed(2) + ' Kms away');
+      $(".distance-to-me").text( "You're " + distanceToMe.toFixed(2) + " Kms away");
   }
   // set map styles
   var styles = [

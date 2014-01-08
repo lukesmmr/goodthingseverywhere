@@ -7,7 +7,9 @@
 <div class="home-additionals">
 	<h1 class="giant-title"><?php echo $giant_title; ?></h1>
 	<div class="current-loc">
-		<span class="map-icon glyphicon glyphicon-map-marker"></span>
+		<div class="distance-calc">
+			<span class="map-icon glyphicon glyphicon-map-marker"></span>
+		</div>
 		<div class="display-loc">Current location: <?php echo $current_loc; ?></div>
 		<div class="next-loc">Next stop: <?php echo $next_loc ?></div>
 	</div>
