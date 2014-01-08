@@ -1,4 +1,5 @@
-// var
+/* @goodthngs / lukassommer - goodthingseverywhere.com - 2013/2014
+I try to keep it tidy and dry here but don't expect perfection ;-) */
 var posLocated = false,
     userPos,
     posDenied = false,
@@ -243,7 +244,7 @@ function goodThingsMap(position) {
 
     // set infowindow
     infowindow = new google.maps.InfoWindow({
-        content: "<span>loading...",
+        content: "loading...",
         maxWidth: infowinWidth
     });
 
