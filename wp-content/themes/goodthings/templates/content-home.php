@@ -1,16 +1,14 @@
 <?php 
 	$giant_title = get_post_meta($post->ID, 'giant_title', true);
 	$current_loc = get_post_meta($post->ID, 'current_loc', true);
-	$current_loc_lat = get_post_meta($post->ID, 'current_loc_lat', true);
-	$current_loc_lng = get_post_meta($post->ID, 'current_loc_lng', true);
 	$next_loc = get_post_meta($post->ID, 'next_loc', true);
-	$home_intro = get_post_meta($post->ID, 'home_intro', true); 
+	$home_intro = get_post_meta($post->ID, 'home_intro', true);
 ?>
 <div class="home-additionals">
 	<h1 class="giant-title"><?php echo $giant_title; ?></h1>
 	<div class="current-loc">
 		<span class="map-icon glyphicon glyphicon-map-marker"></span>
-		<div id="getloc" class="display-loc" data-lat="<?php echo $current_loc_lat ?>" data-lng="<?php echo $current_loc_lng; ?>">Current location: <?php echo $current_loc; ?></div>
+		<div class="display-loc">Current location: <?php echo $current_loc; ?></div>
 		<div class="next-loc">Next stop: <?php echo $next_loc ?></div>
 	</div>
 </div>
