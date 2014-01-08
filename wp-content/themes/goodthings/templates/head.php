@@ -10,5 +10,6 @@
   <?php wp_head(); ?>
   <script src="//use.typekit.net/kzp6vsx.js"></script>
   <script>try{Typekit.load();}catch(e){}</script>
+  <script>var siteurl = "<?php echo get_bloginfo('url'); ?>/";</script>
   <link rel="alternate" type="application/rss+xml" title="<?php echo get_bloginfo('name'); ?> Feed" href="<?php echo home_url(); ?>/feed/">
 </head>

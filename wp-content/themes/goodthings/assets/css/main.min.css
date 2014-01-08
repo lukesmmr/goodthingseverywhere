@@ -278,17 +278,19 @@ h1.giant-title {
 	font-weight: 700 !important;
 	text-transform: uppercase;
 	text-decoration: none;
+	cursor: default;
 }
-.marker-label img {width: 100px !important; height: auto !important;}
+.marker-label img {width: 100px !important; height: auto !important; cursor: default;}
 .marker-label label span.locnr {
 	font-size: 12px !important;
 	margin: -10px 0 0 0;
+	cursor: default;
 }
 h4.locpost-title  {	font-family: "proxima-nova", "Helvetica Neue", Helvetica, sans-serif !important; clear:both;}
 .locpost-preview img {display: block; margin-bottom: 10px; float:left;padding-right: 10px;}
 .locpost-preview p, a.locpost-link {
 	font-family: "museo-sans", "Helvetica Neue",Helvetica, sans-serif !important;
-	font-size: 16px !important;
+	font-size: 15px !important;
 }
 a.locpost-link {
 	color: #129adb;

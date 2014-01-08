@@ -1,5 +1,4 @@
-// Modified http://paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/
-// Only fires on body class (working off strictly WordPress body_class)
+// var
 var posLocated = false,
     userPos,
     posDenied = false,
@@ -8,13 +7,13 @@ var posLocated = false,
     mapHeight = $(window).height() - 40,
     newMapHeight,
     infowindow = null,
+    markers = new Array(),
     infowinWidth,
     infoWinMinHeight,
     captiontimer,
     currentPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng')),
-    websitePath = "http://localhost/goodthingseverywhere/"
-    markerPath = websitePath + "wp-content/themes/goodthings/assets/img/maps-marker.svg",
-    userMarkerPath = websitePath + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg", 
+    markerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker.svg",
+    userMarkerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg", 
     currentLocMsg = "This is my current location", 
     userLocMsg = "This is where you are (detected by your Browser)",
     posMatchMsg = "Nice, our locations match. Maybe we should meet", 
@@ -29,23 +28,21 @@ var posLocated = false,
       infoWinMinHeight = "";
     } else if( /iPad/i.test(navigator.userAgent) ) {
       infowinWidth = 400;
-      infoWinMinHeight = "165px"
+      infoWinMinHeight = "170px"
     } else {
       infowinWidth = 400;  
-      infoWinMinHeight = "165px"
+      infoWinMinHeight = "170px"
     }
 
+// init
 var GoodThingsSite = {
-  // All pages
+  // all
   common: {
     init: function() {
       initMap();
-    },
-    // finalize: function() {
-  
-    // }
+    }
   },
-  // Home page
+  // specific pages
   home: {
     init: function() {
       $(".giant-title").fitText();  
@@ -71,22 +68,47 @@ var UTIL = {
 };
 
 $(document).ready(UTIL.loadEvents);
+// other ready events
+$(document).ready(function() {
+  // bootstrap select
+  $('.selectpicker').selectpicker();
+  $('.selectpicker').selectpicker('deselectAll');
+  $('span.map-msg').text(randomTips());
+  // map toggle
+  $('#journal-map, #map-canvas').css('height', mapHeight);
+  $('#journal-map').css({'z-index': 123456, 'margin-top' : -(mapHeight)});
+  $("#journal-map-toggle").on('click', function() {
+    toggleMap();
+  });
+  if (window.location.hash == '#map') {
+    toggleMap();
+  }
+  $('a.maps-link').on('click', function(e) {
+    e.preventDefault();
+  });
+});
+
+/* Good Things Journal Map v0.1 - 01.2014
+Description: Loops through data attributes with geo data located in post meta and set up map, article & user position, connect with polylines
+and add infowindows with post previews. Necessary enhancements: 
+- enable map during geolocation request (rebuild function, externalize geolocation request)
+- open infowindow on dropdown
+- add location links to each journal entry
+- asynchronous infowindow content loading
+*/
 
 // check distances
 function initMap() {
   // locate pos
   if ("geolocation" in navigator) {
-    if(posLocated) return;
+    if(posLocated) return; // execute only once
     posLocated = true;
-    if (navigator.geolocation) {
-        $('.map-icon').after( '<span class="distance-to-me">Locating...</span>');
-        $('.distance-to-me').fadeTo( "slow" , 1);
-        navigator.geolocation.getCurrentPosition(goodThingsMap, error);
-    } else {
-        error('Geolocation not supported!');
-    }
+    $('.map-icon').after( '<span class="distance-to-me">Locating...</span>');
+    $('.distance-to-me').fadeTo( "slow" , 1);
+    navigator.geolocation.getCurrentPosition(goodThingsMap, error);
   } else {
     // set map
+    error('Geolocation not supported!');
     goodThingsMap();    
   }
 }
@@ -94,7 +116,8 @@ function initMap() {
 function error(err) {
     if (err.code == 1) { // user denied
       posDenied = true;
-      goodThingsMap();   
+      goodThingsMap();
+      $('.distance-to-me').hide();
       console.log("Geolocation was denied!");
     } else {
       // other error
@@ -103,23 +126,19 @@ function error(err) {
 }
 
 function goodThingsMap(position) {
-
   // set user pos and calculate distance to current pos
   if ("geolocation" in navigator && posDenied == false) { 
       userPos =  new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       var distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
       $('.distance-to-me').text( 'You are ' + distanceToMe.toFixed(2) + ' Kms away');
   }
-  
   // set map styles
   var styles = [
     {
       stylers: [
         { hue: "#129adb"},
         { saturation: "-10"}/*,
-        { invert_lightness: true} think about adding time based inversion
-        var currentTime = new Date().getHours();
-        if (0 <= currentTime&&currentTime < 21) { // invertlightness }*/
+        { invert_lightness: true} think about adding time based inversion */
       ]
     }, {
       featureType: "road.local", 
@@ -154,7 +173,8 @@ function goodThingsMap(position) {
     }
   ];
 
-  var customStyles = new google.maps.StyledMapType(styles, {name: "Good Things Map"});
+  // options
+  var customStyles = new google.maps.StyledMapType(styles, {name: "Good Things Journal"});
   var mapOptions = {
     center: currentPos,
     zoom: 5,
@@ -166,20 +186,24 @@ function goodThingsMap(position) {
     disableDefaultUI: false
   };
 
-  // build array from journal locations
-  var journalLocs = $("select.marker-coords > option").map(function() {
-      return [$.map($(this).data(), function(v) {
-          return v;
-      })];
-  }).get();
+  // build array from data attributes
+  var journalLocs = [];
+  $('select.marker-coords > option').each(function(){
+    var $this = $(this);
+    journalLocs.push([ $this.data('post-loc'), $this.data('post-loc-lat'), $this.data('post-loc-lng'), $this.data('post-url'), $this.data('post-excerpt'), $this.data('post-thumb'), $this.data('post-title'), $this.data('post-date') ]);
+  });
 
-  // build array for polylines
-  var journalCoords = []
+  // set arrays
+  var journalCoords = [],
+      coordsArray = [],
+      locArray = [];
+
+  // get coords only for polylines
   for(var y = 1; y < journalLocs.length; y++) {
-      journalCoords.push(new google.maps.LatLng(journalLocs[y][1], journalLocs[y][2]));
+      coordsArray = $.makeArray( journalLocs[y] );
+      journalCoords.push(new google.maps.LatLng(coordsArray[1], coordsArray[2]));
   }
-
-  // polyline test
+  // polylines
   var travelItinerary = new google.maps.Polyline({
     path: journalCoords,
     geodesic: true,
@@ -188,48 +212,57 @@ function goodThingsMap(position) {
     strokeWeight: 2
   });
 
+  // set map
   var map = new google.maps.Map(document.getElementById("map-canvas"),
       mapOptions);
-  
-  var marker = [];
 
-  // Add the markers and infowindows to the map
+  // loop for markers and infowindows
   for (var i = 1; i < journalLocs.length; i++) {  
-    var journalLocLabel = "<label class='loclabel'><span class='locnr'>" + (i) +"</span></label>", 
-        infoWindowPreview = "<span class='locpost-location'>" + journalLocs[i][0] + ' - ' + journalLocs[i][7] + "</span><a class='locpost-link' href='" + journalLocs[i][3] + "'><h4 class='locpost-title'>" + journalLocs[i][6] + "</h4></a><div class='locpost-preview' style='min-height:" + infoWinMinHeight + "'><img style='width: 250px; height: auto !important;' src='" + journalLocs[i][5] + "'' /><p>'" + journalLocs[i][4] + "</p><a class='locpost-link' href='" + journalLocs[i][3] + "'>Continue reading</a></div>";
-
-    marker[i] = new MarkerWithLabel({
-      url: journalLocs[i][3],
-      position: new google.maps.LatLng(journalLocs[i][1], journalLocs[i][2]),
+    // make array from key value pairs
+    locArray = $.makeArray(journalLocs[i]);
+    var journalLocLabel = '<label class="loclabel"><span class="locnr">' + (i) + '</span></label>';
+    var infoWindowPreview = '<span class="locpost-location">' + locArray[0] + ' - ' + locArray[7] +
+                            '</span><a class="locpost-link" href="' + locArray[3] + '"><h4 class="locpost-title">' + 
+                            locArray[6] + '</h4></a><div class="locpost-preview" style="min-height:' + infoWinMinHeight +
+                            ';"><img style="width: 250px; height: auto !important;" src="' + locArray[5] + '" /><p>' + 
+                            locArray[4] + '</p><a class="locpost-link" href="' + locArray[3] + '">Continue reading</a></div>';    
+    // set markers
+    markers[i] = new MarkerWithLabel({
+      icon : new google.maps.MarkerImage(markerPath, null, null, null, null),
+      position: new google.maps.LatLng( locArray[1], locArray[2] ),
       map: map,
-      icon : new google.maps.MarkerImage(markerPath,
-    null, null, null, null),
       draggable: false,
       labelContent: journalLocLabel,
       labelAnchor: new google.maps.Point(4, 40),
       labelClass: "marker-label", // the CSS class for the label
       labelZIndex: i+1,
       html: infoWindowPreview,
+      url: locArray[3],
       zIndex: i
     });
 
+    // set infowindow
     infowindow = new google.maps.InfoWindow({
         content: "<span>loading...",
         maxWidth: infowinWidth
     });
 
-    google.maps.event.addListener(marker[i], 'click', function() {      
-      console.log(marker[i]);
+    // add click event 
+    google.maps.event.addListener(markers[i], 'click', function() {      
       infowindow.setContent(this.html);
       infowindow.open(map, this);
       map.panBy(-50, 0);
     });
+
   }
 
+  // if location available or detected
   if ("geolocation" in navigator && posDenied == false) {
     
+    // display display warning if less then 20km show only current pos marker
     if (distanceToMe < 20) {
-      console.log("Cool, you're really close to where i am!");
+      
+      //console.log("Cool, you're really close to where i am!");
       var currentPosMarker = new MarkerWithLabel({
         position: currentPos,
         icon: new google.maps.MarkerImage(userMarkerPath,
@@ -238,14 +271,14 @@ function goodThingsMap(position) {
         map: map,
         labelContent: "You're only " + distanceToMe.toFixed(2) + "km away!",
         labelAnchor: new google.maps.Point(-20, 22),
-        labelClass: "marker-label-user", // the CSS class for the label
+        labelClass: "marker-label-user", // label css class
         labelInBackground: false
       });
 
-      } else {
+    // if further then 20km show my pos and user pos
+    } else {
 
-        console.log("Yay, you are aren't close to me");
-
+        //console.log("Yay, you are aren't close to me");
         var currentPosMarker = new MarkerWithLabel({
           position: currentPos,
           icon: new google.maps.MarkerImage(markerPath,
@@ -254,7 +287,7 @@ function goodThingsMap(position) {
           map: map,
           labelContent: "My position",
           labelAnchor: new google.maps.Point(-20, 32),
-          labelClass: "marker-label", // the CSS class for the label
+          labelClass: "marker-label", // label css class
           labelInBackground: false
         });
 
@@ -266,12 +299,12 @@ function goodThingsMap(position) {
           map: map,
           labelContent: "You",
           labelAnchor: new google.maps.Point(-20, 22),
-          labelClass: "marker-label-user", // the CSS class for the label
+          labelClass: "marker-label-user", // label css class
           labelInBackground: false
         });
 
       }
-    
+  // if gelocation not available or denied show current pos marker 
   } else {
 
     var currentPosMarker = new MarkerWithLabel({
@@ -282,12 +315,13 @@ function goodThingsMap(position) {
         map: map,
         labelContent: "Current",
         labelAnchor: new google.maps.Point(-20, 22),
-        labelClass: "marker-label", // the CSS class for the label
+        labelClass: "marker-label", // label css class
         labelInBackground: false
       });
 
   }
 
+  // add map styles
   map.mapTypes.set('map_style', customStyles);
   map.setMapTypeId('map_style');
   map.panBy(-50, -50);
@@ -295,12 +329,12 @@ function goodThingsMap(position) {
   // add polyline
   travelItinerary.setMap(map);
 
-  // quick jump
+  // dropdown
   $( "select.marker-coords" ).change(function() {
       clearTimeout(captiontimer);
       var selected_lat = $(this).find(':selected').data('post-loc-lat'),
           selected_lng = $(this).find(':selected').data('post-loc-lng');
-      map.setZoom(8);
+      map.setZoom(10);
       map.panTo(new google.maps.LatLng(selected_lat, selected_lng));
       $('span.map-msg').text(dropdownMsg);
       $('#journal-map-caption').delay(200).slideDown(300);
@@ -310,19 +344,23 @@ function goodThingsMap(position) {
       infowindow.close();
   });
 
+  // custom btn group click events
   $('#current-loc-btn').on('click', function() {
     posMsg(currentPos, currentLocMsg);
+    $('.selectpicker').selectpicker('deselectAll');
   });
 
   $('#user-loc-btn').on('click', function() {
     posMsg(userPos, userLocMsg);
+    $('.selectpicker').selectpicker('deselectAll');
   });
 
-
+  // disable user btn 
   if (!"geolocation" in navigator || posDenied == true) {
     $('#user-loc-btn').prop('disabled', true);
   }
 
+  // msg function
   function posMsg(geodata, posMsg) {
     clearTimeout(captiontimer);
     if ("geolocation" in navigator && posDenied == false) {
@@ -344,6 +382,7 @@ function goodThingsMap(position) {
     infowindow.close();
   }
 
+  // scale map according to viewport height
   $(window).resize(function() {
     $('#journal-map, #map-canvas').css('height', $(window).height() - 40);
     if (!mapOpen) {
@@ -354,24 +393,7 @@ function goodThingsMap(position) {
 
 }
 
-$(document).ready(function() {
-  // bootstrap select
-  $('.selectpicker').selectpicker();
-  $('span.map-msg').text(randomTips());
-  // map toggle
-  $('#journal-map, #map-canvas').css('height', mapHeight);
-  $('#journal-map').css({'z-index': 123456, 'margin-top' : -(mapHeight)});
-  $("#journal-map-toggle").on('click', function() {
-    toggleMap();
-  });
-  if (window.location.hash == '#map') {
-    toggleMap();
-  }
-  $('a.maps-link').on('click', function(e) {
-    e.preventDefault();
-  });
-});
-
+// open / close map
 function toggleMap() {
   console.log(mapOpen);
   if(mapOpen) {

@@ -11,8 +11,8 @@ echo '<span id="getloc" class="hidden" data-lat="' . $page_data->current_loc_lat
       <button id="current-loc-btn" type="button" class="btn btn-default">Me</button>
       <button id="user-loc-btn" type="button" class="btn btn-default">You</button>
     </div>
-    <select class="marker-coords selectpicker show-tick" data-width="150px" data-live-search="true">
-      <option selected="selected" data-post-loc="" data-post-loc-lat="<?php echo $page_data->current_loc_lat ?>" data-post-loc-lng="<?php echo $page_data->current_loc_lng; ?>" data-post-url="">Travel to...</option>
+    <select class="marker-coords selectpicker show-tick" data-width="170px" data-live-search="true">
+      <option selected="selected" data-post-loc="Current" data-post-loc-lat="<?php echo $page_data->current_loc_lat ?>" data-post-loc-lng="<?php echo $page_data->current_loc_lng; ?>" data-post-url="&nbsp;" data-post-excerpt="&nbsp;" data-post-thumb="&nbsp;" data-post-title="&nbsp;" data-post-date="&nbsp;">Travel to...</option>
       <?php $wp_query= null;
       $counter = 0;
       $wp_query = new WP_Query(); $wp_query->query(array ('showposts' => '-1', 'orderby' => 'date', 'order' => 'ASC'));
