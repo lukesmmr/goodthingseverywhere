@@ -2,6 +2,7 @@
 I try to keep it tidy and dry here but don't expect perfection ;-) */
 var posLocated = false,
     userPos,
+    distanceToMe,
     posDenied = false,
     mapOpen = false,
     mapResized = false,
@@ -13,6 +14,9 @@ var posLocated = false,
     infoWinMinHeight,
     dropdownMsg,
     captiontimer,
+    currentPosMarker,
+    matchPosMarker,
+    userPosMarker,
     currentPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng')),
     markerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker.svg",
     userMarkerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg", 
@@ -40,12 +44,6 @@ var posLocated = false,
 
 // init
 var GoodThingsSite = {
-  // all
-  // common: {
-  //   init: function() {
-      
-  //   }
-  // },
   // specific pages
   home: {
     init: function() {
@@ -74,7 +72,8 @@ var UTIL = {
 $(document).ready(UTIL.loadEvents);
 // other ready events
 $(document).ready(function() {
-  initMap();
+  $('#user-loc-btn').prop('disabled', true);
+  goodThingsMap();
   // bootstrap select
   $('.selectpicker').selectpicker();
   $('.selectpicker').selectpicker('deselectAll');
@@ -90,50 +89,16 @@ $(document).ready(function() {
   }
 });
 
-/* Good Things Journal Map v0.1 - 01.2014
+/* Good Things Journal Map v0.2 - 10.01.2014
 Description: Loops through data attributes with geo data located in post meta and set up map, article & user position, connect with polylines
 and add infowindows with post previews. Necessary enhancements: 
-- enable map during geolocation request (rebuild function, externalize geolocation request)
 - open infowindow on dropdown
-- add location links to each journal entry
+- add location links on  journal entry to open map (panTo)
 - asynchronous infowindow content loading
 */
 
-// check distances
-function initMap() {
-  // locate pos
-  if ("geolocation" in navigator) {
-    if(posLocated) return; // execute only once
-    posLocated = true;
-    $('.map-icon').after( '<span class="distance-to-me">Locating...</span>');
-    $('.distance-to-me').fadeTo( "slow" , 1);
-    navigator.geolocation.getCurrentPosition(goodThingsMap, error);
-  } else {
-    // set map
-    error('Geolocation not supported!');
-    goodThingsMap();    
-  }
-}
+function goodThingsMap() {
 
-function error(err) {
-    if (err.code == 1) { // user denied
-      posDenied = true;
-      goodThingsMap();
-      $('.distance-to-me').hide();
-      console.log("Geolocation was denied!");
-    } else {
-      // other error
-      console.log("Geolocation failed!");
-    }
-}
-
-function goodThingsMap(position) {
-  // set user pos and calculate distance to current pos
-  if ("geolocation" in navigator && posDenied == false) { 
-      userPos =  new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      var distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
-      $(".distance-to-me").text( "You're " + distanceToMe.toFixed(2) + " Kms away");
-  }
   // set map styles
   var styles = [
     {
@@ -205,6 +170,7 @@ function goodThingsMap(position) {
       coordsArray = $.makeArray( journalLocs[y] );
       journalCoords.push(new google.maps.LatLng(coordsArray[1], coordsArray[2]));
   }
+
   // polylines
   var travelItinerary = new google.maps.Polyline({
     path: journalCoords,
@@ -258,30 +224,56 @@ function goodThingsMap(position) {
 
   }
 
-  // if location available or detected
-  if ("geolocation" in navigator && posDenied == false) {
-    
-    // display display warning if less then 20km show only current pos marker
-    if (distanceToMe < 20) {
+  // get current loc
+  currentPosMarker = new MarkerWithLabel({
+    position: currentPos,
+    icon: new google.maps.MarkerImage(markerPath,
+      null, null, null, null),
+    draggable: false,
+    map: map,
+    labelContent: "Current",
+    labelAnchor: new google.maps.Point(-20, 22),
+    labelClass: "marker-label", // label css class
+    labelInBackground: false
+  });
+
+  if ("geolocation" in navigator) {
+
+    if(posLocated) return; // execute only once
+    posLocated = true;
+
+    $('.map-icon').after( '<span class="distance-to-me">Locating...</span>');
+    $('.distance-to-me').fadeTo( "slow" , 1);
+
+    getCurrentLocation(function(userPos)
+    {
       
-      //console.log("Cool, you're really close to where i am!");
-      var currentPosMarker = new MarkerWithLabel({
-        position: currentPos,
-        icon: new google.maps.MarkerImage(userMarkerPath,
-          null, null, null, null),
-        draggable: false,
-        map: map,
-        labelContent: "You're only " + distanceToMe.toFixed(2) + "km away!",
-        labelAnchor: new google.maps.Point(-20, 22),
-        labelClass: "marker-label-user", // label css class
-        labelInBackground: false
+      calculateDistance(userPos);
+      $('#user-loc-btn').prop('disabled', false);
+      $('#user-loc-btn').on('click', function() {
+        posMsg(userPos, userLocMsg);
+        $('.selectpicker').selectpicker('deselectAll');
       });
+      if (distanceToMe < 20) {
 
-    // if further then 20km show my pos and user pos
-    } else {
+        currentPosMarker.setMap(null);
+        //console.log("Cool, you're really close to where i am!");
+        matchPosMarker = new MarkerWithLabel({
+          position: currentPos,
+          icon: new google.maps.MarkerImage(userMarkerPath,
+            null, null, null, null),
+          draggable: false,
+          map: map,
+          labelContent: "You're only " + distanceToMe.toFixed(2) + "km away!",
+          labelAnchor: new google.maps.Point(-20, 22),
+          labelClass: "marker-label-user", // label css class
+          labelInBackground: false
+        });
 
-        //console.log("Yay, you are aren't close to me");
-        var currentPosMarker = new MarkerWithLabel({
+      } else {
+
+        currentPosMarker.setMap(null);
+        currentPosMarker = new MarkerWithLabel({
           position: currentPos,
           icon: new google.maps.MarkerImage(markerPath,
             null, null, null, null),
@@ -293,7 +285,7 @@ function goodThingsMap(position) {
           labelInBackground: false
         });
 
-        var userPosMaker = new MarkerWithLabel({
+        userPosMarker = new MarkerWithLabel({
           position: userPos,
           icon: new google.maps.MarkerImage(userMarkerPath,
             null, null, null, null),
@@ -306,21 +298,11 @@ function goodThingsMap(position) {
         });
 
       }
-  // if gelocation not available or denied show current pos marker 
+
+    });
+
   } else {
-
-    var currentPosMarker = new MarkerWithLabel({
-        position: currentPos,
-        icon: new google.maps.MarkerImage(markerPath,
-          null, null, null, null),
-        draggable: false,
-        map: map,
-        labelContent: "Current",
-        labelAnchor: new google.maps.Point(-20, 22),
-        labelClass: "marker-label", // label css class
-        labelInBackground: false
-      });
-
+      error('Geolocation not supported!');
   }
 
   // add map styles
@@ -348,19 +330,10 @@ function goodThingsMap(position) {
 
   // custom btn group click events
   $('#current-loc-btn').on('click', function() {
-    posMsg(currentPos, currentLocMsg);
+    yourPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng'));
+    posMsg(yourPos, currentLocMsg);
     $('.selectpicker').selectpicker('deselectAll');
   });
-
-  $('#user-loc-btn').on('click', function() {
-    posMsg(userPos, userLocMsg);
-    $('.selectpicker').selectpicker('deselectAll');
-  });
-
-  // disable user btn 
-  if (!"geolocation" in navigator || posDenied == true) {
-    $('#user-loc-btn').prop('disabled', true);
-  }
 
   // msg function
   function posMsg(geodata, posMsg) {
@@ -397,7 +370,7 @@ function goodThingsMap(position) {
 
 // open / close map
 function toggleMap() {
-  console.log(mapOpen);
+  // console.log(mapOpen);
   if(mapOpen) {
     $('#journal-map').animate({marginTop: -($('#journal-map').height()) }, 300);
     $('span.map-msg').text(randomTips());
@@ -405,9 +378,8 @@ function toggleMap() {
     $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
     $('#journal-map-caption').slideUp(300);
     $('#journal-map-toggle').text('Map');
-    // $("#journal-map").resizable('disable');
+    // remove anchor
     window.location.hash = '';
-    
     mapOpen = false
   } else {
     clearTimeout(captiontimer);
@@ -423,4 +395,32 @@ function toggleMap() {
     window.location.hash = 'map';
     mapOpen = true;
   }
+}
+
+function calculateDistance(userPos) {
+  if (posDenied == false) { 
+      distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
+      $(".distance-to-me").text( "You're " + distanceToMe.toFixed(2) + " Kms away");
+      return distanceToMe;
+  }
+}
+
+function getCurrentLocation(callback) {
+   if("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+         callback(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+       }, error);
+    } else {
+       error('Geolocation not supported!');    
+    }
+}  
+
+function error(err) {
+    if (err.code == 1) { // user denied
+      console.log("Geolocation was denied! " + posDenied);
+      $('.distance-to-me').hide();
+    } else {
+      // other error
+      console.log("Geolocation failed!");
+    }
 }

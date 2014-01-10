@@ -5,7 +5,7 @@ echo '<span id="getloc" class="hidden" data-lat="' . $page_data->current_loc_lat
 ?>
 
 <div id="journal-map">
-<div id="map-canvas"><span class="map-loader">Loading map and waiting for geolocation...</span></div>
+<div id="map-canvas"><span class="map-loader">Loading map...</span></div>
   <div id="dropdown-pos">
     <div class="btn-group" style="margin-top:-10px">
       <button id="current-loc-btn" type="button" class="btn btn-default">Me</button>
