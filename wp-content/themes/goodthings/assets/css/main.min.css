@@ -424,6 +424,27 @@ footer a:hover {
 #legal-stuff li {margin-left: 10px;}
 span.footer-comment {text-transform: initial; display: block; font-size: 14px; font-weight:500;}
 #legal-stuff span.footer-comment {text-align: right;}
+
+/* responsive video embeds */
+.entry-content-asset {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+    margin-bottom: 20px;
+}
+.entry-content-asset:last-child {
+    margin-bottom: 0px;
+}
+.entry-content-asset iframe,
+.entry-content-asset object,
+.entry-content-asset embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 @media (min-width: 768px) {
 	.journal-thumbnail {width:50%;}
 	.journal-thumbnail img {width: 100%; height: auto !important;}
