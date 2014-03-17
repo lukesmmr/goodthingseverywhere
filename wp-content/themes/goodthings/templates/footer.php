@@ -30,6 +30,4 @@
   })();
 
 </script>
-<script src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 <?php wp_footer(); ?>
-<script src="<?php bloginfo('template_url') ?>/assets/js/main.js"></script>

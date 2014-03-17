@@ -1,5 +1,5 @@
 /* @goodthngs / lukassommer - goodthingseverywhere.com - 2013/2014
-I try to keep it tidy and dry here but don't expect perfection ;-) */
+I try to keep it tidy and dry here. */
 var posLocated = false,
     userPos,
     distanceToMe,
@@ -9,7 +9,7 @@ var posLocated = false,
     mapHeight = $(window).height() - 40,
     newMapHeight,
     infowindow = null,
-    markers = new Array(),
+    markers = [],
     infowinWidth,
     infoWinMinHeight,
     dropdownMsg,
@@ -19,15 +19,15 @@ var posLocated = false,
     userPosMarker,
     currentPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng')),
     markerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker.svg",
-    userMarkerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg", 
-    currentLocMsg = "This is my current location", 
+    userMarkerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg",
+    currentLocMsg = "This is my current location",
     userLocMsg = "This is where you are (detected by your Browser)",
-    posMatchMsg = "Nice, our locations match. Maybe we should meet"; 
+    posMatchMsg = "Nice, our locations match. Maybe we should meet";
     // add more tips will ya!
     var randomTips = function () {
       var tipArray = randomFrom(['Explore the world based on my journal entries. Click on the markers to see places i visited'/*, 'You can navigate with your cursor keys and zoom with +/-', 'With geolocation enabled you can see your position on the map'*/]);
-      return tipArray; 
-    }
+      return tipArray;
+    };
     if( /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ) {
       dropdownMsg = "Tap on the Marker to see the article preview";
       infowinWidth = 220;
@@ -38,7 +38,7 @@ var posLocated = false,
       infoWinMinHeight = "170px";
     } else {
       dropdownMsg = "Click on the Marker to see the article preview";
-      infowinWidth = 400;  
+      infowinWidth = 400;
       infoWinMinHeight = "170px";
     }
 
@@ -47,7 +47,7 @@ var GoodThingsSite = {
   // specific pages
   home: {
     init: function() {
-      $(".giant-title").fitText();  
+      $(".giant-title").fitText();
     }
   }
 };
@@ -70,24 +70,6 @@ var UTIL = {
 };
 
 $(document).ready(UTIL.loadEvents);
-// other ready events
-$(document).ready(function() {
-  $('#user-loc-btn').prop('disabled', true);
-  goodThingsMap();
-  // bootstrap select
-  $('.selectpicker').selectpicker();
-  $('.selectpicker').selectpicker('deselectAll');
-  $('span.map-msg').text(randomTips());
-  // map toggle
-  $('#journal-map, #map-canvas').css('height', mapHeight);
-  $('#journal-map').css({'z-index': 123456, 'margin-top' : -(mapHeight)});
-  $("#journal-map-toggle").on('click', function() {
-    toggleMap();
-  });
-  if (window.location.hash == '#map') {
-    toggleMap();
-  }
-});
 
 /* Good Things Journal Map v0.2 - 10.01.2014
 Description: Loops through data attributes with geo data located in post meta and set up map, article & user position, connect with polylines
@@ -96,6 +78,62 @@ and add infowindows with post previews. Necessary enhancements:
 - add location links on  journal entry to open map (panTo)
 - asynchronous infowindow content loading
 */
+
+// open / close map
+function toggleMap() {
+  if(mapOpen) {
+    $('#journal-map').animate({marginTop: -($('#journal-map').height()) }, 300);
+    $('span.map-msg').text(randomTips());
+    $('#arrow-pos').removeClass('close-btn');
+    $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
+    $('#journal-map-caption').slideUp(300);
+    $('#journal-map-toggle').text('Map');
+    // remove anchor
+    window.location.hash = '';
+    mapOpen = false;
+  } else {
+    clearTimeout(captiontimer);
+    $('#journal-map').animate({ marginTop: "0px" }, 300);
+    $('#arrow-pos').addClass('close-btn');
+    $('#map-arrow').removeClass('arrow-down').addClass('arrow-up');
+    $('#journal-map-caption').delay(200).slideDown(300);
+    $('#journal-map-toggle').text('Close');
+    captiontimer = setTimeout(function() {
+          $('#journal-map-caption').slideUp(300);
+    }, 6000);
+    // set anchor
+    window.location.hash = 'map';
+    mapOpen = true;
+  }
+}
+
+function error(err) {
+    if (err.code === 1) { // user denied
+      console.log("Geolocation was denied! " + posDenied);
+      $('.distance-to-me').hide();
+    } else {
+      // other error
+      console.log("Geolocation failed!");
+    }
+}
+
+function calculateDistance(userPos) {
+  if (posDenied === false) {
+      distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
+      $(".distance-to-me").text( "You're " + distanceToMe.toFixed(2) + " Kms away");
+      return distanceToMe;
+  }
+}
+
+function getCurrentLocation(callback) {
+   if("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+         callback(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+       }, error);
+    } else {
+       error('Geolocation not supported!');
+    }
+}
 
 function goodThingsMap() {
 
@@ -108,20 +146,20 @@ function goodThingsMap() {
         { invert_lightness: true} think about adding time based inversion */
       ]
     }, {
-      featureType: "road.local", 
-      elementType: "goemetry", 
+      featureType: "road.local",
+      elementType: "goemetry",
       stylers : [
         {visibility: "off"}
       ]
     }, {
-      featureType: "road.highway", 
-      elementType: "goemetry", 
+      featureType: "road.highway",
+      elementType: "goemetry",
       stylers : [
         {visibility: "off"}
       ]
     }, {
-      featureType: "road.highway.controlled_access", 
-      elementType: "goemetry", 
+      featureType: "road.highway.controlled_access",
+      elementType: "goemetry",
       stylers : [
         {visibility: "off"}
       ]
@@ -132,7 +170,7 @@ function goodThingsMap() {
         { visibility: "off" }
       ]
     }, {
-      featureType: "all", 
+      featureType: "all",
       elementType: "all",
       styles: [
         {visibiility: "simplified"}
@@ -185,15 +223,15 @@ function goodThingsMap() {
       mapOptions);
 
   // loop for markers and infowindows
-  for (var i = 1; i < journalLocs.length; i++) {  
+  for (var i = 1; i < journalLocs.length; i++) {
     // make array from key value pairs
     locArray = $.makeArray(journalLocs[i]);
     var journalLocLabel = '<label class="loclabel"><span class="locnr">' + (i) + '</span></label>';
     var infoWindowPreview = '<span class="locpost-location">' + locArray[0] + ' - ' + locArray[7] +
-                            '</span><a class="locpost-link" href="' + locArray[3] + '"><h4 class="locpost-title">' + 
+                            '</span><a class="locpost-link" href="' + locArray[3] + '"><h4 class="locpost-title">' +
                             locArray[6] + '</h4></a><div class="locpost-preview" style="min-height:' + infoWinMinHeight +
-                            ';"><img style="width: 250px; height: auto !important;" src="' + locArray[5] + '" /><p>' + 
-                            locArray[4] + '</p><a class="locpost-link" href="' + locArray[3] + '">Continue reading</a></div>';    
+                            ';"><img style="width: 250px; height: auto !important;" src="' + locArray[5] + '" /><p>' +
+                            locArray[4] + '</p><a class="locpost-link" href="' + locArray[3] + '">Continue reading</a></div>';
     // set markers
     markers[i] = new MarkerWithLabel({
       icon : new google.maps.MarkerImage(markerPath, null, null, null, null),
@@ -202,7 +240,7 @@ function goodThingsMap() {
       draggable: false,
       labelContent: journalLocLabel,
       labelAnchor: new google.maps.Point(4, 40),
-      labelClass: "marker-label", // the CSS class for the label
+      labelClass: "marker-label",// the CSS class for the label
       labelZIndex: i+1,
       html: infoWindowPreview,
       url: locArray[3],
@@ -216,12 +254,15 @@ function goodThingsMap() {
     });
 
     // add click event 
-    google.maps.event.addListener(markers[i], 'click', function() {      
+    // google.maps.event.addListener(markers[i], 'click', openInfoWindow(infowindow, markers[i].html));
+
+    // add click event 
+    google.maps.event.addListener(markers[i], 'click', function() {
       infowindow.setContent(this.html);
       infowindow.open(map, this);
       map.panBy(-50, 0);
     });
-
+    
   }
 
   // get current loc
@@ -239,7 +280,7 @@ function goodThingsMap() {
 
   if ("geolocation" in navigator) {
 
-    if(posLocated) return; // execute only once
+    if(posLocated) {return;} // execute only once
     posLocated = true;
 
     $('.map-icon').after( '<span class="distance-to-me">Locating...</span>');
@@ -247,7 +288,6 @@ function goodThingsMap() {
 
     getCurrentLocation(function(userPos)
     {
-      
       calculateDistance(userPos);
       $('#user-loc-btn').prop('disabled', false);
       $('#user-loc-btn').on('click', function() {
@@ -266,7 +306,7 @@ function goodThingsMap() {
           map: map,
           labelContent: "You're only " + distanceToMe.toFixed(2) + "km away!",
           labelAnchor: new google.maps.Point(-20, 22),
-          labelClass: "marker-label-user", // label css class
+          labelClass: "marker-label-user",// label css class
           labelInBackground: false
         });
 
@@ -281,7 +321,7 @@ function goodThingsMap() {
           map: map,
           labelContent: "My position",
           labelAnchor: new google.maps.Point(-20, 32),
-          labelClass: "marker-label", // label css class
+          labelClass: "marker-label",// label css class
           labelInBackground: false
         });
 
@@ -293,14 +333,11 @@ function goodThingsMap() {
           map: map,
           labelContent: "You",
           labelAnchor: new google.maps.Point(-20, 22),
-          labelClass: "marker-label-user", // label css class
+          labelClass: "marker-label-user",// label css class
           labelInBackground: false
         });
-
       }
-
     });
-
   } else {
       error('Geolocation not supported!');
   }
@@ -323,7 +360,7 @@ function goodThingsMap() {
       $('span.map-msg').text(dropdownMsg);
       $('#journal-map-caption').delay(200).slideDown(300);
       captiontimer = setTimeout(function() {
-            $('#journal-map-caption').delay(200).slideUp(300);  
+            $('#journal-map-caption').delay(200).slideUp(300);
       }, 5000);
       infowindow.close();
   });
@@ -336,21 +373,21 @@ function goodThingsMap() {
   });
 
   // msg function
-  function posMsg(geodata, posMsg) {
+  function posMsg(geodata, posmsg) {
     clearTimeout(captiontimer);
-    if ("geolocation" in navigator && posDenied == false) {
+    if ("geolocation" in navigator && posDenied === false) {
       if (distanceToMe < 20) {
         $('span.map-msg').text(posMatchMsg);
       } else {
-        $('span.map-msg').text(posMsg);
+        $('span.map-msg').text(posmsg);
       }
     } else {
       $('#user-loc-btn').prop('disabled', true);
-      $('span.map-msg').text(posMsg);
+      $('span.map-msg').text(posmsg);
     }
     $('#journal-map-caption').delay(200).slideDown(300);
     captiontimer = setTimeout(function() {
-          $('#journal-map-caption').delay(200).slideUp(300);  
+          $('#journal-map-caption').delay(200).slideUp(300);
     }, 3000);
     map.setZoom(9);
     map.panTo(geodata);
@@ -362,65 +399,26 @@ function goodThingsMap() {
     $('#journal-map, #map-canvas').css('height', $(window).height() - 40);
     if (!mapOpen) {
       $('#journal-map').css({marginTop: -($('#journal-map').height()) });
-    } 
+    }
     google.maps.event.trigger(map, 'resize');
   });
 
 }
 
-// open / close map
-function toggleMap() {
-  // console.log(mapOpen);
-  if(mapOpen) {
-    $('#journal-map').animate({marginTop: -($('#journal-map').height()) }, 300);
-    $('span.map-msg').text(randomTips());
-    $('#arrow-pos').removeClass('close-btn');
-    $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
-    $('#journal-map-caption').slideUp(300);
-    $('#journal-map-toggle').text('Map');
-    // remove anchor
-    window.location.hash = '';
-    mapOpen = false
-  } else {
-    clearTimeout(captiontimer);
-    $('#journal-map').animate({ marginTop: "0px" }, 300);
-    $('#arrow-pos').addClass('close-btn');
-    $('#map-arrow').removeClass('arrow-down').addClass('arrow-up');
-    $('#journal-map-caption').delay(200).slideDown(300);
-    $('#journal-map-toggle').text('Close');
-    captiontimer = setTimeout(function() {
-          $('#journal-map-caption').slideUp(300);  
-    }, 6000);
-    // set anchor
-    window.location.hash = 'map';
-    mapOpen = true;
+$(document).ready(function() {
+  $('#user-loc-btn').prop('disabled', true);
+  goodThingsMap();
+  // bootstrap select
+  $('.selectpicker').selectpicker();
+  $('.selectpicker').selectpicker('deselectAll');
+  $('span.map-msg').text(randomTips());
+  // map toggle
+  $('#journal-map, #map-canvas').css('height', mapHeight);
+  $('#journal-map').css({'z-index': 123456, 'margin-top' : -(mapHeight)});
+  $("#journal-map-toggle").on('click', function() {
+    toggleMap();
+  });
+  if (window.location.hash === '#map') {
+    toggleMap();
   }
-}
-
-function calculateDistance(userPos) {
-  if (posDenied == false) { 
-      distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
-      $(".distance-to-me").text( "You're " + distanceToMe.toFixed(2) + " Kms away");
-      return distanceToMe;
-  }
-}
-
-function getCurrentLocation(callback) {
-   if("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-         callback(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-       }, error);
-    } else {
-       error('Geolocation not supported!');    
-    }
-}  
-
-function error(err) {
-    if (err.code == 1) { // user denied
-      console.log("Geolocation was denied! " + posDenied);
-      $('.distance-to-me').hide();
-    } else {
-      // other error
-      console.log("Geolocation failed!");
-    }
-}
+});
