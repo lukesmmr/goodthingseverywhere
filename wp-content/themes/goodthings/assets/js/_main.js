@@ -407,10 +407,11 @@ function goodThingsMap() {
 
 $(document).ready(function() {
   $('#user-loc-btn').prop('disabled', true);
-  goodThingsMap();
-  // bootstrap select
   $('.selectpicker').selectpicker();
   $('.selectpicker').selectpicker('deselectAll');
+
+  goodThingsMap();
+  // bootstrap select
   $('span.map-msg').text(randomTips());
   // map toggle
   $('#journal-map, #map-canvas').css('height', mapHeight);
