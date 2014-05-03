@@ -59,6 +59,7 @@ function roots_display_sidebar() {
       'is_single',
       'is_page',
       'is_home',
+      'is_tag',
       'is_category'
     ),
     /**
