@@ -71,6 +71,12 @@ $meta_boxes[] = array(
     'show_names' => true,
     'fields'     => array(
       array(
+        'name' => 'Add to Map?',
+        'desc' => 'Check to add marker to Journal Map',
+        'id'   => 'add_marker',
+        'type' => 'checkbox',
+      ),
+      array(
         'name' => 'Article location',
         'desc' => 'Maps marker title',
         'id'   => 'post_loc',
@@ -86,6 +92,12 @@ $meta_boxes[] = array(
         'name' => 'Location longitude',
         'desc' => 'Maps marker longitude',
         'id'   => 'post_loc_lng',
+        'type' => 'text'
+      ),
+      array(
+        'name' => 'Category Glyphicon',
+        'desc' => 'Paste ending of glyphicon class',
+        'id'   => 'post_cat_glyph',
         'type' => 'text'
       ),
     ),
