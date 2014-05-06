@@ -232,6 +232,11 @@ function goodThingsMap() {
                             locArray[6] + '</h4></a><div class="locpost-preview" style="min-height:' + infoWinMinHeight +
                             ';"><img style="width: 250px; height: auto !important;" src="' + locArray[5] + '" /><p>' +
                             locArray[4] + '</p><a class="locpost-link" href="' + locArray[3] + '">Continue reading</a></div>';
+    if ( i > 9 ) {
+      var setLabelAnchor = new google.maps.Point(7, 40);
+    } else {
+      var setLabelAnchor = new google.maps.Point(4, 40);
+    }
     // set markers
     markers[i] = new MarkerWithLabel({
       icon : new google.maps.MarkerImage(markerPath, null, null, null, null),
@@ -239,7 +244,7 @@ function goodThingsMap() {
       map: map,
       draggable: false,
       labelContent: journalLocLabel,
-      labelAnchor: new google.maps.Point(4, 40),
+      labelAnchor: setLabelAnchor,
       labelClass: "marker-label",// the CSS class for the label
       labelZIndex: i+1,
       html: infoWindowPreview,

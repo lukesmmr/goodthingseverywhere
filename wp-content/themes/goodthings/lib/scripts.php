@@ -29,7 +29,7 @@ function roots_scripts() {
   wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/vendor/modernizr-2.6.2.min.js', false, null, false);
   wp_register_script('maps', 'http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry', false, null, true);
   wp_register_script('plugins', get_template_directory_uri() . '/assets/js/plugins/plugins.js', false, null, true);
-  wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', false, 'c56e8ce571edc850e8e1c78fe5e11cac', true);
+  wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', false, 'e5c2891c4c282f783115956a3d12897e', true);
   wp_enqueue_script('modernizr');
   wp_enqueue_script('jquery');
   wp_enqueue_script('maps');
