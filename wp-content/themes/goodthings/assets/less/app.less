@@ -66,8 +66,8 @@ h2.entry-title a, h2.entry-title a:hover {
 }
 
 /* content */
-img.alignright {padding: 0 0 20px 20px;}
-img.alignleft {padding: 0 20px 20px 0;}
+img.alignright {padding: 10px 0 20px 20px;}
+img.alignleft {padding: 10px 20px 20px 0;}
 .main h2 {margin: 30px 0 15px 0;}
 .about-intro {
    font-size: 22px;
@@ -374,10 +374,13 @@ h3.journal-title a:hover {text-decoration: none; color: #252525;}
 .comment-count {margin-left: 5px;color: #e1e1e1;}
 a.maps-link, span.maps-link {margin-left: 5px; text-decoration: none; color: #e1e1e1;}
 a.maps-link:hover {text-decoration: underline;}
-.entry-content img {
+.entry-content .alignnone img {
    width: 100%; 
    height: auto !important; margin: 5px 0;
    line-height: 1.45em;
+}
+.entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5 {
+  clear: both;
 }
 .pager li>a, .pager li>span {border: none; text-decoration: none; text-transform: uppercase;border-radius: 0; padding: 0;}
 .pager li>a:hover {background: transparent; color: @good-blue; text-decoration: underline;}
@@ -765,9 +768,15 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 
 /* media queries */
 
-@media (min-width: 768px) {
+@media (min-width: @screen-sm-min) {
    .journal-thumbnail {width:50%;}
    .journal-thumbnail img {width: 100%; height: auto !important;}
+}
+@media (min-width: 768px) and (max-width: 992px) {
+  img.alignleft, img.alignright {
+    max-width: 400px !important; 
+    height: auto !important;
+  }
 }
 @media (max-width: 768px) {
    /*journal*/
@@ -778,6 +787,7 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
    }
 }
 @media (max-width: 767px) {
+   .alignright, .alignleft { width: 50%; height: auto !important;}
    .circle {display: none;}
    #logo, .logo {width: 200px; margin: 0;position: absolute; top: -10px; left: 20px;}
    #logo a {color: @good-orange !important;width:200px;text-align: left;}
