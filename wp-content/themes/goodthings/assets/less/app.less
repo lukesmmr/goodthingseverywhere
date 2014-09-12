@@ -767,7 +767,11 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 }
 
 /* media queries */
-
+@media (min-width: 1200px) {
+  .container {
+    width: 970px !important;
+  }
+}
 @media (min-width: @screen-sm-min) {
    .journal-thumbnail {width:50%;}
    .journal-thumbnail img {width: 100%; height: auto !important;}
