@@ -182,7 +182,7 @@ function goodThingsMap() {
   var customStyles = new google.maps.StyledMapType(styles, {name: "Good Things Journal"});
   var mapOptions = {
     center: currentPos,
-    zoom: 5,
+    zoom: 3,
     minZoom: 2,
     maxZoom: 12,
     mapTypeControlOptions: {
