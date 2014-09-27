@@ -1,11 +1,11 @@
 ## Options Framework ##
 
-**Tags:** options, theme options  
-**Requires at least:** 3.3  
-**Tested up to:** 3.5   
-**Stable tag:** 1.4  
-**License:** GPLv2  
-**Donate link:** http://bit.ly/options-donate-2 
+**Tags:** options, theme options
+**Requires at least:** 3.6
+**Tested up to:** 4.0
+**Stable tag:** 1.8.2
+**License:** GPLv2
+**Donate link:** http://bit.ly/options-donate-2
 
 ## Screenshot ##
 
@@ -13,7 +13,7 @@
 
 ## Description ##
 
-The Options Framework Plugin makes it easy to include an options panel in any WordPress theme.  It was built so developers can concentrate on making the actual theme rather than spending time creating an options panel from scratch.  It's free to use in both commercial and personal projects, just like WordPress itself. 
+The Options Framework Plugin makes it easy to include an options panel in any WordPress theme.  It was built so developers can concentrate on making the actual theme rather than spending time creating an options panel from scratch.  It's free to use in both commercial and personal projects, just like WordPress itself.
 
 ### Options Include: ###
 
@@ -21,12 +21,12 @@ The Options Framework Plugin makes it easy to include an options panel in any Wo
 * textarea
 * checkbox
 * select
-* radio button
-* upload (image uploader)
+* radio buttons
+* upload (image/file uploader)
 * images (use images instead of radio buttons)
 * background (a set of options to define a background)
 * multicheck
-* color (a jquery color picker)
+* colorpicker
 * typography (a set of options to define typography)
 * editor
 
@@ -52,11 +52,75 @@ You can also watch the video screencast I have at [http://wptheming.com/options-
 
 ## Change log ##
 
+#### 1.8.3 ####
+
+* Remove sanitization of info option and description field
+
+#### 1.8.2 ####
+
+* Fix for translation textdomain
+
+#### 1.8.1 ####
+
+* Fix for colorpicker spacing
+* Better sanitization of upload option
+* Update translation .pot
+* Updated Portuguese translations by @pedro-mendonca
+* Indonesian translations props @aryaprakasa)
+* Use filtered values for optionsframework_admin_bar
+
+#### 1.8.0 ####
+
+* Increase default width of text inputs
+* Rename add_options_page function to resolve automatic theme check conflicts
+* Check isset for $value['desc'] in info option
+* Only load styles on options page (props @AndorChen)
+* Fix loading of translation files (props @weslly)
+* Update Portuguese (BR) translations (props @weslly)
+* Add Danish translations (props @Tosak)
+* Allow menu parent to be filtered (props @nvsnkv)
+
+#### 1.7.1 ####
+
+* Fix to use option name if set in options.php
+
+#### 1.7.0 ####
+
+* Update to class based plugin (large code refactor)
+* Drop color picker support for older versions of WordPress
+* Better support for new admin interface in WordPress 3.8
+* Allow option pages without tabs
+
+#### 1.6.1 ####
+
+* Fix for update notice location
+* Use selected and checked functions more consistently
+* Reuse media modal for uploads
+* Portuguese translations (props @xipasduarte)
+
+#### 1.6 ####
+
+* Allow media buttons in the editor option
+* JS/CSS should only load on options page
+* Menu tabs should be filterable
+* Menu settings filter
+* Fix js bindings for upload modal (props @themeblvd)
+
+#### 1.5.2 ####
+
+* Removed update routine to remove "optionsframework" post type
+
+#### 1.5.1 ####
+
+* Temporarily removed update routine
+
 #### 1.5 ####
 
 * Updated width of text input
 * New media uploader
 * Dropped custom post types for file attachments
+* Update routine to remove unused 'optionsframework' post types
+* Updated IDs for .tabs and .groups
 * Italian translations (andreabersi.com)
 * Russian translations (verha.net)
 * Swedish translations (kjeell.se)
