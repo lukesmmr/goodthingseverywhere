@@ -1,7 +1,4 @@
 <?php 
-	$giant_title = get_post_meta($post->ID, 'giant_title', true);
-	$current_loc = get_post_meta($post->ID, 'current_loc', true);
-	$next_loc = get_post_meta($post->ID, 'next_loc', true);
 	$home_intro = get_post_meta($post->ID, 'home_intro', true);
 ?>
 <div class="home-additionals">
@@ -10,8 +7,25 @@
 		<div class="distance-calc">
 			<span class="map-icon glyphicon glyphicon-map-marker"></span>
 		</div>
-		<div class="display-loc">Current location: <?php echo $current_loc; ?></div>
-		<div class="next-loc">Next stop: <?php echo $next_loc ?></div>
+		<div class="display-loc">Current location: <?php echo of_get_option('current_loc'); ?></div>
+		<?php if ( of_get_option('current_project') ) : ?>
+			<div class="current-project">Trading work with 
+
+			<?php if (of_get_option('project_url') !== '' ) : ?>
+				<a href="<?php echo of_get_option('project_url'); ?>" target="_blank" title="Project link">
+			<?php endif; ?>
+
+			<?php echo of_get_option('current_project') ?>
+
+			<?php if( of_get_option('project_url') !== '' ) : ?>
+				</a>
+			<?php endif; ?>
+		</div>
+		<?php endif; ?>
+		<div class="next-loc">
+		Next stop: <?php echo of_get_option('next_loc'); ?>
+		<div class="last-uodate">Location updated on <?php echo of_get_option('last_updated'); ?></div>
+		</div>
 	</div>
 </div>
 

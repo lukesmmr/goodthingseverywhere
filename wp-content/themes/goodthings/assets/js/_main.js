@@ -17,7 +17,9 @@ var posLocated = false,
     currentPosMarker,
     matchPosMarker,
     userPosMarker,
-    currentPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng')),
+    currentPos = new google.maps.LatLng($('#loc-settings').data('lat'), $('#loc-settings').data('lng')),
+    zoomLevel = $('#loc-settings').data('zoom-level');
+    polylineColor = $('#loc-settings').data('polyline-color');
     markerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker.svg",
     userMarkerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg",
     currentLocMsg = "This is my current location",
@@ -182,7 +184,7 @@ function goodThingsMap() {
   var customStyles = new google.maps.StyledMapType(styles, {name: "Good Things Journal"});
   var mapOptions = {
     center: currentPos,
-    zoom: 3,
+    zoom: zoomLevel,
     minZoom: 2,
     maxZoom: 12,
     mapTypeControlOptions: {
@@ -213,7 +215,7 @@ function goodThingsMap() {
   var travelItinerary = new google.maps.Polyline({
     path: journalCoords,
     geodesic: true,
-    strokeColor: '#129adb',
+    strokeColor: polylineColor,
     strokeOpacity: 1.0,
     strokeWeight: 2
   });
@@ -372,7 +374,7 @@ function goodThingsMap() {
 
   // custom btn group click events
   $('#current-loc-btn').on('click', function() {
-    yourPos = new google.maps.LatLng($('#getloc').data('lat'), $('#getloc').data('lng'));
+    yourPos = new google.maps.LatLng($('#loc-settings').data('lat'), $('#loc-settings').data('lng'));
     posMsg(yourPos, currentLocMsg);
     $('.selectpicker').selectpicker('deselectAll');
   });

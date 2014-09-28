@@ -28,36 +28,6 @@ function goodthings_cmb($meta_boxes) {
         'type' => 'wysiwyg',
         'options' => array( 'textarea_rows' => 5 ),
       ),
-      array(
-        'name' => 'Giant title',
-        'desc' => '',
-        'id'   => 'giant_title',
-        'type' => 'text'
-      ),
-      array(
-        'name' => 'Current location',
-        'desc' => '',
-        'id'   => 'current_loc',
-        'type' => 'text'
-      ),
-       array(
-        'name' => 'Current location (latitude)',
-        'desc' => 'latitude of current location',
-        'id'   => 'current_loc_lat',
-        'type' => 'text'
-      ),
-      array(
-        'name' => 'Current location (longitude)',
-        'desc' => 'longitude of current location',
-        'id'   => 'current_loc_lng',
-        'type' => 'text'
-      ),
-      array(
-        'name' => 'Next location',
-        'desc' => '',
-        'id'   => 'next_loc',
-        'type' => 'text'
-      ),
     ),
   );
 

@@ -1,9 +1,4 @@
-<?php // get current loc
-$page_id = 4;
-$page_data = get_page( $page_id ); 
-echo '<span id="getloc" class="hidden" data-lat="' . $page_data->current_loc_lat . '" data-lng="' . $page_data->current_loc_lng . '"></span>';
-?>
-
+<?php echo '<span id="loc-settings" class="hidden" data-lat="' . of_get_option('current_loc_lat') . '" data-lng="' . of_get_option('current_loc_lng') . '" data-zoom-level="' . of_get_option('zoom_level_select') . '" data-polyline-color="' . of_get_option('polyline_color') . '"></span>'; ?>
 <div id="journal-map">
 <div id="map-canvas"><span class="map-loader">Loading map...</span></div>
   <div id="dropdown-pos">
