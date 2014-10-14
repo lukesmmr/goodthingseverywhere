@@ -2,31 +2,10 @@
 	$home_intro = get_post_meta($post->ID, 'home_intro', true);
 ?>
 <div class="home-additionals">
-	<h1 class="giant-title"><?php echo $giant_title; ?></h1>
-	<div class="current-loc">
-		<div class="distance-calc">
-			<span class="map-icon glyphicon glyphicon-map-marker"></span>
-		</div>
-		<div class="display-loc">Current location: <?php echo of_get_option('current_loc'); ?></div>
-		<?php if ( of_get_option('current_project') ) : ?>
-			<div class="current-project">Trading work with 
-
-			<?php if (of_get_option('project_url') !== '' ) : ?>
-				<a href="<?php echo of_get_option('project_url'); ?>" target="_blank" title="Project link">
-			<?php endif; ?>
-
-			<?php echo of_get_option('current_project') ?>
-
-			<?php if( of_get_option('project_url') !== '' ) : ?>
-				</a>
-			<?php endif; ?>
-		</div>
-		<?php endif; ?>
-		<div class="next-loc">
-		Next stop: <?php echo of_get_option('next_loc'); ?>
-		<div class="last-uodate">Location updated on <?php echo of_get_option('last_updated'); ?></div>
-		</div>
-	</div>
+	<div id="keyvisual">
+		<img src="<?php bloginfo('template_url') ?>/assets/img/good-animated.svg" id="good-svg" alt="" />
+		<img src="<?php bloginfo('template_url') ?>/assets/img/good-keyvisual-gfx-940px.jpg" alt="" />
+	</div>	
 </div>
 
 <div class="home-intro">
