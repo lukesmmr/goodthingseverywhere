@@ -74,6 +74,16 @@ function roots_display_sidebar() {
   return apply_filters('roots_display_sidebar', $sidebar_config->display);
 }
 
+
+function read_time($text){
+  $words = str_word_count(strip_tags($text));
+  $min = floor($words / 180);
+  if($min < 1){
+    return '(1 min read)';
+  }
+  return '(' . $min . ' min read)';
+}
+
 /**
  * $content_width is a global variable used by WordPress for max image upload sizes
  * and media embeds (in pixels).
