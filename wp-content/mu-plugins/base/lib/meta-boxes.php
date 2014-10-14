@@ -22,9 +22,47 @@ function goodthings_cmb($meta_boxes) {
     'show_names' => true,
     'fields'     => array(
       array(
-        'name' => 'Big Intro',
+        'name' => 'Intro Highlight',
         'desc' => '',
         'id'   => 'home_intro',
+        'type' => 'wysiwyg',
+        'options' => array( 'textarea_rows' => 5 ),
+      ),
+    ),
+  );
+
+  $meta_boxes[] = array(
+    'id'         => 'home_teaser',
+    'title'      => 'Home Teaser',
+    'pages'      => array('page'),
+    'show_on' => array( 'key' => 'page-template', 'value' => 'page-about.php' ),
+    'context'    => 'normal',
+    'priority'   => 'high',
+    'show_names' => true,
+    'fields'     => array(
+      array(
+        'name' => 'Clients Title',
+        'desc' => 'Title for client list',
+        'id'   => 'client_title',
+        'type' => 'text'
+      ),
+      array(
+        'name' => 'Client List',
+        'desc' => '',
+        'id'   => 'client_list',
+        'type' => 'wysiwyg',
+        'options' => array( 'textarea_rows' => 5 ),
+      ),
+      array(
+        'name' => 'Awards Title',
+        'desc' => 'Title for Award list',
+        'id'   => 'award_title',
+        'type' => 'text'
+      ),
+      array(
+        'name' => 'Award List',
+        'desc' => '',
+        'id'   => 'award_list',
         'type' => 'wysiwyg',
         'options' => array( 'textarea_rows' => 5 ),
       ),
@@ -47,26 +85,26 @@ $meta_boxes[] = array(
         'type' => 'checkbox',
       ),
       array(
-        'name' => 'Article location',
+        'name' => 'Article Location',
         'desc' => 'Maps marker title',
         'id'   => 'post_loc',
         'type' => 'text'
       ),
        array(
-        'name' => 'Location latitude',
+        'name' => 'Location Latitude',
         'desc' => 'Maps marker latitude',
         'id'   => 'post_loc_lat',
         'type' => 'text'
       ),
       array(
-        'name' => 'Location longitude',
+        'name' => 'Location Longitude',
         'desc' => 'Maps marker longitude',
         'id'   => 'post_loc_lng',
         'type' => 'text'
       ),
       array(
         'name' => 'Category Glyphicon',
-        'desc' => 'Paste ending of glyphicon class',
+        'desc' => 'Default if empty. Paste ending of glyphicon class (e.g. "camera")',
         'id'   => 'post_cat_glyph',
         'type' => 'text'
       ),

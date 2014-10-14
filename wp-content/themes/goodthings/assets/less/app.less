@@ -8,6 +8,8 @@
 @good-orange: #ef4b36;
 @good-blue: #129adb;
 @good-turquoise: #00d6b8;
+@good-black: #252525;
+@good-grey: #e1e1e1;
 
 @content-font: "museo-sans", "Helvetica Neue",Helvetica, sans-serif !important;
 @headline-font: "proxima-nova", "Helvetica Neue",Helvetica, sans-serif !important;
@@ -15,7 +17,7 @@
 /* links */
 
 a, a:active, a:hover {text-decoration: underline;}
-a, a:active {color: #252525;}
+a, a:active {color: @good-black;}
 a:hover {color: @good-turquoise;}
 
 /* color classes */
@@ -27,20 +29,27 @@ body {
    font-family: @content-font;
    font-size: 16px;
    font-weight: 500;
-   color: #252525;
+   color: @good-black;
+}
+
+hr {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 0;
+  border-top: 1px solid #eee;
 }
 
 h1 {
    font-family: @headline-font ;
    font-weight: 700 !important;
    font-size: 1.6em;
-   color: #252525;
+   color: @good-black;
    text-transform: uppercase;
 }
 h2, h3, h4, h5, h6 {
    font-family: @headline-font; 
    font-weight: 600;
-   color: #252525;
+   color: @good-black;
    text-transform: uppercase;
 }
 
@@ -50,7 +59,7 @@ h2.entry-title {
 }
 
 h2.entry-title a, h2.entry-title a:hover {
-   color: #252525;
+   color: @good-black;
    text-decoration: none;
 }
 .page-header {
@@ -86,7 +95,7 @@ img.alignleft {margin: 10px 20px 20px 0;}
 .nav a {
    font-family: @headline-font;
    font-weight: 600 !important;
-   font-size: 16px;
+   font-size: 18px;
    color: @good-orange !important;
    text-transform: uppercase;
    text-decoration: none;
@@ -112,9 +121,12 @@ img.alignleft {margin: 10px 20px 20px 0;}
 }
 
 .navbar-nav>li {float: inherit;}
-.navbar-nav>li:first-child {float:left;}
-.navbar-nav>li:last-child {float:right;}
-
+.nav>li>a {
+  padding: 10px 15px 10px 15px;
+}
+.nav>li:last-child>a {
+  padding: 10px 0 10px 15px;
+}
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
    background-color: transparent;
    text-decoration: underline;
@@ -123,7 +135,7 @@ img.alignleft {margin: 10px 20px 20px 0;}
 .navbar-default .navbar-collapse {border-color: #efefef;} 
 .navbar-default .navbar-toggle {border:none;}
 .navbar-default .navbar-toggle .icon-bar {
-   background-color: #252525;
+   background-color: @good-black;
 }
 .navbar-toggle .icon-bar {
    width: 25px;
@@ -133,28 +145,18 @@ img.alignleft {margin: 10px 20px 20px 0;}
 
 
 #logo {
-   width: 100px;
-   margin: -75px auto 0 auto;
    z-index: 2;
    position: relative;
 }
-/*#logo:hover .circle {
-   -webkit-transform: rotateZ(360deg);
-   -moz-transform: rotateZ(360deg);
-   -o-transform: rotateZ(360deg);
-   -ms-transform: rotateZ(360deg);
-   transform: rotateZ(360deg);
-}*/
 .logo a {
    padding: 25px 0 27px 0;
    position: absolute;
    font-family: @headline-font;
    font-weight: 600 !important;
-   color: #fff !important;
+   color: @good-black !important;
    font-style: italic;
    font-size: 20px;
    text-transform: uppercase;
-   width: 100px;
    text-align: center;
    line-height: 1.2em;
    text-decoration: none;
@@ -186,8 +188,18 @@ img.alignleft {margin: 10px 20px 20px 0;}
    margin-bottom: 50px;
 }
 
-#journal-map {position: relative; width: 100%; z-index: -3; height: 420px; margin-top: -420px;}
-#map-canvas {width: 100%; z-index:-2; background: #efefef;}
+#journal-map {
+  position: relative;
+  width: 100%;
+  z-index: -3;
+  height: 420px;
+  margin-top: -420px;
+}
+#map-canvas {
+  width: 100%; 
+  z-index:-2; 
+  background: lighten(@good-blue, 30%);
+}
 .map-loader {
    text-align: center;
    width: 100%;
@@ -196,7 +208,7 @@ img.alignleft {margin: 10px 20px 20px 0;}
 }
 #journal-map-caption {
    color: white;
-   background: @good-blue;
+   background: @good-turquoise;
    padding: 6px;
    text-align: center;
    font-size: 13px;
@@ -215,15 +227,18 @@ img.alignleft {margin: 10px 20px 20px 0;}
    text-align: center; 
    display: block; 
    margin: 0 auto; 
-   font-size: 12px; 
+   font-size: 14px; 
    text-transform: uppercase; 
    padding: 2px 5px; 
    border: 0; 
-   color: white;
+   color: @good-orange;
    position: absolute;
    background: transparent;
    height: 25px;
-   width: 90px;
+   width: 100px;
+}
+.journal-map-btn-container button:hover {
+  color: @good-blue;
 }
 .journal-map-btn-container button:focus {outline: 0;}
 #map-arrow {}
@@ -277,16 +292,16 @@ li.next-loc { float: right; }
 .arrow-down {
    width: 0; 
    height: 0; 
-   border-left: 45px solid transparent;
-   border-right: 45px solid transparent;
-   border-top: 30px solid @good-blue;
+   border-left: 50px solid transparent;
+   border-right: 50px solid transparent;
+   border-top: 35px solid @good-grey;
 }
 .arrow-up {
    width: 0; 
    height: 0; 
-   border-left: 45px solid transparent;
-   border-right: 45px solid transparent;
-   border-bottom: 35px solid @good-blue;
+   border-left: 50px solid transparent;
+   border-right: 50px solid transparent;
+   border-bottom: 35px solid @good-grey;
 }
 .marker-label, .marker-label label.loclabel a, .marker-label label span.locnr, .marker-label-user {
    color: @good-orange;
@@ -335,7 +350,7 @@ span.locpost-location {
 #dropdown-pos a {text-decoration: none !important;}
 .dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:active {background-color: @good-blue;}
 .home-journal {margin: 50px 0 0 0; display:block;}
-.home-journal h2 {margin-bottom: 25px; font-weight: 700; color: #e1e1e1;}
+.home-journal h2 {margin-bottom: 25px; font-weight: 700; color: @good-grey;}
 .home-journal h2 .glyphicon {font-size: 0.7em; vertical-align: 1px;}
 .home-journal-post {display: inline-block;margin-bottom:20px;}
 h3.home-journal-title {
@@ -350,14 +365,14 @@ h3.home-journal-title a {
 }
 h3.home-journal-title a:hover {
    text-decoration: none;
-   color: #252525;
+   color: @good-black;
 }
 .home-journal-thumbnail {
    float: left; margin-right: 20px; 
 }
 a.read-more-journal {
    text-transform: uppercase;
-   color:#e1e1e1;
+   color:@good-grey;
    font-family: @headline-font;
    text-decoration: none;
    font-weight:600;
@@ -510,7 +525,7 @@ h3.journal-title {
    text-decoration: none;
 }
 h3.journal-title a {text-decoration: none;}
-h3.journal-title a:hover {text-decoration: none; color: #252525;}
+h3.journal-title a:hover {text-decoration: none; color: @good-black;}
 .journal-thumbnail { float: left; margin-right: 20px;}
 .journal-thumbnail img, .home-journal-thumbnail img {margin-bottom:10px;}
 .post-meta {margin-bottom: 10px; font-size: 16px;}
@@ -521,6 +536,7 @@ h3.journal-title a:hover {text-decoration: none; color: #252525;}
 .journal-category .glyphicon {color: @good-orange; margin-left:5px;}
 .comment-count {margin-left: 5px;color: #e1e1e1;}
 a.maps-link, span.maps-link {margin-left: 5px; text-decoration: none; color: #e1e1e1;}
+a.maps-link, span.maps-link {margin-left: 5px; text-decoration: none; color: @good-grey;}
 a.maps-link:hover {text-decoration: underline;}
 .entry-content img.alignnone {
    width: 100%; 
@@ -929,6 +945,7 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
     max-width: 400px !important; 
     height: auto !important;
   }
+
 }
 @media (max-width: 768px) {
    /*journal*/
@@ -995,13 +1012,16 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
    span.footer-comment {font-size: 12px;padding-bottom:15px;}
    #dropdown-pos {bottom: 42px; left: 45px;}
    #legal-stuff span.footer-comment {text-align: left;}
+   .client-list, .client-list a, .award-list, .award-list a {
+    font-size: 26px;
+    line-height: 24px;
+   }
 }
 @media only screen and (max-device-width: 480px) and (orientation: landscape) {
    .home-journal-thumbnail img {width:250px !important; height: auto !important;}
    #legal-stuff {float: left;}
    #legal-stuff li {margin-left: 0;margin-right:10px;}
    span.footer-comment {font-size: 12px;padding-bottom:15px;}
-   .comment-count {display: block; margin-left: 0;}
    #legal-stuff span.footer-comment {text-align: left;}
    h4.locpost-title {font-size: 13px !important;width: 220px !important;}
    .bootstrap-select[style] {right: -275px !important;}
@@ -1018,7 +1038,6 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
    header.navbar {margin: 80px 0 10px 0 !important;}
    .home-intro {font-size: 24px;}
    .page-header h1 {font-size: 2.2em;}
-   .comment-count {display: block; margin-left: 0;}
    .home-additionals {margin-bottom: 20px; padding-bottom: 20px;}
    .home-journal-post {margin-bottom: 50px;}
    .home-journal-thumbnail {width: 100%;}

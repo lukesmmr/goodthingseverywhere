@@ -13,5 +13,4 @@
 			<?php the_excerpt(); ?>
 		</div>
 	</div>
-
 </article>

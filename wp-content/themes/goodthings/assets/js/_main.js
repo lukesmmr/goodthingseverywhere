@@ -1,12 +1,13 @@
 /* @goodthngs / lukassommer - goodthingseverywhere.com - 2013/2014
 I try to keep it tidy and dry here. */
 var posLocated = false,
+    mapLoaded = false,
     userPos,
     distanceToMe,
     posDenied = false,
     mapOpen = false,
     mapResized = false,
-    mapHeight = $(window).height() - 40,
+    mapHeight = $(window).height() - 120,
     newMapHeight,
     infowindow = null,
     markers = [],
@@ -14,6 +15,7 @@ var posLocated = false,
     infoWinMinHeight,
     dropdownMsg,
     captiontimer,
+    maptimer,
     currentPosMarker,
     matchPosMarker,
     userPosMarker,
@@ -47,9 +49,27 @@ var posLocated = false,
 // init
 var GoodThingsSite = {
   // specific pages
-  home: {
+  common: {
     init: function() {
-      $(".giant-title").fitText();
+
+      $('#user-loc-btn').prop('disabled', true);
+      $('.selectpicker').selectpicker();
+      $('.selectpicker').selectpicker('deselectAll');
+
+      distanceToUser();
+
+      // bootstrap select
+      $('span.map-msg').text(randomTips());
+      // map toggle
+      $('#journal-map, #map-canvas').css('height', mapHeight);
+      $('#journal-map').css({'z-index': 123456, 'margin-top' : -(mapHeight)});
+      $("#journal-map-toggle").on('click', function() {
+        toggleMap();
+      });
+      if (window.location.hash === '#map') {
+        toggleMap();
+      }
+
     }
   }
 };
@@ -73,36 +93,46 @@ var UTIL = {
 
 $(document).ready(UTIL.loadEvents);
 
-/* Good Things Journal Map v0.2 - 10.01.2014
+/* Good Things Journal Map v0.3 - 14.10.2014
 Description: Loops through data attributes with geo data located in post meta and set up map, article & user position, connect with polylines
 and add infowindows with post previews. Necessary enhancements: 
 - open infowindow on dropdown
-- add location links on  journal entry to open map (panTo)
+- add location links on journal entry to open map (panTo)
 - asynchronous infowindow content loading
 */
 
-// open / close map
 function toggleMap() {
   if(mapOpen) {
-    $('#journal-map').animate({marginTop: -($('#journal-map').height()) }, 300);
+
+    $('#journal-map').delay(200).animate({marginTop: -($('#journal-map').height()) }, 300);
     $('span.map-msg').text(randomTips());
-    $('#arrow-pos').removeClass('close-btn');
+    $('#arrow-pos').addClass('map-btn').removeClass('close-btn');
     $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
     $('#journal-map-caption').slideUp(300);
     $('#journal-map-toggle').text('Map');
+    
     // remove anchor
     window.location.hash = '';
     mapOpen = false;
   } else {
-    clearTimeout(captiontimer);
+    clearTimeout(captiontimer, maptimer);
+    
+    // load map
+    maptimer = setTimeout(function() {
+      goodThingsMap();
+    }, 1500);
+
     $('#journal-map').animate({ marginTop: "0px" }, 300);
-    $('#arrow-pos').addClass('close-btn');
+    $('#arrow-pos').removeClass('map-btn').addClass('close-btn');
     $('#map-arrow').removeClass('arrow-down').addClass('arrow-up');
     $('#journal-map-caption').delay(200).slideDown(300);
     $('#journal-map-toggle').text('Close');
+
+    // map notification
     captiontimer = setTimeout(function() {
           $('#journal-map-caption').slideUp(300);
     }, 6000);
+
     // set anchor
     window.location.hash = 'map';
     mapOpen = true;
@@ -122,7 +152,7 @@ function error(err) {
 function calculateDistance(userPos) {
   if (posDenied === false) {
       distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
-      $(".distance-to-me").text( "You're " + distanceToMe.toFixed(2) + " Kms away");
+      $(".distance-to-me").text( "We're " + distanceToMe.toFixed(2) + " Kms apart");
       return distanceToMe;
   }
 }
@@ -137,14 +167,31 @@ function getCurrentLocation(callback) {
     }
 }
 
+function distanceToUser() {
+  if ("geolocation" in navigator) {
+      if(posLocated) {return;} // execute only once
+      posLocated = true;
+      $('.map-icon').after( '<span class="distance-to-me">Locating...</span>');
+      $('.distance-to-me').fadeTo( "slow" , 1);
+      getCurrentLocation(function(userPos){
+        calculateDistance(userPos);
+      });
+  } else {
+      error('Geolocation not supported!');
+  }
+}
+
 function goodThingsMap() {
+
+  if(mapLoaded) {console.log("map already loaded"); return;}
+  mapLoaded = true;
 
   // set map styles
   var styles = [
     {
       stylers: [
         { hue: "#129adb"},
-        { saturation: "-10"}/*,
+        { saturation: "20"}/*,
         { invert_lightness: true} think about adding time based inversion */
       ]
     }, {
@@ -287,15 +334,8 @@ function goodThingsMap() {
 
   if ("geolocation" in navigator) {
 
-    if(posLocated) {return;} // execute only once
-    posLocated = true;
-
-    $('.map-icon').after( '<span class="distance-to-me">Locating...</span>');
-    $('.distance-to-me').fadeTo( "slow" , 1);
-
     getCurrentLocation(function(userPos)
     {
-      calculateDistance(userPos);
       $('#user-loc-btn').prop('disabled', false);
       $('#user-loc-btn').on('click', function() {
         posMsg(userPos, userLocMsg);
@@ -362,7 +402,7 @@ function goodThingsMap() {
       clearTimeout(captiontimer);
       var selected_lat = $(this).find(':selected').data('post-loc-lat'),
           selected_lng = $(this).find(':selected').data('post-loc-lng');
-      map.setZoom(10);
+      map.setZoom(6);
       map.panTo(new google.maps.LatLng(selected_lat, selected_lng));
       $('span.map-msg').text(dropdownMsg);
       $('#journal-map-caption').delay(200).slideDown(300);
@@ -394,16 +434,18 @@ function goodThingsMap() {
     }
     $('#journal-map-caption').delay(200).slideDown(300);
     captiontimer = setTimeout(function() {
-          $('#journal-map-caption').delay(200).slideUp(300);
+        $('#journal-map-caption').delay(200).slideUp(300);
     }, 3000);
-    map.setZoom(9);
+
+    map.setZoom(6);
     map.panTo(geodata);
+
     infowindow.close();
   }
 
   // scale map according to viewport height
   $(window).resize(function() {
-    $('#journal-map, #map-canvas').css('height', $(window).height() - 40);
+    $('#journal-map, #map-canvas').css('height', $(window).height() - 120);
     if (!mapOpen) {
       $('#journal-map').css({marginTop: -($('#journal-map').height()) });
     }
@@ -412,21 +454,3 @@ function goodThingsMap() {
 
 }
 
-$(document).ready(function() {
-  $('#user-loc-btn').prop('disabled', true);
-  $('.selectpicker').selectpicker();
-  $('.selectpicker').selectpicker('deselectAll');
-
-  goodThingsMap();
-  // bootstrap select
-  $('span.map-msg').text(randomTips());
-  // map toggle
-  $('#journal-map, #map-canvas').css('height', mapHeight);
-  $('#journal-map').css({'z-index': 123456, 'margin-top' : -(mapHeight)});
-  $("#journal-map-toggle").on('click', function() {
-    toggleMap();
-  });
-  if (window.location.hash === '#map') {
-    toggleMap();
-  }
-});

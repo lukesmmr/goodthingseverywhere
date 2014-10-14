@@ -1,6 +1,6 @@
 <?php echo '<span id="loc-settings" class="hidden" data-lat="' . of_get_option('current_loc_lat') . '" data-lng="' . of_get_option('current_loc_lng') . '" data-zoom-level="' . of_get_option('zoom_level_select') . '" data-polyline-color="' . of_get_option('polyline_color') . '"></span>'; ?>
 <div id="journal-map">
-<div id="map-canvas"><span class="map-loader">Loading map...</span></div>
+<div id="map-canvas"><span class="map-loader"><img src="<?php bloginfo('template_url') ?>/assets/img/loading-bars.svg" alt="" width="64" height="64" /></span></div>
   <div id="dropdown-pos">
     <div class="btn-group" style="margin-top:-10px">
       <button id="current-loc-btn" type="button" class="btn btn-default">Me</button>
@@ -29,20 +29,42 @@
     </select>      
   </div>
   <?php wp_reset_query(); ?>
-  <!--  <span id="resize-icon" class="glyphicon glyphicon-resize-vertical"></span> -->      
+  <div class="journal-location-details">
+    <div class="container">
+      <ul>
+      <li class="distance-calc">
+        <i class="map-icon glyphicon glyphicon-map-marker"></i>
+      </li>
+      <li class="display-loc"><em>I'm in</em> <?php echo of_get_option('current_loc'); ?></li>
+      <?php if ( of_get_option('current_project') ) : ?>
+        <li class="current-project"> for
+        <?php if (of_get_option('current_url') !== '' ) : ?><a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php endif; ?><?php echo of_get_option('current_project') ?><?php if( of_get_option('current_url') !== '' ) : ?></a><?php endif; ?>
+        <?php //if( of_get_option('last_updated') !== '' ) : echo ' (' . of_get_option('last_updated') . ')'; endif; ?>
+        </li> 
+      <?php endif; ?>
+      <li class="next-loc"><i class="glyphicon glyphicon-heart-empty"></i> <em>Going to</em> <?php echo of_get_option('next_loc'); ?></li>
+      </ul>
+    </div>
+  </div>
   <div class="journal-map-btn-container">
     <div id="journal-map-caption"><i class="glyphicon glyphicon-info-sign"></i> <span class="map-msg"></span></div>
-    <div id="arrow-pos">
+    <div id="arrow-pos" class="map-btn">
       <button id="journal-map-toggle">Map</button>
       <div id="map-arrow" class="arrow-down"></div>
     </div>
   </div>
 </div>
 
+
 <header class="banner navbar navbar-default navbar-static-top" role="banner">
   
   <div class="container site-head">
     
+    <div id="logo" class="logo">
+      <a href="<?php echo home_url(); ?>/">
+        <span><?php bloginfo('name'); ?></span>
+      </a>
+    </div>    
 
    
     <div class="navbar-header">
@@ -62,12 +84,6 @@
         ?>
     </nav>
 
-    <div id="logo" class="logo">
-      <a href="<?php echo home_url(); ?>/">
-        <?php bloginfo('name'); ?>
-      </a>
-      <div class="circle"></div>
-    </div>    
 
   </div>
 </header>
