@@ -371,6 +371,134 @@ a.read-more-journal {
    vertical-align: 2px;
  }
 
+ /*projects*/
+.projects-current h2, .projects-journal h2 {
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #e1e1e1;
+}
+.projects-current h2 .glyphicon, .projects-journal h2 .glyphicon {
+  font-size: 0.7em;
+  vertical-align: 1px;
+}
+.current-thumb {
+  float: left;
+  width: 35%;
+  margin-right: 20px;
+}
+.current-thumb img {
+  width: 100%; 
+  height: auto;
+  border: 1px solid @good-grey;
+}
+.current-meta, .current-meta a {
+  margin: 10px 0;
+  color: @good-orange;
+  text-decoration: none;
+}
+.current-meta ul  {
+  display: inline-block;
+}
+.current-meta ul ,.current-meta li {
+  list-style: none;
+  padding: 0;
+}
+.current-meta li {
+  margin: 0 0 3px 0;
+}
+.current-meta small {
+  color: @good-grey;
+  font-size: 12px;
+}
+.project-post {
+  margin: 0 0 40px 0;
+  display: inline-block;
+}
+// .project-post header {
+//   clear: both; display: inline-block;
+// }
+.project-content { 
+  float: right; 
+  width: 53%;
+}
+.project-thumbnail { 
+  float: left; 
+  width: 44%;
+}
+.project-thumbnail img { 
+  width: 100%; 
+  height: auto;
+}
+h3.project-title {
+  font-weight: 800;
+  font-size: 36px;
+  color: @good-black;
+  margin: 0 0 10px 0 !important;
+  background: -webkit-linear-gradient(@good-black, lighten(@good-black, 20%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.project-description {
+  clear: both; 
+  margin-bottom: 10px;
+  font-size:18px;
+}
+.project-details { clear: both; display: inline-block;margin-bottom: 10px;}
+.project-details ul, .project-details li, .project-meta ul, .project-meta li {
+  list-style: none;
+  padding: 0;
+}
+.project-details li.project-url {
+  margin-top: 10px;
+}
+.project-meta {
+  margin-bottom: 10px;
+  display: inline-block;
+}
+.project-meta li i, .project-details li i, .current-meta li i{
+  margin-right: 3px;
+}
+.project-details span {
+  color: @good-orange !important;
+  text-decoration: none;
+}
+.project-meta li, .project-meta a {
+  color: @good-blue;
+  text-decoration: none;
+}
+.project-meta a:hover, .current-meta a:hover {
+  text-decoration: underline;
+}
+.project-meta li {
+  float: left;
+  margin-right: 15px;
+}
+
+
+/*about me */
+ #awards {margin-bottom: 50px;}
+ .client-list, .client-list a, .award-list, .award-list a {
+  font-size: 36px;
+  text-transform: uppercase;
+  font-weight: 800;
+  line-height: 38px;
+  color: @good-grey !important;
+  text-decoration: none;
+ }
+.client-list, .award-list {
+   background: -webkit-linear-gradient(@good-grey, lighten(@good-blue, 30%));
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+}
+.client-list a:hover, .award-list a:hover {
+  color: #CCC !important;
+}
+.award-list ul, .award-list li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 /* journal */
 .journal-post {display: inline-block;margin-bottom:20px;}
 .journal-content {font-size: 16px;}
@@ -850,6 +978,13 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
       float: left;
       width: 100%;
       margin: 0 0 20px 0;
+   }
+   .project-content {
+      float: none;
+      width: 100%;
+   }
+   h3.project-title {
+    font-size: 30px;
    }
    footer {height: 130px; padding-left: 0px !important; padding-right: 0px !important; padding-top:20px;margin-top: 30px;}
 }

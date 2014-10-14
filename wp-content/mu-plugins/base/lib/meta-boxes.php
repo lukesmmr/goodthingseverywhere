@@ -70,6 +70,54 @@ $meta_boxes[] = array(
         'id'   => 'post_cat_glyph',
         'type' => 'text'
       ),
+      array(
+        'name' => 'Add to Project feed?',
+        'desc' => 'Check to add marker to Project page',
+        'id'   => 'add_project',
+        'type' => 'checkbox',
+      ),
+      array(
+        'name' => 'Project Name',
+        'desc' => 'If article is a project description, name project',
+        'id'   => 'post_project_name',
+        'type' => 'text'
+      ),
+      array(
+        'name' => 'Project Link',
+        'desc' => 'Project website URL without http:// (e.g. openmindprojects.org)',
+        'id'   => 'post_project_url',
+        'type' => 'text_medium'
+      ),
+      array(
+        'name' => 'Project Thumbnail',
+        'desc' => 'Upload an image or enter an URL.',
+        'id'   => 'post_project_thumb',
+        'type' => 'file',
+      ),
+      array(
+        'name' => 'Project Date',
+        'desc' => 'Date the trade happened',
+        'id'   => 'post_project_date',
+        'type' => 'text_medium'
+      ),
+      array(
+        'name' => 'Project tasks',
+        'desc' => 'What did I do...',
+        'id'   => 'post_project_task',
+        'type' => 'text'
+      ),
+      array(
+        'name' => 'Project trade',
+        'desc' => 'What did I get...',
+        'id'   => 'post_project_trade',
+        'type' => 'text'
+      ),
+      array(
+        'name' => 'Project description',
+        'desc' => 'Short project description',
+        'id'   => 'post_project_description',
+        'type' => 'textarea',
+      ),
     ),
   );
 

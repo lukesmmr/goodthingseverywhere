@@ -39,15 +39,37 @@ function optionsframework_options() {
 
 	$options[] = array(
 		'name' => __('Current project', 'options_check'),
-		'desc' => __('Hidden if empty.', 'options_check'),
+		'desc' => __('HIDES WHOLE CURRENT PROJECT SECTION IF EMPTY.', 'options_check'),
 		'id' => 'current_project',
 		'std' => '',
 		'type' => 'text');
+
+
+	$options[] = array(
+		'name' => __('Current project description', 'options_check'),
+		'desc' => __('40 - 60 words.', 'options_check'),
+		'id' => 'current_project_desc',
+		'std' => '',
+		'type' => 'textarea');
+
+	
+	$options[] = array(
+		'name' => __('Current project thumbnail', 'options_check'),
+		'desc' => __('Upload current project thumbnail for project page.', 'options_check'),
+		'id' => 'current_project_thumb',
+		'type' => 'upload');
 
 	$options[] = array(
 		'name' => __('Project URL', 'options_check'),
 		'desc' => __('Not displayed if current project is empty.', 'options_check'),
 		'id' => 'current_url',
+		'std' => '',
+		'type' => 'text');
+
+	$options[] = array(
+		'name' => __('Current project duration', 'options_check'),
+		'desc' => __('e.g. 1 week, 1 month,etc', 'options_check'),
+		'id' => 'current_project_dur',
 		'std' => '',
 		'type' => 'text');
 
@@ -83,7 +105,7 @@ function optionsframework_options() {
 
 	$options[] = array(
 		'name' => __('Last updated', 'options_check'),
-		'desc' => __('dd/mm/yyyy', 'options_check'),
+		'desc' => __('mm.yyyy', 'options_check'),
 		'id' => 'last_updated',
 		'std' => '',
 		'class' => 'mini',
