@@ -8,7 +8,7 @@
   			<li><a href="http://movingthngs.tumblr.com" target="_blank">Gif</a></li>
         <li><a href="https://github.com/lukesmmr" target="_blank">Code</a></li>
   		</ul>
-  		<span class="footer-comment">This website evolves while i travel. Come back soon.</span>
+  		<span class="footer-comment">This website evolves while I travel. Come back soon.</span>
 
   	</div>
   	<div id="legal-stuff">
