@@ -154,7 +154,7 @@ $meta_boxes[] = array(
         'name' => 'Project description',
         'desc' => 'Short project description',
         'id'   => 'post_project_description',
-        'type' => 'textarea',
+        'type' => 'wysiwyg',
       ),
     ),
   );
