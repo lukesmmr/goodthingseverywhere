@@ -3,10 +3,10 @@
 	 xml:space="preserve">
 <defs>
 		<linearGradient id="GoodGradient" x1="100%" y1="100%">
-          <stop offset="0%" stop-color="#129abd" stop-opacity=".7">
+          <stop offset="0%" stop-color="#129abd" stop-opacity=".4">
             <animate attributeName="stop-color" values="#129abd;white;#ef4b36;#ef4b36;white;#ef4b36;#ef4b36;#129abd;#129abd" dur="10s" repeatCount="indefinite" />
           </stop>
-          <stop offset="100%" stop-color="#129abd" stop-opacity=".7">
+          <stop offset="100%" stop-color="#129abd" stop-opacity=".4">
             <animate attributeName="stop-color" values="#129abd;#ef4b36;#129abd;#129abd;white;#ef4b36;#ef4b36;white;#129abd" dur="10s" repeatCount="indefinite" />
             <animate attributeName="offset" values=".95;.80;.60;.40;.20;0;.20;.40;.60;.80;.95" dur="10s" repeatCount="indefinite" />
           </stop>
