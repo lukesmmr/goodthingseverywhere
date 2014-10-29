@@ -7,41 +7,44 @@
 
 </div>
 
-<?php if ( of_get_option('current_project') ) : ?>
 
 	<div class="projects-current">
 		
 		<h2>Present <i class="glyphicon glyphicon-chevron-down"></i></h2>
 
-		<h3 class="project-title"><?php echo of_get_option('current_project') ?></h3>
+		<?php if ( of_get_option('current_project') ) : ?>
+			<h3 class="project-title"><?php echo of_get_option('current_project') ?></h3>
 
-	
-		<?php if (of_get_option('current_project_thumb') !== '' ) : ?>
-			<div class="current-thumb">
-				<img src="<?php echo of_get_option('current_project_thumb'); ?>" alt="Current project logo" />
+			<?php if (of_get_option('current_project_thumb') !== '' ) : ?>
+				<div class="current-thumb">
+					<img src="<?php echo of_get_option('current_project_thumb'); ?>" alt="Current project logo" />
+				</div>
+			<?php endif; ?>
+
+			<?php if (of_get_option('current_project_desc') !== '' ) : ?>
+			<div class="current-project-desc">
+				<?php echo of_get_option('current_project_desc'); ?>
 			</div>
-		<?php endif; ?>
+			<?php endif; ?>
+			<div class="current-meta">			
+				<ul>
+					<li><i class="glyphicon glyphicon-map-marker"></i> <?php echo of_get_option('current_loc'); ?></li>
+					<?php if (of_get_option('current_project_dur') !== '' ) : ?>
+					<li><i class="glyphicon glyphicon-time"></i> <?php echo of_get_option('current_project_dur'); ?></li>
+					<?php endif; ?>
+					<?php if (of_get_option('current_url') !== '' ) : ?>
+					<li><i class="glyphicon glyphicon-link"></i> <a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php echo of_get_option('current_url'); ?></a></li>
+					<?php endif; ?>
+					<li><small>Last update: <?php echo of_get_option('last_updated'); ?></small></li>
+				</ul>
+			</div>
+		<?php else : ?>
 
-		<?php if (of_get_option('current_project_desc') !== '' ) : ?>
-		<div class="current-project-desc">
-			<?php echo of_get_option('current_project_desc'); ?>
-		</div>
-		<?php endif; ?>
-		<div class="current-meta">			
-			<ul>
-				<li><i class="glyphicon glyphicon-map-marker"></i> <?php echo of_get_option('current_loc'); ?></li>
-				<?php if (of_get_option('current_project_dur') !== '' ) : ?>
-				<li><i class="glyphicon glyphicon-time"></i> <?php echo of_get_option('current_project_dur'); ?></li>
-				<?php endif; ?>
-				<?php if (of_get_option('current_url') !== '' ) : ?>
-				<li><i class="glyphicon glyphicon-link"></i> <a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php echo of_get_option('current_url'); ?></a></li>
-				<?php endif; ?>
-				<li><small>Last update: <?php echo of_get_option('last_updated'); ?></small></li>
-			</ul>
-		</div>
+			<p>I'm currently in <?php echo of_get_option('current_loc'); ?> &ndash; making my way to my next project. See my latest work stops below. <small>(Updated: <?php echo of_get_option('last_updated'); ?>)</small></p>
+
+		<?php endif; ?>	
 	</div>
 	<div class="clearfix"></div>
-<?php endif; ?>
 
 <hr />
 <!--  latest journal posts -->
