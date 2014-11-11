@@ -7,6 +7,9 @@
     <div class="entry-content">
       <?php the_content(); ?>
     </div>
+    <div class="sharing">
+      <?php get_template_part('templates/recommend'); ?>
+    </div>
     <div class="comments">
     <?php comments_template('/templates/comments.php'); ?>
     </div>
