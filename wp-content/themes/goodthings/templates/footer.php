@@ -3,10 +3,12 @@
   		More good things
   		<ul class="social-icons">
         <li><a href="https://twitter.com/goodthngs" target="_blank">News</a></li>
-        <li><a href="http://ohgoodthings.tumblr.com" target="_blank">Tunes</a></li>
         <li><a href="https://instagram.com/lukelucky" target="_blank">Pics</a></li>
-  			<li><a href="http://movingthngs.tumblr.com" target="_blank">Gif</a></li>
+        <li><a href="http://movingthngs.tumblr.com" target="_blank">Gif</a></li>
+        <li><a href="http://ohgoodthings.tumblr.com" target="_blank">Tunes</a></li>
         <li><a href="https://github.com/lukesmmr" target="_blank">Code</a></li>
+        <li><a href="https://500px.com/goodthingseverywhere" target="_blank">500px</a></li>
+        <li><a href="https://medium.com/@goodthngs" target="_blank">Medium</a></li>
   		</ul>
   		<span class="footer-comment">This website evolves while I travel. Come back soon.</span>
 
