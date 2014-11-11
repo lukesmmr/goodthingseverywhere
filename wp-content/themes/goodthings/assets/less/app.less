@@ -65,7 +65,7 @@ h2.entry-title a, h2.entry-title a:hover {
 .page-header {
    margin: 40px 0 40px;
    padding-bottom: 10px;
-   border-bottom: 1px solid #efefef;
+   border-bottom: 1px solid @good-grey;
 }
 .page-header h1 {
    text-align: center;
@@ -136,7 +136,7 @@ img.alignleft {margin: 10px 20px 20px 0;}
    text-decoration: underline;
 }
 
-.navbar-default .navbar-collapse {border-color: #efefef;} 
+.navbar-default .navbar-collapse {border-color: @good-grey;} 
 .navbar-default .navbar-toggle {border:none;}
 .navbar-default .navbar-toggle .icon-bar {
    background-color: @good-black;
@@ -363,10 +363,101 @@ span.locpost-location {
 }
 #dropdown-pos a {text-decoration: none !important;}
 .dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:active {background-color: @good-blue;}
-.home-journal {margin: 50px 0 0 0; display:block;}
-.home-journal h2 {margin-bottom: 25px; font-weight: 700; color: @good-grey;}
-.home-journal h2 .glyphicon {font-size: 0.7em; vertical-align: 1px;}
+
 .home-journal-post {display: inline-block;margin-bottom:20px;}
+.home-latest-social, .home-journal {width: 100%; display:inline-block; margin: 40px 0 0 0; clear:both;}
+.home-latest-social h2, .home-journal h2 {margin: 0 0 25px 0; font-weight: 700; color: @good-grey; float: left;}
+.home-latest-social h2 .glyphicon, .home-journal h2 .glyphicon {font-size: 0.7em; vertical-align: 1px;}
+.follow {
+  font-family: @content-font;
+  font-weight: 700;
+  font-size: 14px;
+  float: right;
+  margin-top: 11px;
+  color: @good-grey !important;
+  text-transform: capitalize;
+  a {
+    color: @good-orange !important;
+    text-transform: lowercase;
+    text-decoration: none;
+  }
+}
+
+.right-now {
+  width: 100%;
+  clear:both;
+}
+.insta-pic, .insta-container {
+  position: relative;
+  min-height: 300px;
+}
+.insta-container {
+  float: left;
+  width: 49%;
+}
+.insta-container:first-child {
+  margin-right: 2%;
+}
+.insta-pic .svg-loader {
+  max-height: 450px;
+}
+#instagram-img {
+  margin-bottom: 10px;
+}
+.insta-meta {
+  position: absolute;
+  top: 15px; 
+  left: 15px;
+  z-index: 667;
+  font-size:14px;
+  i {
+    color: @good-orange;
+    margin-right: 5px;
+  }
+}
+.insta-loc, .insta-date {
+  display: inline;
+}
+.latest-instagram {
+  img {
+    width: 100%;
+    heigth: auto !important;
+  }
+  img:hover {
+    opacity: 0.95;
+  }
+}
+
+
+
+// .latest-tweets {
+//   ul {
+//     padding: 0 !important;
+//   }
+//   li {
+//     list-style: none;
+//     margin-bottom: 20px;
+//   }
+//   li:last-child {
+//     margin-bottom: 0;
+//   }
+//   .home-tweet-date a {
+//     color: @good-grey;
+//     font-size: 12px;
+//     text-decoration: none;
+//   }
+// }
+
+// .subscribe-journal {
+//   h3 {
+//     margin-top:20px;
+//   }
+//   .btn-submit {
+//     background: @good-orange;
+//     color: white !important;
+//   }
+// }
+
 h3.home-journal-title {
    padding: 0;
    margin: 0 0 10px 0;
@@ -551,6 +642,55 @@ h3.journal-title a:hover {text-decoration: none; color: @good-black;}
 .comment-count, .journal-read-time {margin-left: 5px;color: @good-grey;}
 .journal-read-time {display: inline; }
 .single .journal-read-time {float: right;}
+
+.sharing {
+  width: 100%;
+  text-align: center;
+  margin: 60px 0 40px 0;
+  position: relative;
+}
+.sharing button.recommend {
+  .btn;
+  background: transparent;
+  color: @good-orange;
+  border: @good-grey 1px solid;
+  padding: 6px 15px;
+}
+.sharing button.recommend:hover {
+  color: @good-blue;
+  border: @good-grey 1px solid;
+}
+.sharing button.recommend i {
+  margin: 0 0 0 10px;
+  font-size: 16px;
+  height: 20px;
+  vertical-align: bottom;
+}
+.share-options {
+    max-width: 380px !important;
+    width: 380px !important;
+    margin: 50px 0 0 -190px;
+    left: 50%;
+  ul {
+    list-style: none;
+    display: inline;
+    padding: 0;
+  }
+  li {
+    margin: 5px 10px;
+    display: inline-block;
+    height: 30px;
+    vertical-align: bottom;
+  }
+}
+.popover.bottom {
+  margin-top: 50px;
+}
+.popover-content {
+  padding: 15px 14px 5px 14px;
+  text-align: center;
+}
+
 a.maps-link, span.maps-link {margin-left: 5px; text-decoration: none; color: @good-grey;}
 a.maps-link:hover {text-decoration: underline;}
 .entry-content img.alignnone {
@@ -561,8 +701,9 @@ a.maps-link:hover {text-decoration: underline;}
 .entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5 {
   clear: both;
 }
-.pager li>a, .pager li>span {border: none; text-decoration: none; text-transform: uppercase;border-radius: 0; padding: 0;}
-.pager li>a:hover {background: transparent; color: @good-blue; text-decoration: underline;}
+.pager li>a, .pager li>span {font-family: @content-font; font-weight: 700; border: none; text-decoration: none; text-transform: uppercase;border-radius: 0; padding: 0;}
+.pager li>a:hover {background: transparent; color: @good-blue; text-decoration: none;}
+
 .read-more, .read-more a {color: @good-blue; text-decoration: none; font-size: 18px;}
 .read-more a:hover {text-decoration: underline;}
 .comments {display:block; margin-top: 50px;}
@@ -573,7 +714,7 @@ footer {
    height: 100px;
    padding-top:50px;
    margin: 25px 0 25px 0;
-   border-top: 1px solid #efefef;
+   border-top: 1px solid @good-grey;
    text-transform: uppercase;
    font-weight: 600;
 }
@@ -968,6 +1109,13 @@ figure.thumbnail {
    .journal-thumbnail {width:50%;}
    .journal-thumbnail img {width: 100%; height: auto !important;}
 }
+@media (max-width: 992px) {
+   #legal-stuff {float: left;}
+   #legal-stuff li {margin-left: 0;margin-right:10px;}
+   #legal-stuff span.footer-comment {text-align: left;}
+   span.footer-comment {font-size: 12px;padding-bottom:15px;}
+}
+
 @media (min-width: 768px) and (max-width: 992px) {
   img#good-svg {
     top: -4px;
@@ -1034,7 +1182,6 @@ figure.thumbnail {
       text-align: center;
    }
    header.navbar {margin: 60px 0 40px 0;}
-   .close-btn {margin: -90px 0 0 0;}
    .project-thumbnail {
       float: left;
       width: 100%;
@@ -1051,15 +1198,12 @@ figure.thumbnail {
 }
 @media (max-width:540px) {
    .home-journal-thumbnail img {width:280px !important; height: auto !important;}
-   #legal-stuff {float: left;}
-   #legal-stuff li {margin-left: 0;margin-right:10px;}
-   span.footer-comment {font-size: 12px;padding-bottom:15px;}
    #dropdown-pos {bottom: 42px; left: 45px;}
-   #legal-stuff span.footer-comment {text-align: left;}
    .client-list, .client-list a, .award-list, .award-list a {
     font-size: 26px;
     line-height: 24px;
    }
+   .close-btn {margin: -90px 0 0 0;}
 }
 @media only screen and (max-device-width: 480px) and (orientation: landscape) {
    .home-journal-thumbnail img {width:250px !important; height: auto !important;}
@@ -1105,6 +1249,7 @@ figure.thumbnail {
     font-size: 13px !important;
     text-align: center !important;
   }
+  .close-btn {margin: -70px 0 0 0;}
    li.next-loc {display: none !important;}
    #dropdown-pos {bottom: 35px;}
    .bootstrap-select.btn-group .dropdown-menu {margin-left: -65px; max-height: 200px;}
@@ -1115,4 +1260,32 @@ figure.thumbnail {
    .locpost-preview img {display: none;}
    .locpost-preview img[style] {width: 100px !important;}
    a.locpost-link {font-size: 12px !important;}
+
+    .insta-container {
+      float: none;
+      width: 100%;
+    }
+    .insta-container:first-child {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+    #instagram-img {
+      margin-bottom: 0;
+    }
+    .insta-meta {
+      top: 25px;
+    }
+    .home-latest-social h2, .home-journal h2 {
+      display: block; 
+      float: none;
+      margin: 0 !important;
+    }
+    header.home-header {
+      margin-bottom: 25px;
+    }
+    .follow {
+      display: block; 
+      float: none; 
+      margin-top: 0;
+    }
 }
