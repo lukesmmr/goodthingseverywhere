@@ -297,7 +297,7 @@ function goodThingsMap() {
 
   // polylines
   var travelItinerary = new google.maps.Polyline({
-    path: journalCoords,
+    path: $.merge(journalCoords, [currentPos]),
     geodesic: true,
     strokeColor: polylineColor,
     strokeOpacity: 1.0,

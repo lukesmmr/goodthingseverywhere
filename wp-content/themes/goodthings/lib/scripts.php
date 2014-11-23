@@ -28,7 +28,7 @@ function roots_scripts() {
 
   wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/vendor/modernizr-2.6.2.min.js', false, null, false);
   wp_register_script('maps', 'http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry', false, null, true);
-  wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', false, 'a431c9035bdf8db74149c594da7db7e6', true);
+  wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', false, 'fda9ae585c2df02de250aa01e60f4f7d', true);
   wp_enqueue_script('modernizr');
   wp_enqueue_script('jquery');
   wp_enqueue_script('maps');
