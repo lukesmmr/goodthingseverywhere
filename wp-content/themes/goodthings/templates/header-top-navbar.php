@@ -2,12 +2,12 @@
 <div id="journal-map">
 <div id="map-canvas"><span class="map-loader"><img src="<?php bloginfo('template_url') ?>/assets/img/loading-bars.svg" alt="" width="64" height="64" /></span></div>
   <div id="dropdown-pos">
-    <div class="btn-group" style="margin-top:-10px">
+    <div class="btn-group">
       <button id="current-loc-btn" type="button" class="btn btn-default">Me</button>
       <button id="user-loc-btn" type="button" class="btn btn-default">You</button>
     </div>
-    <select class="marker-coords selectpicker show-tick" data-width="170px" data-live-search="true">
-      <option selected="selected" data-post-loc="Current" data-post-loc-lat="<?php echo $page_data->current_loc_lat ?>" data-post-loc-lng="<?php echo $page_data->current_loc_lng; ?>" data-post-url="&nbsp;" data-post-excerpt="&nbsp;" data-post-thumb="&nbsp;" data-post-title="&nbsp;" data-post-date="&nbsp;">Travel to...</option>
+    <select class="selectpicker show-tick marker-coords" data-width="180px" data-live-search="false">
+      <option selected="selected" data-post-loc="current" data-post-loc-lat="<?php echo of_get_option('current_loc_lat') ?>" data-post-loc-lng="<?php echo of_get_option('current_loc_lng') ?>" data-post-url="&nbsp;" data-post-excerpt="&nbsp;" data-post-thumb="&nbsp;" data-post-title="&nbsp;" data-post-date="&nbsp;">Travel to...</option>
       <?php $wp_query= null;
       $counter = 0;
       $wp_query = new WP_Query(); $wp_query->query(array ('showposts' => '-1', 'orderby' => 'date', 'order' => 'ASC'));   
@@ -24,7 +24,7 @@
 
       if ($add_marker) : 
       $counter++; ?>
-      <option id="post-<?php the_ID(); ?>" data-post-loc="<?php echo $post_loc; ?>" data-post-loc-lat="<?php echo $post_loc_lat; ?>" data-post-loc-lng="<?php echo $post_loc_lng; ?>" data-post-url="<?php echo get_permalink(); ?>" data-post-excerpt="<?php echo $excerpt; ?>" data-post-thumb="<?php echo $thumb_url[0]; ?>" data-post-title="<?php the_title(); ?>" data-post-date="<?php echo get_the_date('j. M y'); ?>"><?php echo $counter . ". " . $post_loc; ?></option>
+      <option id="post-<?php the_ID(); ?>" data-marker="<?php echo $counter; ?>" data-post-loc="<?php echo $post_loc; ?>" data-post-loc-lat="<?php echo $post_loc_lat; ?>" data-post-loc-lng="<?php echo $post_loc_lng; ?>" data-post-url="<?php echo get_permalink(); ?>" data-post-excerpt="<?php echo $excerpt; ?>" data-post-thumb="<?php echo $thumb_url[0]; ?>" data-post-title="<?php the_title(); ?>" data-post-date="<?php echo get_the_date('j. M y'); ?>"><?php echo $counter . ". " . $post_loc; ?></option>
       <?php endif; endwhile; ?>
     </select>      
   </div>
