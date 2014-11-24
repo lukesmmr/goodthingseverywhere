@@ -1,180 +1,58 @@
 /* @goodthngs / lukassommer - goodthingseverywhere.com - 2013/2014
 I try to keep it tidy and dry here. */
-var posLocated = false,
-    mapLoaded = false,
-    userPos,
-    distanceToMe,
-    posDenied = false,
-    mapOpen = false,
-    mapResized = false,
-    mapHeight = $(window).height() - 120,
-    newMapHeight,
-    infowindow = null,
-    markers = [],
-    infowinWidth,
+var infowinWidth,
     infoWinMinHeight,
-    dropdownMsg,
+    newMapHeight,
     captiontimer,
     maptimer,
+    map_id,
     currentPosMarker,
     matchPosMarker,
     userPosMarker,
-    currentPos = new google.maps.LatLng($('#loc-settings').data('lat'), $('#loc-settings').data('lng')),
-    zoomLevel = $('#loc-settings').data('zoom-level');
-    polylineColor = $('#loc-settings').data('polyline-color');
-    markerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker.svg",
-    userMarkerPath = siteurl + "wp-content/themes/goodthings/assets/img/maps-marker-user.svg",
-    currentLocMsg = "This is my current location",
-    userLocMsg = "This is where you are (detected by your Browser)",
-    posMatchMsg = "Nice, our locations match. Maybe we should meet";
-    // add more tips will ya!
-    var randomTips = function () {
-      var tipArray = randomFrom(['Explore the world based on my journal entries. Click on the markers to see places i visited'/*, 'You can navigate with your cursor keys and zoom with +/-', 'With geolocation enabled you can see your position on the map'*/]);
-      return tipArray;
-    };
-    if( /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-      dropdownMsg = "Tap on the Marker to see the article preview";
-      infowinWidth = 220;
-      infoWinMinHeight = "";
-    } else if( /iPad/i.test(navigator.userAgent) ) {
-      dropdownMsg = "Tap on the Marker to see the article preview";
-      infowinWidth = 400;
-      infoWinMinHeight = "170px";
-    } else {
-      dropdownMsg = "Click on the Marker to see the article preview";
-      infowinWidth = 400;
-      infoWinMinHeight = "170px";
-    }
+    userPos,
+    distanceToMe,
+    marker_array,
+    marker,
+    markers         = [],
+    posLocated      = false,
+    mapLoaded       = false,
+    posDenied       = false,
+    mapOpen         = false,
+    mapResized      = false,
+    mapHeight       = $(window).height() - 120,
+    infowindow      = null,
+    currentPos      = new google.maps.LatLng($('#loc-settings').data('lat'), $('#loc-settings').data('lng')),
+    zoomLevel       = $('#loc-settings').data('zoom-level'),
+    polylineColor   = $('#loc-settings').data('polyline-color'),
+    markerPath      = siteurl + 'wp-content/themes/goodthings/assets/img/maps-marker.svg',
+    userMarkerPath  = siteurl + 'wp-content/themes/goodthings/assets/img/maps-marker-user.svg',
+    currentLocMsg   = 'This is my current location',
+    userLocMsg      = 'This is where you are (detected by your Browser)',
+    posMatchMsg     = 'Nice, our locations match. Maybe we should meet';
 
-// init
-var GoodThingsSite = {
-  // specific pages
-  common: {
-    init: function() {
-
-      $('#user-loc-btn').prop('disabled', true);
-      $('.selectpicker').selectpicker();
-      $('.selectpicker').selectpicker('deselectAll');
-
-      // locate
-      distanceToUser();
-
-      // bootstrap select
-      $('span.map-msg').text(randomTips());
-      // map toggle
-      $('#journal-map, #map-canvas').css('height', mapHeight);
-      $('#journal-map').css({'z-index': 123456, 'margin-top' : -(mapHeight)});
-      $("#journal-map-toggle").on('click', function() {
-        toggleMap();
-      });
-      if (window.location.hash === '#map') {
-        toggleMap();
-      }
-
-    }
-  },
-  single: {
-    init: function() {
-        $('button.recommend').on('click', function() {
-          $('.share-options').fadeToggle(300);
-        });
-    }
-  }, 
-  home: {
-    init: function() {
-      $('#good-svg').removeClass('hidden');
-      // get latest instagram image
-       $.getScript(siteurl + "wp-content/themes/goodthings/assets/js/keys.js", function() {
-         $.ajax({
-            type: "GET",
-            dataType: "jsonp",
-            cache: false,
-            url: "https://api.instagram.com/v1/users/2167719/media/recent/?access_token=" + insta_token,
-            success: function(data) {
-              $('.insta-pic').html('');
-              for (i = 0; i < 2; i++) {
-                $('.insta-pic').append('
-                  <div class="insta-container">
-                    <div class="insta-meta">
-                      <i class="glyphicon glyphicon-map-marker"></i> <div class="insta-date">' + timeAgo(data.data[i].caption.created_time) + '</div> <div class="insta-loc"><span>in ' + data.data[i].location.name + '</span></div>
-                    </div>
-                    <a href="' + data.data[i].link +'" title="Link to latest Instagram Photo" target="_blank" class="insta-link">
-                      <div id="instagram-img"><img src="' + data.data[i].images.standard_resolution.url + '" alt="" /></div>
-                    </a>
-                    <figcaption class="caption insta-caption wp-caption-text">' + data.data[i].caption.text + '</figcaption>
-                  </div>');
-              }
-            }
-         });
-       });
-    }
-  }
+var randomTips = function () {
+  var tipArray = randomFrom(['Explore the world based on my journal entries!', 'The world is a pretty big place, right?', 'With geolocation enabled you can see your position on the map']);
+  return tipArray;
+};
+var randomClickMore = function () {
+  var moreArray = randomFrom(['Lots of cool photos if you continue reading, trust me!', 'Continue reading to see the whole article!', 'Have you been here yourself? Tell me about it!']);
+  return moreArray;
 };
 
-var UTIL = {
-  fire: function(func, funcname, args) {
-    var namespace = GoodThingsSite;
-    funcname = (funcname === undefined) ? 'init' : funcname;
-    if (func !== '' && namespace[func] && typeof namespace[func][funcname] === 'function') {
-      namespace[func][funcname](args);
-    }
-  },
-  loadEvents: function() {
-    UTIL.fire('common');
-    $.each(document.body.className.replace(/-/g, '_').split(/\s+/),function(i,classnm) {
-      UTIL.fire(classnm);
-    });
-    UTIL.fire('common', 'finalize');
-  }
-};
+if( /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+  infowinWidth = 200;
+  infoWinMinHeight = "";
+} else {
+  infowinWidth = 400;
+  infoWinMinHeight = "170px";
+}
 
-$(document).ready(UTIL.loadEvents);
-
-/* Good Things Journal Map v0.3 - 14.10.2014
+/* Good Things Journal Map v0.5 - 24.11.2014
 Description: Loops through data attributes with geo data located in post meta and set up map, article & user position, connect with polylines
 and add infowindows with post previews. Necessary enhancements: 
-- open infowindow on dropdown
 - add location links on journal entry to open map (panTo)
-- asynchronous infowindow content loading
+- read / write marker data from json 
 */
-
-function toggleMap() {
-  if(mapOpen) {
-
-    $('#journal-map').delay(200).animate({marginTop: -($('#journal-map').height()) }, 300);
-    $('span.map-msg').text(randomTips());
-    $('#arrow-pos').addClass('map-btn').removeClass('close-btn');
-    $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
-    $('#journal-map-caption').slideUp(300);
-    $('#journal-map-toggle').text('Map');
-    
-    // remove anchor
-    window.location.hash = '';
-    mapOpen = false;
-  } else {
-    clearTimeout(captiontimer, maptimer);
-    
-    // load map
-    maptimer = setTimeout(function() {
-      goodThingsMap();
-    }, 1500);
-
-    $('#journal-map').animate({ marginTop: "0px" }, 300);
-    $('#arrow-pos').removeClass('map-btn').addClass('close-btn');
-    $('#map-arrow').removeClass('arrow-down').addClass('arrow-up');
-    $('#journal-map-caption').delay(200).slideDown(300);
-    $('#journal-map-toggle').text('Close');
-
-    // map notification
-    captiontimer = setTimeout(function() {
-          $('#journal-map-caption').slideUp(300);
-    }, 6000);
-
-    // set anchor
-    window.location.hash = 'map';
-    mapOpen = true;
-  }
-}
 
 function error(err) {
     if (err.code === 1) { // user denied
@@ -216,6 +94,14 @@ function distanceToUser() {
   } else {
       error('Geolocation not supported!');
   }
+}
+
+function bindInfoWindow(marker, map, infowindow, html) {
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(html);
+    infowindow.open(map, marker);
+    map.panBy(-50, -150);
+  });
 }
 
 function goodThingsMap() {
@@ -308,6 +194,12 @@ function goodThingsMap() {
   var map = new google.maps.Map(document.getElementById("map-canvas"),
       mapOptions);
 
+  // set infowindow
+  infowindow = new google.maps.InfoWindow({
+      content: "loading...",
+      maxWidth: infowinWidth
+  });
+
   // loop for markers and infowindows
   for (var i = 1; i < journalLocs.length; i++) {
     // make array from key value pairs
@@ -319,9 +211,9 @@ function goodThingsMap() {
                             ';"><img style="width: 250px; height: auto !important;" src="' + locArray[5] + '" /><p>' +
                             locArray[4] + '</p><a class="locpost-link" href="' + locArray[3] + '">Continue reading</a></div>';
     if ( i > 9 ) {
-      var setLabelAnchor = new google.maps.Point(7, 40);
+      setLabelAnchor = new google.maps.Point(7, 40);
     } else {
-      var setLabelAnchor = new google.maps.Point(4, 40);
+      setLabelAnchor = new google.maps.Point(4, 40);
     }
     // set markers
     markers[i] = new MarkerWithLabel({
@@ -338,22 +230,7 @@ function goodThingsMap() {
       zIndex: i
     });
 
-    // set infowindow
-    infowindow = new google.maps.InfoWindow({
-        content: "loading...",
-        maxWidth: infowinWidth
-    });
-
-    // add click event 
-    // google.maps.event.addListener(markers[i], 'click', openInfoWindow(infowindow, markers[i].html));
-
-    // add click event 
-    google.maps.event.addListener(markers[i], 'click', function() {
-      infowindow.setContent(this.html);
-      infowindow.open(map, this);
-      map.panBy(-50, 0);
-    });
-    
+    bindInfoWindow(markers[i], map, infowindow, markers[i].html);
   }
 
   // get current loc
@@ -429,7 +306,6 @@ function goodThingsMap() {
   // add map styles
   map.mapTypes.set('map_style', customStyles);
   map.setMapTypeId('map_style');
-  map.panBy(-50, -50);
 
   // add polyline
   travelItinerary.setMap(map);
@@ -437,16 +313,27 @@ function goodThingsMap() {
   // dropdown
   $( "select.marker-coords" ).change(function() {
       clearTimeout(captiontimer);
-      var selected_lat = $(this).find(':selected').data('post-loc-lat'),
-          selected_lng = $(this).find(':selected').data('post-loc-lng');
-      map.setZoom(6);
-      map.panTo(new google.maps.LatLng(selected_lat, selected_lng));
-      $('span.map-msg').text(dropdownMsg);
+      // var
+      var marker_lat  = $(this).find(':selected').data('post-loc-lat'),
+          marker_lng  = $(this).find(':selected').data('post-loc-lng'),
+          marker_id     = $(this).find(':selected').data('marker'),
+          marker_loc    = $(this).find(':selected').data('post-loc');
+      // set map
+      map.setZoom(8);
+      map.panTo( new google.maps.LatLng(marker_lat, marker_lng) );
+      // set infowindow 
+      if ( marker_loc !== "current" ) {
+        infowindow.close();
+        infowindow.setContent( markers[marker_id].html );
+        infowindow.open(map, markers[marker_id] );
+        map.panBy(-50, -150);
+      }
+      // map notifications
+      $('span.map-msg').text(randomClickMore());
       $('#journal-map-caption').delay(200).slideDown(300);
       captiontimer = setTimeout(function() {
             $('#journal-map-caption').delay(200).slideUp(300);
-      }, 5000);
-      infowindow.close();
+      }, 6000);
   });
 
   // custom btn group click events
@@ -472,7 +359,7 @@ function goodThingsMap() {
     $('#journal-map-caption').delay(200).slideDown(300);
     captiontimer = setTimeout(function() {
         $('#journal-map-caption').delay(200).slideUp(300);
-    }, 3000);
+    }, 6000);
 
     map.setZoom(6);
     map.panTo(geodata);
@@ -491,3 +378,119 @@ function goodThingsMap() {
 
 }
 
+function toggleMap() {
+  if(mapOpen) {
+
+    $('#journal-map').delay(200).animate({marginTop: -($('#journal-map').height()) }, 300);
+    $('span.map-msg').text(randomTips());
+    $('#arrow-pos').addClass('map-btn').removeClass('close-btn');
+    $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
+    $('#journal-map-caption').slideUp(300);
+    $('#journal-map-toggle').text('Map');
+    
+    // remove anchor
+    window.location.hash = '';
+    mapOpen = false;
+  } else {
+    clearTimeout(captiontimer, maptimer);
+    
+    // load map
+    maptimer = setTimeout(function() {
+      goodThingsMap();
+    }, 1500);
+
+    $('#journal-map').animate({ marginTop: "0px" }, 300);
+    $('#arrow-pos').removeClass('map-btn').addClass('close-btn');
+    $('#map-arrow').removeClass('arrow-down').addClass('arrow-up');
+    $('#journal-map-caption').delay(200).slideDown(300);
+    $('#journal-map-toggle').text('Close');
+
+    // map notification
+    captiontimer = setTimeout(function() {
+          $('#journal-map-caption').slideUp(300);
+    }, 6000);
+
+    // set anchor
+    window.location.hash = 'map';
+    mapOpen = true;
+  }
+}
+
+// init
+var GoodThingsSite = {
+  // specific pages
+  common: {
+    init: function() {
+
+      $('#user-loc-btn').prop('disabled', true);
+      if( /iPad/i.test(navigator.userAgent) ) {
+          $('.selectpicker').selectpicker('mobile');
+      } else {
+          $('.selectpicker').selectpicker();
+          $('.selectpicker').selectpicker('deselectAll');
+      }
+
+      // locate
+      distanceToUser();
+
+      // bootstrap select
+      $('span.map-msg').text(randomTips());
+      // map toggle
+      $('#journal-map, #map-canvas').css('height', mapHeight);
+      $('#journal-map').css({'z-index': 123456, 'margin-top' : -(mapHeight)});
+      $("#journal-map-toggle").on('click', function() {
+        toggleMap();
+      });
+      if (window.location.hash === '#map') {
+        toggleMap();
+      }
+
+    }
+  },
+  single: {
+    init: function() {
+        $('button.recommend').on('click', function() {
+          $('.share-options').fadeToggle(300);
+        });
+    }
+  },
+  home: {
+    init: function() {
+      $('#good-svg').removeClass('hidden');
+      // get latest instagram image
+       $.getScript(siteurl + "wp-content/themes/goodthings/assets/js/keys.js", function() {
+         $.ajax({
+            type: "GET",
+            dataType: "jsonp",
+            cache: false,
+            url: "https://api.instagram.com/v1/users/2167719/media/recent/?access_token=" + insta_token,
+            success: function(data) {
+              $('.insta-pic').html('');
+              for (i = 0; i < 2; i++) {
+                $('.insta-pic').append('<div class="insta-container"><div class="insta-meta"><i class="glyphicon glyphicon-map-marker"></i> <div class="insta-date">' + timeAgo(data.data[i].caption.created_time) + '</div> <div class="insta-loc"><span>in ' + data.data[i].location.name + '</span></div></div><a href="' + data.data[i].link +'" title="Link to latest Instagram Photo" target="_blank" class="insta-link"><div id="instagram-img"><img src="' + data.data[i].images.standard_resolution.url + '" alt="" /></div></a><figcaption class="caption insta-caption wp-caption-text">' + data.data[i].caption.text + '</figcaption></div>');
+              }
+            }
+         });
+       });
+    }
+  }
+};
+
+var UTIL = {
+  fire: function(func, funcname, args) {
+    var namespace = GoodThingsSite;
+    funcname = (funcname === undefined) ? 'init' : funcname;
+    if (func !== '' && namespace[func] && typeof namespace[func][funcname] === 'function') {
+      namespace[func][funcname](args);
+    }
+  },
+  loadEvents: function() {
+    UTIL.fire('common');
+    $.each(document.body.className.replace(/-/g, '_').split(/\s+/),function(i,classnm) {
+      UTIL.fire(classnm);
+    });
+    UTIL.fire('common', 'finalize');
+  }
+};
+
+$(document).ready(UTIL.loadEvents);
