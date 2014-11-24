@@ -456,6 +456,12 @@ var GoodThingsSite = {
   },
   home: {
     init: function() {
+      $('.open-map').on('click', function() {
+        $('.home').scrollTop(0);
+        if(!mapOpen) {
+          toggleMap();
+        }
+      });
       $('#good-svg').removeClass('hidden');
       // get latest instagram image
        $.getScript(siteurl + "wp-content/themes/goodthings/assets/js/keys.js", function() {
