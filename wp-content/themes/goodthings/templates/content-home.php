@@ -49,6 +49,7 @@
 					<?php if (of_get_option('current_url') !== '' ) : ?>
 					<li><i class="glyphicon glyphicon-link"></i> <a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php echo of_get_option('current_url'); ?></a></li>
 					<?php endif; ?>
+					<li><small>Updated: <?php echo of_get_option('last_updated'); ?></small></li>
 				</ul>
 			</div>
 		<?php else : ?>
