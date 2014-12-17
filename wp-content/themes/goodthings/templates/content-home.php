@@ -21,10 +21,52 @@
 
 <div class="home-latest-social">
 	<header class="home-header">
+		<h2>Current project <i class="glyphicon glyphicon-map-marker"></i></h2>
+	</header>
+
+	<div class="home-current-project">
+	
+		<?php if ( of_get_option('current_project') ) : ?>
+			<h3 class="project-title"><?php echo of_get_option('current_project') ?></h3>
+
+			<?php if (of_get_option('current_project_thumb') !== '' ) : ?>
+				<div class="current-thumb">
+					<img src="<?php echo of_get_option('current_project_thumb'); ?>" alt="Current project logo" />
+				</div>
+			<?php endif; ?>
+
+			<?php if (of_get_option('current_project_desc') !== '' ) : ?>
+			<div class="current-project-desc">
+				<?php echo of_get_option('current_project_desc'); ?>
+			</div>
+			<?php endif; ?>
+			<div class="current-meta">			
+				<ul>
+					<li><i class="glyphicon glyphicon-map-marker"></i> <?php echo of_get_option('current_loc'); ?></li>
+					<?php if (of_get_option('current_project_dur') !== '' ) : ?>
+					<li><i class="glyphicon glyphicon-time"></i> <?php echo of_get_option('current_project_dur'); ?></li>
+					<?php endif; ?>
+					<?php if (of_get_option('current_url') !== '' ) : ?>
+					<li><i class="glyphicon glyphicon-link"></i> <a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php echo of_get_option('current_url'); ?></a></li>
+					<?php endif; ?>
+				</ul>
+			</div>
+		<?php else : ?>
+
+			<p>I'm currently in <?php echo of_get_option('current_loc'); ?> &ndash; making my way to my next project. See my latest work stops <a href="<?php bloginfo("site_url"); ?>/trade-projects" title="See trade projects">here</a>.</p>
+
+		<?php endif; ?>	
+	
+	</div>
+
+	<header class="home-header">
 		<h2>Right now <i class="glyphicon glyphicon-picture"></i></h2>
 		<span class="follow">Follow <a href="https://instagram.com/lukelucky" title="">@lukelucky</a></span>
 	</header>
+
 	<div class="right-now latest-instagram">
+
+
 		<div class="insta-pic">
 			<img src="<?php bloginfo('template_url') ?>/assets/img/lazy-loader.svg" class="svg-loader" alt="">
 		</div>
