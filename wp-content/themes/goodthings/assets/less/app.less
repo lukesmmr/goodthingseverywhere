@@ -373,7 +373,7 @@ span.locpost-location {
 
 .home-journal-post {display: inline-block;margin-bottom:20px;}
 .home-latest-social, .home-journal {width: 100%; display:inline-block; margin: 40px 0 0 0; clear:both;}
-.home-latest-social h2, .home-journal h2 {margin: 0 0 25px 0; font-weight: 700; color: @good-grey; float: left;}
+.home-latest-social h2, .home-journal h2 {margin: 0 0 20px 0; font-weight: 700; color: @good-grey; float: left;}
 .home-latest-social h2 .glyphicon, .home-journal h2 .glyphicon {font-size: 0.7em; vertical-align: 1px;}
 .follow {
   font-family: @content-font;
@@ -390,9 +390,12 @@ span.locpost-location {
   }
 }
 
-.right-now {
+.right-now, .home-current-project {
   width: 100%;
   clear:both;
+}
+.home-current-project {
+  margin-bottom: 40px;
 }
 .insta-pic, .insta-container {
   position: relative;
@@ -1250,5 +1253,11 @@ figure.thumbnail {
     .share-options {
       width: 200px !important;
       margin: 50px 0 0 -100px;
+    }
+    .current-thumb {
+      float: none;
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 10px;
     }
 }
