@@ -11,7 +11,7 @@
  * 3. /theme/assets/js/main.min.js (in footer)
  */
 function roots_scripts() {
-  wp_enqueue_style('roots_main', get_template_directory_uri() . '/assets/css/main.min.css', false, '87e744a0ab1fc59f2243941fe2595d6f');
+  wp_enqueue_style('roots_main', get_template_directory_uri() . '/assets/css/main.min.css', false, '844c7cf2d1c2eda5ac72ab385afa6b0f');
 
   // jQuery is loaded using the same method from HTML5 Boilerplate:
   // Grab Google CDN's latest jQuery with a protocol relative URL; fallback to local if offline
@@ -28,7 +28,7 @@ function roots_scripts() {
 
   wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/vendor/modernizr-2.6.2.min.js', false, null, false);
   wp_register_script('maps', 'http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry', false, null, true);
-  wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', false, '4f7caad614d064fc2dcdf159cfb01746', true);
+  wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', false, 'f5183d06836f8039aec8568ea746f2c8', true);
   wp_enqueue_script('modernizr');
   wp_enqueue_script('jquery');
   wp_enqueue_script('maps');

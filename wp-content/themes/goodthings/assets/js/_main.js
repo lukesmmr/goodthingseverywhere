@@ -1,5 +1,4 @@
-/* @goodthngs / lukassommer - goodthingseverywhere.com - 2013/2014
-I try to keep it tidy and dry here. */
+/* @goodthngs / lukassommer - goodthingseverywhere.com - 2013/2014 */
 var infowinWidth,
     infoWinMinHeight,
     newMapHeight,
@@ -204,17 +203,14 @@ function goodThingsMap() {
   for (var i = 1; i < journalLocs.length; i++) {
     // make array from key value pairs
     locArray = $.makeArray(journalLocs[i]);
-    var journalLocLabel = '<label class="loclabel"><span class="locnr">' + (i) + '</span></label>';
+    var journalLocLabel = '<label class="loclabel"><span class="locnr">' + i + '</span></label>';
     var infoWindowPreview = '<span class="locpost-location">' + locArray[0] + ' - ' + locArray[7] +
                             '</span><a class="locpost-link" href="' + locArray[3] + '"><h4 class="locpost-title">' +
                             locArray[6] + '</h4></a><div class="locpost-preview" style="min-height:' + infoWinMinHeight +
                             ';"><img style="width: 250px; height: auto !important;" src="' + locArray[5] + '" /><p>' +
                             locArray[4] + '</p><a class="locpost-link" href="' + locArray[3] + '">Continue reading</a></div>';
-    if ( i > 9 ) {
-      setLabelAnchor = new google.maps.Point(7, 40);
-    } else {
-      setLabelAnchor = new google.maps.Point(4, 40);
-    }
+    setLabelAnchor = new google.maps.Point(13, 42);
+
     // set markers
     markers[i] = new MarkerWithLabel({
       icon : new google.maps.MarkerImage(markerPath, null, null, null, null),
