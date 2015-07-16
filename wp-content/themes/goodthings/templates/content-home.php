@@ -3,7 +3,6 @@
 ?>
 <div class="home-additionals">
 	<div id="keyvisual">
-		<img src="<?php bloginfo('template_url') ?>/assets/img/good-animated.svg" id="good-svg" class="hidden" alt="" />
 		<img src="<?php bloginfo('template_url') ?>/assets/img/good-keyvisual-gfx-940px.jpg" alt="" />
 	</div>	
 </div>
