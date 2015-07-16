@@ -41,6 +41,32 @@ function goodthings_cmb($meta_boxes) {
     'show_names' => true,
     'fields'     => array(
       array(
+        'name' => 'About Intro',
+        'desc' => '',
+        'id'   => 'about_intro',
+        'type' => 'wysiwyg',
+        'options' => array( 'textarea_rows' => 4 ),
+      ),
+      array(
+        'name' => 'Portrait Pic',
+        'desc' => 'Upload an image or enter an URL.',
+        'id'   => 'portrait_pic',
+        'type' => 'file',
+      ),
+      array(
+        'name' => 'Portrait Caption',
+        'desc' => 'Caption for my portrait',
+        'id'   => 'portrait_caption',
+        'type' => 'text'
+      ),
+      array(
+        'name' => 'More About List',
+        'desc' => '',
+        'id'   => 'more_list',
+        'type' => 'wysiwyg',
+        'options' => array( 'textarea_rows' => 10 ),
+      ),
+      array(
         'name' => 'Clients Title',
         'desc' => 'Title for client list',
         'id'   => 'client_title',

@@ -95,6 +95,43 @@ img.alignleft {margin: 10px 20px 20px 0;}
   width: 100%; 
   height: auto !important;
 }
+.about-details {
+  width: 100%;
+  margin-bottom: 20px;
+}
+img.portraic-pic {
+  width: 100%;
+  height: auto !important;
+  margin-bottom: 5px !important;
+}
+.more-content {
+  h4 {
+    font-size: 1.6em;
+    color: white;
+  }
+  font-size: 1.1em;
+  color: white;
+  max-width: 100%;
+  background-color: @good-turquoise;
+  display: block;
+  margin: 10px 0;
+  padding: 15px 20px 10px 20px;
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      margin: 5px 0;
+      i {margin-right: 10px}
+    }
+  }
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+    color: @good-black;
+  }
+}
 /* navigation */
 .nav a {
    font-family: @headline-font;
@@ -624,19 +661,10 @@ h3.project-title {
 
 /*about me */
  #awards {margin-bottom: 50px;}
- .client-list, .client-list a, .award-list, .award-list a {
-  font-size: 36px;
-  text-transform: uppercase;
-  font-weight: 800;
-  line-height: 38px;
-  color: @good-grey !important;
+ .client-list, .award-list, .client-list a, .award-list a {
+  // font-size: 18px;
   text-decoration: none;
  }
-.client-list, .award-list {
-   background: -webkit-linear-gradient(@good-grey, lighten(@good-blue, 30%));
-   -webkit-background-clip: text;
-   -webkit-text-fill-color: transparent;
-}
 .client-list a:hover, .award-list a:hover {
   color: #CCC !important;
 }
@@ -644,6 +672,7 @@ h3.project-title {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: inline;
 }
 
 /* journal */
@@ -1086,6 +1115,11 @@ figure.thumbnail {
 @media (min-width: @screen-sm-min) {
    .journal-thumbnail {width:50%;}
    .journal-thumbnail img {width: 100%; height: auto !important;}
+   .about-details {
+      float: right;
+      max-width: 340px;
+      margin: 0 0 20px 20px;
+   }
 }
 @media (max-width: 992px) {
    #legal-stuff {float: left;}
@@ -1210,7 +1244,8 @@ figure.thumbnail {
   }
    .navbar-header, #logo {margin-top: 20px !important;}
    header.navbar {margin: 80px 0 10px 0 !important;}
-   .about-content figure.thumbnail {margin-bottom: 30px !important;}
+   .about-content figure.thumbnail {margin-bottom: 10px !important;}
+   img.portraic-pic {margin-top: 20px !important;}
    .home-intro {font-size: 24px;}
    .page-header h1 {font-size: 2.2em;}
    .home-additionals {margin-bottom: 20px; padding-bottom: 20px;}
