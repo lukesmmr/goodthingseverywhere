@@ -52,7 +52,7 @@ function optionsframework_options() {
 		'std' => '',
 		'type' => 'textarea');
 
-	
+
 	$options[] = array(
 		'name' => __('Current project thumbnail', 'options_check'),
 		'desc' => __('Upload current project thumbnail for project page.', 'options_check'),
