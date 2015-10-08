@@ -9,7 +9,7 @@
 	$award_list = get_post_meta($post->ID, 'award_list', true);
 	$award_title = get_post_meta($post->ID, 'award_title', true);
 ?>
-<div class="about-content">
+<div class="container about-content">
   <div class="about-details">
       <figure class="thumbnail wp-caption">
         <img class="portraic-pic" src="<?php echo $portrait_pic ?>" alt="Lukas Portrait">
@@ -47,4 +47,4 @@
 		</div>
 	</div>
 
-</div> 
+</div>

@@ -79,6 +79,18 @@ function goodthings_cmb( array $meta_boxes) {
         'type' => 'text_url',
       ),
       array(
+        'name' => 'Slide Link Text',
+        'desc' => 'What should the button say...',
+        'id'   => 'slide_url_text',
+        'type' => 'text_medium',
+      ),
+      array(
+        'name' => 'Slide Label',
+        'desc' => 'Categorize it...',
+        'id'   => 'slide_label',
+        'type' => 'text_small',
+      ),
+      array(
         'name' => 'Is the slide link external?',
         'desc' => 'Inserts target _blank and icon',
         'id'   => 'slide_url_type',

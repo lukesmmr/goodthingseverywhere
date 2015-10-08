@@ -26,8 +26,8 @@
     }
   ?>
 
-  <div class="wrap container" role="document">
-    <div class="content row">
+  <div class="wrap container-fluid" role="document">
+    <div class="content">
       <div class="main <?php echo roots_main_class(); ?>" role="main">
         <?php include roots_template_path(); ?>
       </div><!-- /.main -->
@@ -37,7 +37,6 @@
         </aside><!-- /.sidebar -->
       <?php endif; ?>
     </div><!-- /.content -->
- 
 
   <?php get_template_part('templates/footer'); ?>
   </div><!-- /.wrap -->

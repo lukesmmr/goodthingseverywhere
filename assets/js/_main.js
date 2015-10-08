@@ -458,7 +458,9 @@ var GoodThingsSite = {
           toggleMap();
         }
       });
-      $('#good-svg').removeClass('hidden');
+      $('.carousel').carousel({
+        interval: 10000
+      });
       // get latest instagram image
        $.getScript(siteurl + "wp-content/themes/goodthings/assets/js/keys.js", function() {
          $.ajax({

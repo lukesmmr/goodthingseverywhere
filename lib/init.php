@@ -16,7 +16,7 @@ function roots_setup() {
   // set_post_thumbnail_size(150, 150, false);
   add_image_size('journal-home-thumb', 350, 9999);
   add_image_size('journal-main-thumb', 500, 9999);
-  add_image_size('home-carousel', 1280, 500, true);
+  add_image_size('home-carousel', 1280, 550, true);
 
   // Add post formats (http://codex.wordpress.org/Post_Formats)
   // add_theme_support('post-formats', array('aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat'));

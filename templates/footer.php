@@ -1,4 +1,4 @@
-<footer class="content-info" role="contentinfo">
+<footer class="container content-info" role="contentinfo">
   	<div id="more-social">
   		More good things
   		<ul class="social-icons">

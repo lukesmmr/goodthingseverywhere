@@ -1,4 +1,4 @@
-<?php 
+<?php
 $post_loc = get_post_meta($post->ID, 'post_loc', true);
 $post_loc_lat = get_post_meta($post->ID, 'post_loc_lat', true);
 $post_loc_lng = get_post_meta($post->ID, 'post_loc_lng', true);
@@ -7,7 +7,7 @@ $maps_link = 'http://maps.google.com/?q=' . $post_loc_lat . ',' . $post_loc_lng 
 $article_content = $post->post_content;
 ?>
 <div class="post-meta">
-	<time class="published journal-date" datetime="<?php echo get_the_time('c'); ?>">			
+	<time class="published journal-date" datetime="<?php echo get_the_time('c'); ?>">
 		<?php echo get_the_date('j. M y'); ?>
 	</time>
 	<?php if ( is_single() ) : if ($post_loc_lat || $post_loc_lng) : ?>
@@ -15,7 +15,7 @@ $article_content = $post->post_content;
 		<?php else : ?>
 		<?php if ($post_loc ) : ?>
 		<span class="maps-link"><?php echo $post_loc; ?></span>
-	<?php endif; endif; endif; ?>	
+	<?php endif; endif; endif; ?>
 	<span class="comment-count">
   		<?php comments_number( '', '1 Comment', '% Comments' ); ?>
 	</span>
