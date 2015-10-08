@@ -1,4 +1,5 @@
-.htaccess
-wp-config.php
-wp-content/plugins/*
-media/*
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
+node_modules
+lib/keys.php
+assets/js/keys.js
