@@ -38,9 +38,7 @@ add_filter( 'cmb2_meta_boxes', 'goodthings_cmb' );
  * @return array
  */
 function goodthings_cmb( array $meta_boxes) {
-  /**
-   * Page Options meta box
-   */
+
   $meta_boxes['home_teaser'] = array(
     'id'         => 'home_teaser',
     'title'      => 'Home Teaser',
@@ -57,6 +55,35 @@ function goodthings_cmb( array $meta_boxes) {
         'type' => 'wysiwyg',
         'options' => array( 'textarea_rows' => 5 ),
       ),
+    ),
+  );
+
+  $meta_boxes['slider_meta'] = array(
+    'id'         => 'slider_meta',
+    'title'      => 'Slider Meta',
+    'object_types'      => array('carousel'),
+    'context'    => 'normal',
+    'priority'   => 'high',
+    'show_names' => true,
+    'fields'     => array(
+      array(
+        'name' => 'Slide Excerpt',
+        'desc' => 'What\'s this about?',
+        'id'   => 'slide_excerpt',
+        'type' => 'textarea_small',
+      ),
+      array(
+        'name' => 'Slide Link',
+        'desc' => 'with http://',
+        'id'   => 'slide_url',
+        'type' => 'text_url',
+      ),
+      array(
+        'name' => 'Is the slide link external?',
+        'desc' => 'Inserts target _blank and icon',
+        'id'   => 'slide_url_type',
+        'type' => 'checkbox'
+      )
     ),
   );
 
