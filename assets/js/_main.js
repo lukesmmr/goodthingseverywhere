@@ -461,6 +461,7 @@ var GoodThingsSite = {
       $('.carousel').carousel({
         interval: 10000
       });
+      console.log('script test');
       // get latest instagram image
        $.getScript(siteurl + "wp-content/themes/goodthings/assets/js/keys.js", function() {
          $.ajax({

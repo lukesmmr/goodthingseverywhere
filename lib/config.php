@@ -11,8 +11,12 @@ add_theme_support('jquery-cdn');            // Enable to load jQuery from the Go
 /**
  * Configuration values
  */
-define('GOOGLE_ANALYTICS_ID', ''); // UA-XXXXX-Y (Note: Universal Analytics only, not Classic Analytics)
+
 define('POST_EXCERPT_LENGTH', 50); // Length in words for excerpt_length filter (http://codex.wordpress.org/Plugin_API/Filter_Reference/excerpt_length)
+
+if (!defined('WP_ENV')) {
+  define('WP_ENV', 'production');  // scripts.php checks for values 'production' or 'development'
+}
 
 /**
  * .main classes

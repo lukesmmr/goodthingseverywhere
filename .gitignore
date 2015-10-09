@@ -3,5 +3,7 @@
 node_modules
 lib/keys.php
 assets/js/keys.js
-assets/css/main.min.css
-assets/js/scripts.min.js
+assets/css/main.css.map
+assets/css/*main*.css
+assets/js/*scripts*.js
+assets/manifest.json
