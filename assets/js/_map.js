@@ -1,7 +1,8 @@
-/* Good Things Journal Map v0.5 - 24.11.2014
+/* Good Things Journal Map v0.5 - Last edit 24.11.2014
 Description: Loops through data attributes with geo data located in post meta and set up map, article & user position, connect with polylines
 and add infowindows with post previews. Necessary enhancements:
 - add location links on journal entry to open map (panTo)
+- invert select dropdown order
 - read / write marker data from json
 */
 
