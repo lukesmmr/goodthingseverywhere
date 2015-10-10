@@ -40,5 +40,9 @@
 
   <?php get_template_part('templates/footer'); ?>
   </div><!-- /.wrap -->
+  <?php if (WP_ENV === 'development') : ?>
+    <!-- live reloading -->
+    <script src="//localhost:35729/livereload.js"></script>
+  <?php endif; ?>
 </body>
 </html>
