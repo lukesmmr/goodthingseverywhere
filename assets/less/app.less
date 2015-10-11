@@ -79,7 +79,8 @@ h2.entry-title a, h2.entry-title a:hover {
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
 }
-.nav a, .logo a, .award-list a, footer a, .journal-map-btn-container button {
+
+.animate-transition {
    -webkit-transition: all 0.3s ease;
    -moz-transition: all 0.3s ease;
    -o-transition: all 0.3s ease;
@@ -216,12 +217,13 @@ header.navbar {
   border: none;
 }
 .nav a {
-   font-family: @headline-font;
-   font-weight: 600 !important;
-   font-size: 18px;
-   color: @good-black !important;
-   text-transform: uppercase;
-   text-decoration: none;
+  font-family: @headline-font;
+  font-weight: 600 !important;
+  font-size: 18px;
+  color: @good-black !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  .animate-transition();
   a:hover, .active a {
      color: @good-blue !important;
   }
@@ -316,6 +318,7 @@ header.navbar {
     line-height: 1.2em;
     text-decoration: none;
     z-index: 5;
+    .animate-transition();
     &:hover {
       text-decoration: none;
       color: @good-blue !important;
@@ -360,6 +363,7 @@ header.navbar {
   }
   h1 {
     font-size: 32px;
+    .animate-transition();
     @media (min-width: @screen-phone) {
       font-size: 48px;
     }
@@ -544,9 +548,9 @@ header.navbar {
       height: 25px;
       width: 90px;
       left: 50%;
-      margin-left: -45px;
       line-height: 1;
       font-size: 12px;
+      .animate-transition();
       &:hover {
         color: @good-black;
       }
@@ -1268,6 +1272,7 @@ footer.content-info {
   margin: 0 auto 25px auto;
   text-transform: uppercase;
   font-weight: 600;
+  .animate-transition();
   a, a:active {
    color: @good-orange;
    text-decoration: none;
