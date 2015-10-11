@@ -21,6 +21,11 @@ module.exports = function(grunt) {
     'assets/js/_*.js'
   ];
 
+ var cssFileList = [
+  'assets/css/bootstrap-select.css',
+  'assets/css/app.css'
+ ];
+
   grunt.initConfig({
     jshint: {
       options: {
@@ -36,7 +41,7 @@ module.exports = function(grunt) {
     less: {
       dev: {
         files: {
-          'assets/css/main.css': [
+          'assets/css/app.css': [
             'assets/less/app.less'
           ]
         },
@@ -45,7 +50,7 @@ module.exports = function(grunt) {
           // LESS source map
           // To enable, set sourceMap to true and update sourceMapRootpath based on your install
           sourceMap: true,
-          sourceMapFilename: 'assets/css/main.css.map',
+          sourceMapFilename: 'assets/css/app.css.map',
           sourceMapRootpath: '/app/themes/roots/'
         }
       },
@@ -64,10 +69,14 @@ module.exports = function(grunt) {
       options: {
         separator: ';',
       },
-      dist: {
+      js: {
         src: [jsFileList],
         dest: 'assets/js/scripts.js',
       },
+      css: {
+        src: [cssFileList],
+        dest: 'assets/css/main.css'
+      }
     },
     uglify: {
       dist: {
