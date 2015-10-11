@@ -21,10 +21,10 @@ module.exports = function(grunt) {
     'assets/js/_*.js'
   ];
 
- var cssFileList = [
-  'assets/css/bootstrap-select.css',
-  'assets/css/app.css'
- ];
+  var cssFileList = [
+    'assets/css/bootstrap-select.css',
+    'assets/css/app.css'
+  ];
 
   grunt.initConfig({
     jshint: {
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
       ]
     },
     less: {
-      dev: {
+      dist: {
         files: {
           'assets/css/app.css': [
             'assets/less/app.less'
@@ -54,16 +54,6 @@ module.exports = function(grunt) {
           sourceMapRootpath: '/app/themes/roots/'
         }
       },
-      build: {
-        files: {
-          'assets/css/main.min.css': [
-            'assets/less/app.less'
-          ]
-        },
-        options: {
-          compress: true,
-        }
-      }
     },
     concat: {
       options: {
@@ -76,6 +66,16 @@ module.exports = function(grunt) {
       css: {
         src: [cssFileList],
         dest: 'assets/css/main.css'
+      }
+    },
+    cssmin: {
+      options: {
+        keepSpecialComments: 0
+      },
+      target: {
+        files: {
+          'assets/css/main.min.css': 'assets/css/main.css'
+        }
       }
     },
     uglify: {
@@ -107,7 +107,7 @@ module.exports = function(grunt) {
           'assets/less/*.less',
           'assets/less/bootstrap/*.less'
         ],
-        tasks: ['less:dev']
+        tasks: ['less', 'concat:css']
       },
       js: {
         files: [
@@ -143,13 +143,15 @@ module.exports = function(grunt) {
   ]);
   grunt.registerTask('dev', [
     'jshint',
-    'less:dev',
+    'less',
     'concat'
   ]);
   grunt.registerTask('build', [
     'clean',
     'jshint',
-    'less:build',
+    'less',
+    'concat:css',
+    'cssmin',
     'uglify',
     'version'
   ]);
