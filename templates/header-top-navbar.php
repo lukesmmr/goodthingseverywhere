@@ -3,14 +3,14 @@
 <div id="map-canvas"><span class="map-loader"><img src="<?php bloginfo('template_url') ?>/assets/img/loading-bars.svg" alt="" width="64" height="64" /></span></div>
   <div id="dropdown-pos">
     <span class="distance-calc hidden-xs">
-      <i class="map-icon glyphicon glyphicon-education"></i>
+      <i class="map-icon glyphicon glyphicon-info-sign"></i>
     </span>
     <div class="me-you-btn-group btn-group">
       <button id="current-loc-btn" type="button" class="btn btn-default">Me</button>
       <button id="user-loc-btn" type="button" class="btn btn-default">You</button>
     </div>
     <select class="selectpicker show-tick marker-coords" data-width="180px" data-live-search="false">
-      <option selected="selected" data-post-loc="current" data-post-loc-lat="<?php echo of_get_option('current_loc_lat') ?>" data-post-loc-lng="<?php echo of_get_option('current_loc_lng') ?>" data-post-url="&nbsp;" data-post-excerpt="&nbsp;" data-post-thumb="&nbsp;" data-post-title="&nbsp;" data-post-date="&nbsp;">Travel to...</option>
+      <option selected="selected" data-post-loc="current" data-post-loc-lat="<?php echo of_get_option('current_loc_lat') ?>" data-post-loc-lng="<?php echo of_get_option('current_loc_lng') ?>" data-post-url="&nbsp;" data-post-excerpt="&nbsp;" data-post-thumb="&nbsp;" data-post-title="&nbsp;" data-post-date="&nbsp;">I have been to...</option>
       <?php $wp_query= null;
       $counter = 0;
       $wp_query = new WP_Query(); $wp_query->query(array ('showposts' => '-1', 'orderby' => 'date', 'order' => 'ASC'));
@@ -54,9 +54,9 @@
     </div>
   </div>
   <div class="journal-map-btn-container">
-    <div id="journal-map-caption"><i class="glyphicon glyphicon-info-sign"></i> <span class="map-msg"></span></div>
+    <div id="journal-map-notification"><i class="glyphicon glyphicon-info-sign"></i> <span class="map-msg"></span></div>
     <div id="arrow-pos" class="map-btn">
-      <button id="journal-map-toggle">Explore</button>
+      <button id="journal-map-toggle">Explore Map</button>
       <div id="map-arrow" class="arrow-down"></div>
     </div>
   </div>

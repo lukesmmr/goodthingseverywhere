@@ -66,7 +66,7 @@ function error(err) {
 function calculateDistance(userPos) {
   if (posDenied === false) {
       distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
-      $(".distance-to-me").text( "We're " + distanceToMe.toFixed(2) + " Kms apart");
+      $(".distance-to-me").text( "You're " + distanceToMe.toFixed(2) + " Kms away!");
       return distanceToMe;
   }
 }
@@ -232,8 +232,7 @@ function goodThingsMap() {
   // get current loc
   currentPosMarker = new MarkerWithLabel({
     position: currentPos,
-    icon: new google.maps.MarkerImage(markerPath,
-      null, null, null, null),
+    icon: new google.maps.MarkerImage(markerPath, null, null, null, null),
     draggable: false,
     map: map,
     labelContent: "Current",
@@ -257,8 +256,7 @@ function goodThingsMap() {
         //console.log("Cool, you're really close to where i am!");
         matchPosMarker = new MarkerWithLabel({
           position: currentPos,
-          icon: new google.maps.MarkerImage(userMarkerPath,
-            null, null, null, null),
+          icon: new google.maps.MarkerImage(userMarkerPath, null, null, null, null),
           draggable: false,
           map: map,
           labelContent: "You're only " + distanceToMe.toFixed(2) + "km away!",
@@ -272,8 +270,7 @@ function goodThingsMap() {
         currentPosMarker.setMap(null);
         currentPosMarker = new MarkerWithLabel({
           position: currentPos,
-          icon: new google.maps.MarkerImage(markerPath,
-            null, null, null, null),
+          icon: new google.maps.MarkerImage(markerPath, null, null, null, null),
           draggable: false,
           map: map,
           labelContent: "My position",
@@ -284,8 +281,7 @@ function goodThingsMap() {
 
         userPosMarker = new MarkerWithLabel({
           position: userPos,
-          icon: new google.maps.MarkerImage(userMarkerPath,
-            null, null, null, null),
+          icon: new google.maps.MarkerImage(userMarkerPath, null, null, null, null),
           draggable: false,
           map: map,
           labelContent: "You",
@@ -326,9 +322,9 @@ function goodThingsMap() {
       }
       // map notifications
       $('span.map-msg').text(randomClickMore());
-      $('#journal-map-caption').delay(200).slideDown(300);
+      $('#journal-map-notification').delay(200).slideDown(300);
       captiontimer = setTimeout(function() {
-            $('#journal-map-caption').delay(200).slideUp(300);
+            $('#journal-map-notification').delay(200).slideUp(300);
       }, 6000);
   });
 
@@ -352,9 +348,9 @@ function goodThingsMap() {
       $('#user-loc-btn').prop('disabled', true);
       $('span.map-msg').text(posmsg);
     }
-    $('#journal-map-caption').delay(200).slideDown(300);
+    $('#journal-map-notification').delay(200).slideDown(300);
     captiontimer = setTimeout(function() {
-        $('#journal-map-caption').delay(200).slideUp(300);
+        $('#journal-map-notification').delay(200).slideUp(300);
     }, 6000);
 
     map.setZoom(6);
@@ -381,8 +377,8 @@ function toggleMap() {
     $('span.map-msg').text(randomTips());
     $('#arrow-pos').addClass('map-btn').removeClass('close-btn');
     $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
-    $('#journal-map-caption').slideUp(300);
-    $('#journal-map-toggle').text('Explore');
+    $('#journal-map-notification').slideUp(300);
+    $('#journal-map-toggle').text('Explore Map');
 
     // remove anchor
     window.location.hash = '';
@@ -398,12 +394,12 @@ function toggleMap() {
     $('#journal-map').animate({ marginTop: "0px" }, 300);
     $('#arrow-pos').removeClass('map-btn').addClass('close-btn');
     $('#map-arrow').removeClass('arrow-down').addClass('arrow-up');
-    $('#journal-map-caption').delay(200).slideDown(300);
+    $('#journal-map-notification').delay(200).slideDown(300);
     $('#journal-map-toggle').text('Close');
 
     // map notification
     captiontimer = setTimeout(function() {
-          $('#journal-map-caption').slideUp(300);
+          $('#journal-map-notification').slideUp(300);
     }, 6000);
 
     // set anchor

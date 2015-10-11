@@ -505,9 +505,9 @@ header.navbar {
       opacity: 0;
     }
   }
-  #journal-map-caption {
+  #journal-map-notification {
     color: white;
-    background: @good-turquoise;
+    background: @good-blue;
     padding: 6px;
     text-align: center;
     font-size: 13px;
@@ -543,7 +543,7 @@ header.navbar {
       line-height: 1;
       font-size: 12px;
       &:hover {
-        color: @good-blue;
+        color: @good-black;
       }
       &:focus {
         outline: 0;
@@ -567,10 +567,10 @@ header.navbar {
        border-right: 60px solid transparent;
     }
     .arrow-down {
-       border-top: 40px solid @good-turquoise;
+       border-top: 40px solid @good-blue;
     }
     .arrow-up {
-       border-bottom: 35px solid @good-turquoise;
+       border-bottom: 35px solid @good-blue;
     }
     .close-btn {
       height: 35px;
@@ -588,7 +588,7 @@ header.navbar {
 
   .journal-location-details {
     width: 100%;
-    background: @good-turquoise;
+    background: @good-blue;
     height: 35px;
     color: white !important;
     font-size: 13px;
@@ -626,7 +626,10 @@ header.navbar {
 
 }
 
-.marker-label, .marker-label label.loclabel a, .marker-label label span.locnr, .marker-label-user {
+.marker-label,
+.marker-label label.loclabel a,
+.marker-label label span.locnr,
+.marker-label-user {
    color: @good-orange;
    font-size: 14px !important;
    text-align: left;
@@ -654,19 +657,22 @@ header.navbar {
 }
 
 .marker-label label span.locnr {
-   font-size: 11px !important;
-    margin: 0;
-    cursor: default;
-    background-color: white;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    display: inline-block;
-    text-align: center;
-    padding-top: 2px;
-    @media (max-width: @screen-tablet) {
-      margin: -15px 0 0 0;
-    }
+  font-size: 11px !important;
+  margin: 0;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  text-align: center;
+  padding-top: 2px;
+  @media (max-width: @screen-tablet) {
+    margin: -15px 0 0 0;
+  }
+  &:hover {
+    color: @good-blue;
+  }
 }
 .locpost-preview {
   font-family: @content-font;
@@ -695,11 +701,10 @@ header.navbar {
   margin: 5px 0 !important;
   font-size: 13px !important;
   @media (min-width: @screen-phone) {
-    font-size: 16px !important;
-    margin: 10px 0 !important;
+    font-size: 18px !important;
   }
   &:hover {
-    color: @good-turquoise;
+    color: lighten(@good-black, 10%);
   }
 }
 .locpost-link {
@@ -707,7 +712,8 @@ header.navbar {
   text-decoration: none;
   display: block;
   &:hover {
-    text-decoration: none;
+    text-decoration: underline;
+    color: @good-blue;
   }
 }
 span.locpost-location {
@@ -727,7 +733,8 @@ span.locpost-location {
     overflow: hidden !important;
   }
   div.locpost-preview {
-    min-height: 70px !important;
+    min-height: 80px !important;
+    margin-bottom: 20px;
   }
 }
 
@@ -740,6 +747,7 @@ span.locpost-location {
   bottom: 10px;
   font-family: @content-font;
   font-size: 16px;
+  pointer-events: none;
   a {
     text-decoration: none !important;
   }
@@ -751,6 +759,7 @@ span.locpost-location {
       max-width: 160px;
     }
     margin-right: 10px;
+    pointer-events: all;
     .dropdown-menu {
       max-height: 200px !important;
       max-width: 220px;
@@ -761,10 +770,14 @@ span.locpost-location {
       right: 0;
       left: -100px;
       overflow: hidden;
+      li:last-child {
+        padding-bottom: 10px;
+      }
     }
   }
   .me-you-btn-group {
     margin-left: 10px;
+    pointer-events: all;
   }
 }
 
@@ -823,6 +836,7 @@ h3.home-journal-title {
   font-size: 24px;
   text-transform: uppercase;
   text-decoration: none;
+  line-height: 1;
   a {
      text-decoration: none;
   }
