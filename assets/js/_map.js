@@ -56,7 +56,7 @@ if( /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 function error(err) {
     if (err.code === 1) { // user denied
       console.log("Geolocation was denied! " + posDenied);
-      $('.distance-to-me').hide();
+      $('.distance-calc').hide();
     } else {
       // other error
       console.log("Geolocation failed!");
@@ -85,7 +85,7 @@ function distanceToUser() {
   if ("geolocation" in navigator) {
       if(posLocated) {return;} // execute only once
       posLocated = true;
-      $('.map-icon').after( '<span class="distance-to-me">Locating...</span>');
+      $('.map-icon').show().after( '<span class="distance-to-me">Locating...</span>');
       $('.distance-to-me').fadeTo( "slow" , 1);
       getCurrentLocation(function(userPos){
         calculateDistance(userPos);
@@ -382,7 +382,7 @@ function toggleMap() {
     $('#arrow-pos').addClass('map-btn').removeClass('close-btn');
     $('#map-arrow').removeClass('arrow-up').addClass('arrow-down');
     $('#journal-map-caption').slideUp(300);
-    $('#journal-map-toggle').text('Map');
+    $('#journal-map-toggle').text('Explore');
 
     // remove anchor
     window.location.hash = '';

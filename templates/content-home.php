@@ -88,12 +88,8 @@
 		<?php endwhile; ?>
 	</div>
 
-	<div class="keyvisual">
-		<img src="<?php bloginfo('template_url') ?>/assets/img/good-keyvisual-gfx-940px.jpg" alt="" />
-	</div>
-
 	<div class="home-latest-social">
-		<header class="home-header">
+	<!-- 	<header class="home-header">
 			<h2>Current project <i class="glyphicon glyphicon-map-marker"></i></h2>
 		</header>
 
@@ -131,7 +127,7 @@
 
 			<?php endif; ?>
 
-		</div>
+		</div> -->
 
 		<header class="home-header">
 			<h2>Right now <i class="glyphicon glyphicon-picture"></i></h2>
@@ -170,7 +166,7 @@
 			</div>
 		</div>
 		<?php endwhile; ?>
-		<a href="<?php bloginfo('url') ?>/travel-journal" class="read-more-journal">See all <i class="glyphicon glyphicon-chevron-right"></i></a>
+		<a href="<?php bloginfo('url') ?>/travel-journal" class="read-all-journal">See all <i class="glyphicon glyphicon-chevron-right"></i></a>
 	</div>
 
 </div>

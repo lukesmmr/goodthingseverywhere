@@ -2,7 +2,10 @@
 <div id="journal-map">
 <div id="map-canvas"><span class="map-loader"><img src="<?php bloginfo('template_url') ?>/assets/img/loading-bars.svg" alt="" width="64" height="64" /></span></div>
   <div id="dropdown-pos">
-    <div class="btn-group">
+    <span class="distance-calc hidden-xs">
+      <i class="map-icon glyphicon glyphicon-education"></i>
+    </span>
+    <div class="me-you-btn-group btn-group">
       <button id="current-loc-btn" type="button" class="btn btn-default">Me</button>
       <button id="user-loc-btn" type="button" class="btn btn-default">You</button>
     </div>
@@ -32,24 +35,28 @@
   <div class="journal-location-details">
     <div class="container">
       <ul>
-      <li class="distance-calc">
-        <i class="map-icon glyphicon glyphicon-map-marker"></i>
-      </li>
-      <li class="display-loc"><em>I'm in</em> <?php echo of_get_option('current_loc'); ?></li>
-      <?php if ( of_get_option('current_project') ) : ?>
+       <li class="display-loc"><i class="glyphicon glyphicon-map-marker"></i><em>I'm in</em> <?php echo of_get_option('current_loc'); ?></li>
+        <?php if ( of_get_option('current_project') ) : ?>
         <li class="current-project"> for
-        <?php if (of_get_option('current_url') !== '' ) : ?><a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php endif; ?><?php echo of_get_option('current_project') ?><?php if( of_get_option('current_url') !== '' ) : ?></a><?php endif; ?>
-        <?php //if( of_get_option('last_updated') !== '' ) : echo ' (' . of_get_option('last_updated') . ')'; endif; ?>
+          <?php if (of_get_option('current_url') !== '' ) : ?><a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php endif; ?><?php echo of_get_option('current_project') ?><?php if( of_get_option('current_url') !== '' ) : ?></a><?php endif; ?>
+          <?php //if( of_get_option('last_updated') !== '' ) : echo ' (' . of_get_option('last_updated') . ')'; endif; ?>
         </li>
-      <?php endif; ?>
-      <li class="next-loc"><i class="glyphicon glyphicon-heart-empty"></i> <em>Going to</em> <?php echo of_get_option('next_loc'); ?></li>
+        <?php endif; ?>
+        <li class="next-loc">
+        <i class="glyphicon glyphicon-plane"></i>
+        <?php if (of_get_option('next_loc')): ?>
+          <em>Going to</em> <?php echo of_get_option('next_loc'); ?>
+        <?php else : ?>
+          <em>Staying put</em>
+        <?php endif; ?>
+        </li>
       </ul>
     </div>
   </div>
   <div class="journal-map-btn-container">
     <div id="journal-map-caption"><i class="glyphicon glyphicon-info-sign"></i> <span class="map-msg"></span></div>
     <div id="arrow-pos" class="map-btn">
-      <button id="journal-map-toggle">Map</button>
+      <button id="journal-map-toggle">Explore</button>
       <div id="map-arrow" class="arrow-down"></div>
     </div>
   </div>

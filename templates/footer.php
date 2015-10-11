@@ -1,5 +1,6 @@
 <footer class="container content-info" role="contentinfo">
-  	<div id="more-social">
+    <hr />
+  	<div class="more-social">
   		More good things
   		<ul class="social-icons">
         <li><a href="https://twitter.com/goodthngs" target="_blank">News</a></li>
@@ -12,9 +13,9 @@
   		<span class="footer-comment">This website evolves while I travel. Come back soon.</span>
 
   	</div>
-  	<div id="legal-stuff">
+  	<div class="legal-stuff">
       <?php dynamic_sidebar('sidebar-footer'); ?>
-      <span class="footer-comment">&copy; <?php echo date('Y'); ?></span>
+      <span class="copyright">&copy; <?php echo date('Y'); ?></span>
   	</div>
 </footer>
 <?php if (WP_ENV !== 'development') : ?>
