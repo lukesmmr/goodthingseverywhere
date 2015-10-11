@@ -63,7 +63,7 @@ h2.entry-title a, h2.entry-title a:hover {
    text-decoration: none;
 }
 .page-header {
-   margin: 40px auto 40px auto;
+   margin: 50px auto 40px auto;
    padding-bottom: 10px;
    border-bottom: 1px solid @good-grey;
 }
@@ -185,6 +185,9 @@ img.portraic-pic {
    position:relative;
    width: 100%;
    margin: 0 auto;
+   @media (min-width: @screen-tablet) {
+    margin-top: -10px;
+   }
 }
 .home .navbar {
   @media (min-width: @screen-tablet) {
@@ -193,14 +196,11 @@ img.portraic-pic {
   }
 }
 header.navbar {
-  margin: 25px 0 10px 0;
-  @media (min-width: @screen-phone) {
-    margin: 50px 0 10px 0;
-  }
+  margin: 50px 0 10px 0;
 }
-@media (max-width: @screen-phone) {
+@media (max-width: @screen-tablet) {
   .navbar-header {
-    margin-top: 20px !important;
+    margin-top: -10px !important;
   }
 }
 .navbar {
@@ -211,20 +211,22 @@ header.navbar {
   border:none;
 }
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
-   padding: 16px 0 0 0;
-   float: right;
+  float: right;
+  padding: 0;
 }
 .navbar-collapse {
   border: none;
 }
-.nav a {
-  font-family: @headline-font;
-  font-weight: 600 !important;
-  font-size: 18px;
-  color: @good-black !important;
-  text-transform: uppercase;
-  text-decoration: none;
-  .animate-transition();
+.nav {
+  a {
+    font-family: @headline-font;
+    font-weight: 600 !important;
+    font-size: 18px;
+    color: @good-black !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    .animate-transition();
+  }
   a:hover, .active a {
      color: @good-blue !important;
   }
@@ -232,6 +234,16 @@ header.navbar {
     text-decoration: none !important;
   }
 }
+
+.home .nav a {
+  @media (min-width: @screen-tablet) {
+    color: white !important;
+    &:hover {
+      color: @good-black !important;
+    }
+  }
+}
+
 .navbar-nav>li {float: inherit;}
 .nav>li>a {
   padding: 10px 15px 10px 15px;
@@ -296,43 +308,56 @@ header.navbar {
 .logo {
   z-index: 2;
   position: relative;
-  @media (max-width: @screen-phone) {
-    margin-top: 20px !important;
+  margin-top: 10px;
+  @media (min-width: @screen-tablet) {
+    margin-top: 40px;
   }
-  @media (max-width: @screen-tablet) {
-    width: 160px;
-    margin: 0;
-    position: absolute;
-    top: -10px;
-    left: 20px;
+  span.main {
+    font-family: 'ff-prater-script-web', 'Helvetica Neue', Helvetica;
+    display: inline-block;
+    text-align: left;
+    font-size: 42px;
+    @media (min-width: @screen-tablet) {
+      font-size: 60px;
+    }
+  }
+  span.subline {
+    display: block;
+    font-size: 7px;
+    margin-left: 20px;
+    @media (min-width: @screen-tablet) {
+      margin-left: 27px;
+      font-size: 10px;
+    }
   }
   a {
-    padding: 25px 0 27px 0;
+    .animate-transition();
     position: absolute;
     font-weight: 600 !important;
     color: @good-black !important;
     font-style: italic;
-    font-size: 20px;
     text-transform: uppercase;
     text-align: center;
-    line-height: 1.2em;
+    line-height: 0.9;
+    @media (min-width: @screen-tablet) {
+      line-height: 1.2em;
+    }
     text-decoration: none;
     z-index: 5;
-    .animate-transition();
     &:hover {
       text-decoration: none;
       color: @good-blue !important;
     }
-    @media (max-width: @screen-tablet) {
-      color: @good-orange !important;
-      width:160px;
-      text-align: left;
-      font-size: 13px !important;
-      line-height: 13px;
+  }
+}
+.home .logo a {
+  @media(min-width: @screen-tablet) {
+    color: white !important;
+    &:hover {
+      color: @good-black !important;
     }
   }
 }
-
 .site-head {
    position: relative;
 }
@@ -356,6 +381,7 @@ header.navbar {
 
 /* carousel styles */
 .home-carousel {
+  margin-top: 25px;
   margin-bottom: 10px;
   @media (min-width: @screen-tablet) {
     margin-top: 35px;
@@ -376,7 +402,7 @@ header.navbar {
     margin-bottom: 10px;
   }
   .carousel-inner, .item {
-    min-height: 450px;
+    min-height: 400px;
     background-size: cover !important;
     @media (min-width: @screen-md-min) {
       min-height: 550px;
@@ -496,7 +522,7 @@ header.navbar {
   #map-canvas {
     width: 100%;
     z-index:-2;
-    background: lighten(@good-blue, 30%);
+    background: darken(@good-grey, 10%);
   }
   .map-loader {
      text-align: center;
@@ -516,7 +542,7 @@ header.navbar {
   }
   #journal-map-notification {
     color: white;
-    background: @good-blue;
+    background: lighten(@good-blue, 20%);
     padding: 6px;
     text-align: center;
     font-size: 13px;
@@ -579,10 +605,10 @@ header.navbar {
        border-right: 60px solid transparent;
     }
     .arrow-down {
-       border-top: 40px solid @good-blue;
+       border-top: 40px solid lighten(@good-blue, 20%);
     }
     .arrow-up {
-       border-bottom: 35px solid @good-blue;
+       border-bottom: 35px solid lighten(@good-blue, 20%);
     }
     .close-btn {
       height: 35px;
@@ -600,7 +626,7 @@ header.navbar {
 
   .journal-location-details {
     width: 100%;
-    background: @good-blue;
+    background: lighten(@good-blue, 20%);
     height: 35px;
     color: white !important;
     font-size: 13px;
@@ -651,6 +677,7 @@ header.navbar {
    text-transform: uppercase;
    text-decoration: none;
    cursor: default;
+   pointer-events: none;
 }
 .marker-label img {
   width: 100px !important;
@@ -750,7 +777,11 @@ span.locpost-location {
   }
 }
 
-.marker-label-user {color: @good-blue; font-size: 14px !important; text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);}
+.marker-label-user {
+  color: @good-blue;
+  font-size: 14px !important;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
+}
 
 #dropdown-pos {
   position: absolute;

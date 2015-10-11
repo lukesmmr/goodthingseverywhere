@@ -69,7 +69,8 @@
 
     <div id="logo" class="logo">
       <a href="<?php echo home_url(); ?>/">
-        <span><?php bloginfo('name'); ?></span>
+        <span class="main">Good</span>
+        <span class="subline">Things Everywhere</span>
       </a>
     </div>
 
