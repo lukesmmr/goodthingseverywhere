@@ -811,7 +811,7 @@ header.home-header {
     @media (min-width: @screen-phone) {
       font-size: 30px;
       display: inline-block;
-      margin: 0 0 20px 0;
+      margin: 0 0 30px 0;
       float: left;
     }
   }
@@ -864,22 +864,23 @@ h3.home-journal-title {
 }
 
 .follow {
-  font-family: @content-font;
-  font-weight: 700;
-  font-size: 14px;
   float: right;
-  margin-top: 11px;
-  color: @good-grey !important;
-  text-transform: capitalize;
-  a {
-    color: @good-orange !important;
-    text-transform: lowercase;
-    text-decoration: none;
-  }
+  font-weight: 600;
+  margin: 4px 0 0 10px;
   @media (max-width: @screen-phone) {
     display: block;
     float: none;
     margin-top: 0;
+  }
+  a {
+    padding: 4px 8px;
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    background-color: darken(@good-grey, 10%);
+    &:hover {
+      background-color: @good-blue;
+    }
   }
 }
 
