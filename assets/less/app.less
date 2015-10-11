@@ -87,6 +87,7 @@ h2.entry-title a, h2.entry-title a:hover {
    -ms-transition: all 0.3s ease;
    transition: all 0.3s ease;
 }
+
 /* content */
 .container {
   @media (min-width: 1200px) {
@@ -536,14 +537,14 @@ header.navbar {
      z-index: 1234567;
      width: 100%;
     button {
+      position: absolute;
       text-align: center;
       display: block;
-      margin: 0 auto;
+      margin: 0 auto 0 -45px;
       text-transform: uppercase;
       padding: 2px 5px;
       border: 0;
       color: white;
-      position: absolute;
       background: transparent;
       height: 25px;
       width: 90px;
@@ -563,11 +564,14 @@ header.navbar {
       }
     }
     #arrow-pos {
-       height: 40px;
-       width: 120px;
-       position: absolute;
-       left: 50%;
-       margin-left: -60px;
+      height: 40px;
+      width: 120px;
+      position: absolute;
+      left: 50%;
+      margin-left: -60px;
+      @media (min-width: @screen-tablet) {
+        margin-top: -15px;
+      }
     }
     .arrow-down, .arrow-up {
        width: 0;
@@ -583,7 +587,7 @@ header.navbar {
     }
     .close-btn {
       height: 35px;
-      margin: -70px 0 0 0;
+      margin-top: -55px !important;
       button {
         padding-top: 17px;
         font-size:11px;
