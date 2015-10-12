@@ -54,7 +54,7 @@
                   <h1><?php the_title(); ?></h1>
                 </div>
                 <div class="carousel-excerpt">
-                  <?php if ($linked_post_id): ?><span class="carousel-post-date"><?php echo $post_date; ?> <?php endif; ?></span><?php echo $slide_excerpt; ?>
+                  <?php if ($linked_post_id): ?><span class="carousel-post-date"><?php echo $post_date; ?><i class="glyphicon glyphicon-triangle-right"></i></span><?php endif; ?><?php echo $slide_excerpt; ?>
                   <?php if ($slide_url): ?>
   	                	<a class="read-more" href="<?php echo $slide_url; ?>" <?php if($link_external) : ?>target="_blank"<?php endif;?> title="Link to <?php the_title(); ?>">
   	                		<?php echo $slide_url_text; ?>
