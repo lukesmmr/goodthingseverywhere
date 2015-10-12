@@ -192,14 +192,14 @@ add_action('admin_init', 'roots_remove_dashboard_widgets');
  */
 function roots_excerpt_length($length) {
   if ( is_home() ) {
-    return 38;
-  } elseif (condition) {
+    return HOME_EXCERPT_LENGTH;
+  } else {
     return POST_EXCERPT_LENGTH;
   }
 }
 
 function roots_excerpt_more($more) {
-  return ' &hellip; <a href="' . get_permalink() . '">' . __('<div class="read-more">Continue reading <span class="glyphicon glyphicon-flash"></span> </div>', 'roots') . '</a>';
+  return '&hellip; <a href="' . get_permalink() . '">' . __('<div class="read-more">Read more <span class="glyphicon glyphicon-triangle-right"></span> </div>', 'roots') . '</a>';
 }
 add_filter('excerpt_length', 'roots_excerpt_length');
 add_filter('excerpt_more', 'roots_excerpt_more');

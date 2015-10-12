@@ -46,6 +46,7 @@
                 if ($linked_post_id):
                   $linked_post = get_post($linked_post_id);
                   $post_content = $linked_post->post_content;
+                  $post_date = get_the_date('j. M y', $linked_post_id);
                   ?>
                   <span class="carousel-read-time"><?php echo read_time($post_content); ?></span>
                 <?php endif ?>
@@ -53,7 +54,7 @@
                   <h1><?php the_title(); ?></h1>
                 </div>
                 <div class="carousel-excerpt">
-                  <?php echo $slide_excerpt; ?>
+                  <?php if ($linked_post_id): ?><span class="carousel-post-date"><?php echo $post_date; ?> <?php endif; ?></span><?php echo $slide_excerpt; ?>
                   <?php if ($slide_url): ?>
   	                	<a class="read-more" href="<?php echo $slide_url; ?>" <?php if($link_external) : ?>target="_blank"<?php endif;?> title="Link to <?php the_title(); ?>">
   	                		<?php echo $slide_url_text; ?>
@@ -129,7 +130,9 @@
 			<div class="home-journal-content">
 				<h3 class="home-journal-title"><a href="<?php the_permalink(); ?>" title="Read more"><?php the_title(); ?></a></h3>
 				<?php get_template_part('templates/entry-meta'); ?>
-				<?php the_excerpt(); ?>
+        <div class="home-excerpt">
+          <?php the_excerpt(); ?>
+        </div>
 			</div>
 		</div>
 		<?php endwhile; ?>
