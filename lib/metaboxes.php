@@ -37,6 +37,18 @@ add_filter( 'cmb2_meta_boxes', 'goodthings_cmb' );
  * @param  array $meta_boxes
  * @return array
  */
+
+function populate_post_select() {
+  // Pull all the pages into an array
+  $select_post = array();
+  $args = array('post_type' => 'post', 'orderby'=> 'date', 'post_status' => 'publish', 'posts_per_page' => -1);
+  $select_post_obj = get_posts($args);
+  foreach ($select_post_obj as $post) {
+    $select_post[$post->ID] = $post->post_title;
+  }
+  return $select_post;
+}
+
 function goodthings_cmb( array $meta_boxes) {
 
   $meta_boxes['home_teaser'] = array(
@@ -73,16 +85,13 @@ function goodthings_cmb( array $meta_boxes) {
         'type' => 'textarea_small',
       ),
       array(
-        'name' => 'Slide Link',
-        'desc' => 'with http://',
-        'id'   => 'slide_url',
-        'type' => 'text_url',
-      ),
-      array(
-        'name' => 'Slide Link Text',
-        'desc' => 'What should the button say...',
-        'id'   => 'slide_url_text',
-        'type' => 'text_medium',
+        'name' => 'Select linked post',
+        'desc' => 'Choose related post for links and read time...',
+        'id'   => 'slide_post_select',
+        'type' => 'select',
+        'show_option_none' => true,
+        'default' => 'custom',
+        'options' => 'populate_post_select'
       ),
       array(
         'name' => 'Slide Label',
@@ -91,11 +100,23 @@ function goodthings_cmb( array $meta_boxes) {
         'type' => 'text_small',
       ),
       array(
+        'name' => 'Slide Link Text',
+        'desc' => 'What should the button say...',
+        'id'   => 'slide_url_text',
+        'type' => 'text_medium',
+      ),
+      array(
+        'name' => 'External Slide Link',
+        'desc' => 'Post selection overrides this, enter with http://',
+        'id'   => 'slide_url',
+        'type' => 'text_url',
+      ),
+      array(
         'name' => 'Is the slide link external?',
-        'desc' => 'Inserts target _blank and icon',
+        'desc' => 'Inserts target _blank',
         'id'   => 'slide_url_type',
         'type' => 'checkbox'
-      )
+      ),
     ),
   );
 

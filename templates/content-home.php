@@ -31,29 +31,43 @@
         while ($slider_query->have_posts()) : $slider_query->the_post();
           $counter++;
           $slide_label = get_post_meta( get_the_ID(), 'slide_label', true);
-          $slide_url = get_post_meta( get_the_ID(), 'slide_url', true);
-          $slide_url_type = get_post_meta( get_the_ID(), 'slide_url_type', true);
           $slide_excerpt = get_post_meta( get_the_ID(), 'slide_excerpt', true);
           $slide_url_text = get_post_meta( get_the_ID(), 'slide_url_text', true);
+          $slide_url = get_post_meta( get_the_ID(), 'slide_url', true);
+          $link_external = get_post_meta( get_the_ID(), 'slide_url_type', true);
+          $linked_post_id = get_post_meta( get_the_ID(), 'slide_post_select', true);
 					$slide_id = get_post_thumbnail_id();
 					$slide_src = wp_get_attachment_image_src($slide_id,'home-carousel', true);
         ?>
             <div class="item <?php if($counter == 1) : echo 'active'; endif; ?>" style="background: transparent url('<?php echo $slide_src[0]; ?>') center top no-repeat scroll;">
 
               <div class="carousel-caption">
-              	<div class="carousel-label">
-              		<?php echo $slide_label; ?>
-              	</div>
+                <?php if ($slide_label): ?>
+                  <div class="carousel-label">
+                    <?php echo $slide_label; ?>
+                  </div>
+                <?php endif ?>
+                <?php // get read time via post id if it is set
+                if ($linked_post_id):
+                  $linked_post = get_post($linked_post_id);
+                  $post_content = $linked_post->post_content;
+                  ?>
+                  <span class="carousel-read-time"><?php echo read_time($post_content); ?></span>
+                <?php endif ?>
                 <div class="carousel-title">
                   <h1><?php the_title(); ?></h1>
                 </div>
                 <div class="carousel-excerpt">
                   <?php echo $slide_excerpt; ?>
-	                <?php if ($slide_url): ?>
-	                	<a class="read-more" href="<?php echo $slide_url; ?>"<?php if($slide_url_type) : ?> target="_blank"<?php endif; ?> title="Link to <?php the_title(); ?>">
-	                		<?php echo $slide_url_text; ?>
-	                	</a>
-	                <?php endif ?>
+                  <?php if ($slide_url): ?>
+  	                	<a class="read-more" href="<?php echo $slide_url; ?>" <?php if($link_external) : ?>target="_blank"<?php endif;?> title="Link to <?php the_title(); ?>">
+  	                		<?php echo $slide_url_text; ?>
+  	                	</a>
+                  <?php elseif($slide_url_text) : ?>
+                    <a class="read-more" href="<?php echo get_post_permalink($linked_post_id);  ?>" title="Link to <?php the_title(); ?>">
+                      <?php echo $slide_url_text; ?>
+                    </a>
+                  <?php endif; ?>
                 </div>
               </div>
               <div class="bottom-gradient"></div>

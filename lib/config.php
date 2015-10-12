@@ -83,9 +83,9 @@ function read_time($text){
   $words = str_word_count(strip_tags($text));
   $min = floor($words / 180);
   if($min < 1){
-    return '(1 min read)';
+    return '1 min read';
   }
-  return '(' . $min . ' min read)';
+  return '' . $min . ' min read';
 }
 
 /**

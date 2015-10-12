@@ -20,7 +20,7 @@ $article_content = $post->post_content;
   		<?php comments_number( '', '1 Comment', '% Comments' ); ?>
 	</span>
 	<div class="journal-read-time">
-		<span class="eta"><?php echo read_time($article_content); ?></span>
+		<span class="eta">(<?php echo read_time($article_content); ?>)</span>
 	</div>
 	<div class="journal-category">
 		<?php the_category(', '); ?>
