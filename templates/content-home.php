@@ -3,24 +3,19 @@
 	<?php $slider_count = wp_count_posts( 'carousel' )->publish; ?>
 
     <div id="goodthings-carousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
       <?php if ($slider_count > 1 ) : ?>
         <ol class="carousel-indicators">
 
            <?php
-          $i = -1;
-          $counter = 0;
+          $i = -1; $counter = 0;
           $bullet_query = new WP_Query();
           $bullet_query->query( 'post_type=carousel' );
           while ($bullet_query->have_posts()) : $bullet_query->the_post();
-            $i++;
-            $counter++;
-          ?>
+          $i++; $counter++;
+            ?>
             <li data-target="#goodthings-carousel" data-slide-to="<?php echo $i; ?>" class="carousel-section <?php if($counter == 1) : echo 'active'; endif; ?>"></li>
-
             <?php endwhile; ?>
             <?php wp_reset_query(); ?>
-
         </ol>
       <?php endif; ?>
       <div class="carousel-inner" role="listbox">
@@ -75,7 +70,6 @@
           <?php endwhile; ?>
       </div>
     <?php if ($slider_count > 1 ) : ?>
-      <!-- Controls -->
       <a class="left carousel-control" href="#goodthings-carousel" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
         <span class="sr-only"><?php _e('Previous', 'roots'); ?></span>
@@ -106,7 +100,7 @@
 
 		<header class="home-header">
 			<h2>Instagram <i class="glyphicon glyphicon-picture"></i></h2>
-			<span class="follow"><a href="https://instagram.com/lukelucky" title="">@lukelucky</a></span>
+			<span class="follow"><a href="https://instagram.com/lukelucky" title="Follow me on Instagram" target="_blank">@lukelucky</a></span>
 		</header>
 
 		<div class="right-now latest-instagram">
@@ -124,7 +118,7 @@
 		</header>
 		<?php 
 		$wp_query= null;
-		$wp_query = new WP_Query(); $wp_query->query('showposts=2');
+		$wp_query = new WP_Query(); $wp_query->query('showposts=3');
 		while ($wp_query->have_posts()) : $wp_query->the_post(); ?>
 		<div class="home-journal-post">
 			<div class="home-journal-thumbnail">

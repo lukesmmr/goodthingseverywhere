@@ -191,7 +191,11 @@ add_action('admin_init', 'roots_remove_dashboard_widgets');
  * Clean up the_excerpt()
  */
 function roots_excerpt_length($length) {
-  return POST_EXCERPT_LENGTH;
+  if ( is_home() ) {
+    return 38;
+  } elseif (condition) {
+    return POST_EXCERPT_LENGTH;
+  }
 }
 
 function roots_excerpt_more($more) {

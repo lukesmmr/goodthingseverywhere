@@ -412,6 +412,8 @@ header.navbar {
     padding: 0 !important;
     position: absolute;
     bottom: inherit;
+    left: 10%;
+    right: 10%;
     @media (max-width: @screen-tablet) {
       top: 50%;
       -webkit-transform: translateY(-50%);
@@ -421,7 +423,7 @@ header.navbar {
     @media (min-width: @screen-tablet) {
       bottom: 100px;
     }
-    @media (min-width: @screen-md-min) {
+    @media (min-width: @screen-desktop) {
       width: 55%;
       text-align: left;
       left: 12%;
@@ -434,7 +436,7 @@ header.navbar {
     padding: 4px 8px;
     margin-bottom: 20px;
     @media (min-width: @screen-md-min) {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
     font-size: 13px;
     font-weight: 600;
@@ -481,7 +483,7 @@ header.navbar {
     @media (min-width: @screen-tablet) {
       bottom: 40px !important;
     }
-    @media (min-width: @screen-md-min) {
+    @media (min-width: @screen-desktop) {
       text-align: left;
       left: 12%;
       margin-left: 0 !important;
@@ -495,10 +497,16 @@ header.navbar {
       font-size: 16px;
     }
     &.left span {
-      left: 40px;
+      left: 10px;
+      @media (min-width: @screen-phone) {
+        left: 40px;
+      }
     }
     &.right span {
-      right: 40px;
+      right: 10px;
+      @media (min-width: @screen-phone) {
+        right: 40px;
+      }
     }
   }
   .bottom-gradient {
@@ -619,7 +627,10 @@ header.navbar {
     }
     .close-btn {
       height: 35px;
-      margin-top: -55px !important;
+      margin-top: -70px;
+      @media (min-width: @screen-tablet) {
+        margin-top: -55px !important;
+      }
       button {
         padding-top: 17px;
         font-size:11px;
@@ -845,12 +856,6 @@ span.locpost-location {
     color: @good-turquoise;
   }
 }
-
-header.home-header {
-  @media (max-width: @screen-phone) {
-    margin-bottom: 10px;
-  }
-}
 .home-journal-post {
   display: inline-block;
   margin-bottom:20px;
@@ -874,9 +879,16 @@ header.home-header {
     @media (min-width: @screen-phone) {
       font-size: 30px;
       display: inline-block;
-      margin: 0 0 30px 0;
       float: left;
     }
+  }
+}
+header.home-header {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
+  @media (min-width: @screen-tablet) {
+    margin-bottom: 10px;
   }
 }
 
@@ -928,13 +940,14 @@ h3.home-journal-title {
 }
 
 .follow {
-  float: right;
   font-weight: 600;
-  margin: 4px 0 0 10px;
-  @media (max-width: @screen-phone) {
-    display: block;
-    float: none;
-    margin-top: 0;
+  margin: 5px 0 0 0;
+  float: left;
+  clear: both;
+  @media (min-width: @screen-tablet) {
+    float: right;
+    clear:none;
+    margin: 4px 0 0 10px;
   }
   a {
     padding: 4px 8px;
