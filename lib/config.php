@@ -97,3 +97,35 @@ function read_time($text){
  * Default: 1140px is the default Bootstrap container width.
  */
 if (!isset($content_width)) { $content_width = 1140; }
+
+
+
+/**
+ * Fix wp_nav_menu's active item highlighting with custom post types
+ */
+function roots_cpt_active_menu($menu) {
+  $post_type = get_post_type();
+
+  switch($post_type) {
+
+    case 'project':
+      $menu = str_replace('active', '', $menu);
+      $menu = str_replace('menu-work', 'menu-work active', $menu);
+      break;
+    // case 'therapist':
+    //   $menu = str_replace('active', '', $menu);
+    //   $menu = str_replace('menu-therapists', 'menu-therapists active', $menu);
+    //   break;
+  }
+
+  if (is_author()) {
+    $menu = str_replace('active', '', $menu);
+  }
+
+  if (is_archive()) {
+    $menu = str_replace('active', '', $menu);
+  }
+
+  return $menu;
+}
+add_filter('nav_menu_css_class', 'roots_cpt_active_menu', 400);
