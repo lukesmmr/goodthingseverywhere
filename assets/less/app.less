@@ -1230,6 +1230,49 @@ h3.home-journal-title, h3.journal-title {
 // }
 
 /* project grid */
+
+.portfolio-filter {
+  display: inline-block;
+  width: 100%;
+  margin: 20px 0 20px 0;
+  border-bottom: 1px solid @good-grey;
+  padding-bottom: 10px;
+  span {
+    display: inline-block;
+    padding-top: 10px;
+    text-transform: uppercase;
+    font-family: @headline-font;
+    font-weight: 600;
+  }
+  ul.filter-projects {
+    padding: 0;
+    list-style: none;
+    float: right;
+    cursor: pointer;
+    li {
+      display: inline;
+      .meta-labels(@good-grey);
+      padding: 6px 22px 5px 22px !important;
+      &.active {
+        color: white !important;
+        background: lighten(@good-black, 10%) !important;
+      }
+    }
+    li.project-type-client {
+      .meta-labels(@good-blue);
+      &:hover {
+        background: darken(@good-blue, 10%);
+      }
+    }
+    li.project-type-barter {
+      .meta-labels(@good-turquoise);
+      &:hover {
+        background: darken(@good-turquoise, 10%);
+      }
+    }
+  }
+}
+
 .portfolio-grid {
   .grid-sizer {width: 22%;}
   .gutter-sizer {width: 4%;}
@@ -1330,6 +1373,9 @@ h3.home-journal-title, h3.journal-title {
         font-size: 14px;
       }
     }
+  }
+  .project-type-client .project-type {
+    .meta-labels(@good-blue) !important;
   }
 }
 

@@ -68,16 +68,32 @@ var GoodThingsSite = {
   },
   work: {
     init: function() {
-      var container = jQuery('.portfolio-grid');
-      // initialize Masonry after all images have loaded
-      container.imagesLoaded( function() {
-        container.masonry({
-          columnWidth: '.grid-sizer',
-          gutter: '.gutter-sizer',
-          itemSelector: '.project-item',
-          percentPosition: true,
-          transitionDuration: '0.2s',
-        });
+      var gridOptions = {
+        columnWidth: '.grid-sizer',
+        gutter: '.gutter-sizer',
+        itemSelector: '.project-item',
+        percentPosition: true,
+        transitionDuration: '0.2s'
+      };
+      var $grid = $('.portfolio-grid').masonry( gridOptions );
+      // layout Masonry after each image loads
+      $grid.imagesLoaded().progress( function() {
+        $grid.masonry('layout');
+      });
+
+      $('.filter-projects li').on('click', function(){
+        var $filter = $(this).attr('class');
+        $(this).siblings().removeClass('active');
+        if ($(this).hasClass('active')) {
+          $(this).removeClass('active');
+          $("article.project").not($filter).show();
+          $('article.' + $filter).toggle();
+        } else {
+          $(this).addClass('active');
+          $("article.project").not($filter).hide();
+          $('article.' + $filter).toggle();
+        }
+        $grid.masonry( gridOptions ); // re-initialize
       });
     }
   }

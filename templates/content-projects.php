@@ -46,8 +46,17 @@
 		</div>
 		<div class="clearfix"></div> -->
 
-	<hr />
-
+	<div class="portfolio-filter">
+		<span>Filter work</span>
+		<?php $taxonomy = 'project-type';
+		$tax_terms = get_terms($taxonomy);
+		?>
+		<ul class="filter-projects">
+			<?php foreach ($tax_terms as $tax_term) { ?>
+				<li class="<?php echo $tax_term->taxonomy; ?>-<?php echo $tax_term->slug; ?>"><?php echo $tax_term->name; ?></li>
+			<?php } ?>
+		</ul>
+	</div>
 	<div class="portfolio-grid">
 
 		<div class="grid-sizer"></div>
