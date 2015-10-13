@@ -50,6 +50,9 @@
                   ?>
                   <span class="carousel-read-time"><?php echo read_time($post_content); ?></span>
                 <?php endif ?>
+                <?php if ($link_external): ?>
+                  <i class="link-external glyphicon glyphicon-link"></i>
+                <?php endif ?>
                 <div class="carousel-title">
                   <h1><?php the_title(); ?></h1>
                 </div>
