@@ -18,4 +18,5 @@ require_once locate_template('/lib/widgets.php');         // Sidebars and widget
 require_once locate_template('/lib/scripts.php');         // Scripts and stylesheets
 require_once locate_template('/lib/metaboxes.php');          // Custom functions
 require_once locate_template('/lib/cpts.php');          // Custom functions
+require_once locate_template('/lib/taxonomies.php');          // Custom functions
 require_once locate_template('/lib/custom.php');          // Custom functions

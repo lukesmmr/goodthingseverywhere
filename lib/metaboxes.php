@@ -49,6 +49,15 @@ function populate_post_select() {
   return $select_post;
 }
 
+function populate_thumb_select() {
+  $thumb_sizes = array(
+    'small'     => 'Small',
+    'medium'    => 'Medium',
+    'fullwidth' => 'Full width'
+  );
+  return $thumb_sizes;
+}
+
 function goodthings_cmb( array $meta_boxes) {
 
   $meta_boxes['home_teaser'] = array(
@@ -116,6 +125,33 @@ function goodthings_cmb( array $meta_boxes) {
         'desc' => 'Inserts target _blank',
         'id'   => 'slide_url_type',
         'type' => 'checkbox'
+      ),
+    ),
+  );
+
+
+$meta_boxes['project_meta'] = array(
+    'id'         => 'project_meta',
+    'title'      => 'Project Meta',
+    'object_types'      => array('project'),
+    'context'    => 'normal',
+    'priority'   => 'high',
+    'show_names' => true,
+    'fields'     => array(
+      array(
+        'name' => 'Featured image size',
+        'desc' => 'Small, medium or full width...',
+        'id'   => 'project_thumb_select',
+        'type' => 'select',
+        'show_option_none' => false,
+        'default' => 'project-medium',
+        'options' => 'populate_thumb_select'
+      ),
+      array(
+        'name' => 'Year',
+        'desc' => 'When did I make this?',
+        'id'   => 'project_year',
+        'type' => 'text_small',
       ),
     ),
   );

@@ -65,6 +65,21 @@ var GoodThingsSite = {
          });
        });
     }
+  },
+  work: {
+    init: function() {
+      var container = jQuery('.project-grid');
+      // initialize Masonry after all images have loaded
+      container.imagesLoaded( function() {
+        container.masonry({
+          columnWidth: '.project-sizer',
+          itemSelector: '.project-item',
+          gutter: '.gutter-sizer',
+          percentPosition: true,
+          transitionDuration: 0,
+        });
+      });
+    }
   }
 };
 
