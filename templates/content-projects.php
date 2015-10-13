@@ -1,5 +1,5 @@
 <div class="container">
-	<div class="projects-content">
+	<div class="portfolio-content">
 
 		<?php while (have_posts()) : the_post(); ?>
 		  <?php the_content(); ?>
@@ -69,13 +69,17 @@
 			?>
 	    <article <?php post_class($grid_classes); ?>>
 	      <a href="<?php echo the_permalink(); ?>" title="Link to <?php the_title(); ?>">
+	      	<div class="project-info">
+	      		<header class="project-header">
+		      		<h3 class="project-title"><?php the_title(); ?></h3>
+	        		<?php get_template_part('templates/project-meta'); ?>
+	      		</header>
+	        	<div class="header-bg"></div>
+	      	</div>
 		      <?php if ( has_post_thumbnail() ) {
 							the_post_thumbnail($thumb_size);
 					} ?>
 				</a>
-	      <footer>
-	        <?php get_template_part('templates/project-meta'); ?>
-	      </footer>
 	    </article>
 	  <?php endwhile; ?>
 

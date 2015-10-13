@@ -76,7 +76,7 @@ var GoodThingsSite = {
           gutter: '.gutter-sizer',
           itemSelector: '.project-item',
           percentPosition: true,
-          transitionDuration: 0,
+          transitionDuration: '0.2s',
         });
       });
     }
