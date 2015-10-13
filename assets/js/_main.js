@@ -89,6 +89,7 @@ var GoodThingsSite = {
           $("article.project").not($filter).show();
           $('article.' + $filter).toggle();
         } else {
+          $(this).parent().parent().find('li').removeClass('active');
           $(this).addClass('active');
           $("article.project").not($filter).hide();
           $('article.' + $filter).toggle();
