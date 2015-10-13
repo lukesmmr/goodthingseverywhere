@@ -68,13 +68,13 @@ var GoodThingsSite = {
   },
   work: {
     init: function() {
-      var container = jQuery('.project-grid');
+      var container = jQuery('.portfolio-grid');
       // initialize Masonry after all images have loaded
       container.imagesLoaded( function() {
         container.masonry({
-          columnWidth: '.project-sizer',
-          itemSelector: '.project-item',
+          columnWidth: '.grid-sizer',
           gutter: '.gutter-sizer',
+          itemSelector: '.project-item',
           percentPosition: true,
           transitionDuration: 0,
         });

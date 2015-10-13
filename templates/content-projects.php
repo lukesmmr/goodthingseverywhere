@@ -48,10 +48,10 @@
 
 	<hr />
 
-	<div class="project-grid">
+	<div class="portfolio-grid">
 
+		<div class="grid-sizer"></div>
 		<div class="gutter-sizer"></div>
-		<div class="project-sizer"></div>
 		<?php
 		$args = array(
 			'post_type' => 'project',
@@ -61,13 +61,14 @@
 		while ($project_query->have_posts()) : $project_query->the_post(); ?>
 			<?php
 			$thumb_size = get_post_meta( get_the_ID(), 'project_thumb_select', true);
+			// set item classes according to selected thumbnail size
 			$grid_classes = array(
 				'project-item--' . $thumb_size,
 				'project-item'
 			);
 			?>
 	    <article <?php post_class($grid_classes); ?>>
-	      <a href="<?php echo the_permalink(); ?>" title="Link <?php the_title(); ?>">
+	      <a href="<?php echo the_permalink(); ?>" title="Link to <?php the_title(); ?>">
 		      <?php if ( has_post_thumbnail() ) {
 							the_post_thumbnail($thumb_size);
 					} ?>
