@@ -1229,7 +1229,7 @@ h3.home-journal-title, h3.journal-title {
 //   text-decoration: underline;
 // }
 
-/* project grid */
+/* portfolio */
 
 .portfolio-filter {
   display: inline-block;
@@ -1237,25 +1237,34 @@ h3.home-journal-title, h3.journal-title {
   margin: 20px 0 20px 0;
   border-bottom: 1px solid @good-grey;
   padding-bottom: 10px;
-  span {
-    display: inline-block;
-    padding-top: 10px;
-    text-transform: uppercase;
-    font-family: @headline-font;
-    font-weight: 600;
-  }
   ul.filter-projects {
     padding: 0;
     list-style: none;
-    float: right;
     cursor: pointer;
+    &.filter-type {
+      float: left;
+    }
+    &.filter-cat {
+      float: left;
+      clear: left;
+      @media(min-width: @screen-tablet) {
+        float: right;
+        clear: none;
+      }
+    }
     li {
       display: inline;
-      .meta-labels(@good-grey);
-      padding: 6px 22px 5px 22px !important;
+      .meta-labels(lighten(@good-orange, 20%));
+      padding: 4px 14px 3px 14px !important;
+      @media(max-width: @screen-tablet) {
+        margin-bottom: 5px;
+      }
+      &:hover {
+        background: @good-orange;
+      }
       &.active {
         color: white !important;
-        background: lighten(@good-black, 10%) !important;
+        background: darken(@good-orange, 20%);
       }
     }
     li.project-type-client {
@@ -1263,35 +1272,35 @@ h3.home-journal-title, h3.journal-title {
       &:hover {
         background: darken(@good-blue, 10%);
       }
+      &.active {
+        background: darken(@good-blue, 25%);
+      }
     }
     li.project-type-barter {
       .meta-labels(@good-turquoise);
       &:hover {
         background: darken(@good-turquoise, 10%);
       }
+      &.active {
+        background: darken(@good-turquoise, 25%);
+      }
+    }
+    li.project-type:first-child {
+      margin-left: 20px;
     }
   }
 }
 
 .portfolio-grid {
-  .grid-sizer {width: 22%;}
+  .grid-sizer {width: 48%;}
   .gutter-sizer {width: 4%;}
   article.project-item {
     position: relative;
     float: left;
-    width: 22%;
+    width: 48%;
     margin-bottom: 20px;
     @media(min-width: @screen-phone) {
       margin-bottom: 25px;
-    }
-    &--small {
-      width: 48%;
-      @media(min-width: @screen-desktop) {
-        width: 22%;
-        h3.project-title {
-          font-size: 20px !important;
-        }
-      }
     }
     &--medium {
       width: 48%;

@@ -47,12 +47,19 @@
 		<div class="clearfix"></div> -->
 
 	<div class="portfolio-filter">
-		<span>Filter work</span>
-		<?php $taxonomy = 'project-type';
-		$tax_terms = get_terms($taxonomy);
+		<?php
+		$tax_type = 'project-type';
+		$tax_cat = 'project-category';
+		$tax_type_terms = get_terms($tax_type);
+		$tax_cat_terms = get_terms($tax_cat);
 		?>
-		<ul class="filter-projects">
-			<?php foreach ($tax_terms as $tax_term) { ?>
+		<ul class="filter-projects filter-type">
+			<?php foreach ($tax_type_terms as $tax_term) { ?>
+				<li class="<?php echo $tax_term->taxonomy ?>-<?php echo $tax_term->slug; ?>"><?php echo $tax_term->name; ?></li>
+			<?php } ?>
+		</ul>
+		<ul class="filter-projects filter-cat">
+			<?php foreach ($tax_cat_terms as $tax_term) { ?>
 				<li class="<?php echo $tax_term->taxonomy; ?>-<?php echo $tax_term->slug; ?>"><?php echo $tax_term->name; ?></li>
 			<?php } ?>
 		</ul>

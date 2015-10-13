@@ -18,8 +18,7 @@ function roots_setup() {
   add_image_size('journal-main-thumb', 500, 9999);
   add_image_size('home-carousel', 1280, 550, true);
   add_image_size('fullwidth', 970, 620, true);
-  add_image_size('medium', 582, 372, true);
-  add_image_size('small', 388, 248, true);
+  add_image_size('medium', 600, 384, true);
 
   // Add post formats (http://codex.wordpress.org/Post_Formats)
   // add_theme_support('post-formats', array('aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat'));

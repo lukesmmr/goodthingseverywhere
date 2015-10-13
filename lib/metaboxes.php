@@ -51,8 +51,7 @@ function populate_post_select() {
 
 function populate_thumb_select() {
   $thumb_sizes = array(
-    'small'     => 'Small',
-    'medium'    => 'Medium',
+    'medium'    => 'Normal',
     'fullwidth' => 'Full width'
   );
   return $thumb_sizes;
