@@ -75,6 +75,13 @@ function goodthings_cmb( array $meta_boxes) {
         'type' => 'wysiwyg',
         'options' => array( 'textarea_rows' => 5 ),
       ),
+      array(
+        'name' => 'Link List',
+        'desc' => '',
+        'id'   => 'link_list',
+        'type' => 'wysiwyg',
+        'options' => array( 'textarea_rows' => 10 ),
+      ),
     ),
   );
 

@@ -1,4 +1,8 @@
-<?php $home_intro = get_post_meta($post->ID, 'home_intro', true); ?>
+<?php
+$home_intro = get_post_meta($post->ID, 'home_intro', true);
+$link_list = get_post_meta($post->ID, 'link_list', true);
+$cta_title = get_post_meta($post->ID, 'cta_title', true);
+$cta_content = get_post_meta($post->ID, 'cta_content', true); ?>
 <div class="home-carousel">
 	<?php $slider_count = wp_count_posts( 'carousel' )->publish; ?>
 
@@ -100,6 +104,69 @@
 		<?php endwhile; ?>
 	</div>
 
+  <div class="home-cta">
+    <div class="home-options">
+
+      <div class="cta cta-left col-md-4">
+        <h2>Current project</h2>
+        <div class="current-project">
+          <?php
+          $current_project_url = of_get_option('current_url');
+          $url_trim = trim($current_project_url, '/');
+          // get rid of http or www
+          if (!preg_match('#^http(s)?://#', $url_trim)) {
+              $url_trim = 'http://' . $url_trim;
+          }
+          $urlParts = parse_url($url_trim);
+          $current_project_url = preg_replace('/^www\./', '', $urlParts['host']);
+           ?>
+          <?php if (of_get_option('current_project_desc') !== '' ) : ?>
+          <p><?php echo of_get_option('current_project_desc'); ?></p>
+          <?php endif; ?>
+          <ul>
+            <?php if (of_get_option('current_project') !== '' ) : ?>
+            <li><span>For whom</span> <?php echo of_get_option('current_project'); ?></li>
+            <?php endif; ?>
+            <li><span>Where</span> <?php echo of_get_option('current_loc'); ?></li>
+            <?php if (of_get_option('current_project_dur') !== '' ) : ?>
+            <li><span>How long</span> <?php echo of_get_option('current_project_dur'); ?></li>
+            <?php endif; ?>
+            <?php if (of_get_option('current_url') !== '' ) : ?>
+            <li><span>Their website</span> <a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php echo $current_project_url ?></a></li>
+            <?php endif; ?>
+            <!-- <li><small>Last update: <?php echo of_get_option('last_updated'); ?></small></li> -->
+          </ul>
+        </div>
+      </div>
+
+      <div class="cta cta-middle col-md-4">
+        <h2>Latest Work</h2>
+         <div class="latest-portfolio">
+            <?php $latest_project = null;
+            $latest_project = new WP_Query(); $latest_project->query( array('showposts' => 1 , 'post_type' => 'project' ) );
+            while ($latest_project->have_posts()) : $latest_project->the_post(); ?>
+              <h3><?php the_title(); ?></h3>
+              <?php get_template_part('templates/project-meta'); ?>
+              <a href="<?php the_permalink(); ?>" title="Link to <?php the_title(); ?>">
+                <?php if ( has_post_thumbnail() ) {
+                  the_post_thumbnail('journal-main-thumb');
+                } ?>
+              </a>
+            <?php endwhile; ?>
+         </div>
+      </div>
+
+      <div class="cta cta-right col-md-4">
+        <h2>What else?</h2>
+        <div class="what-else-list">
+          <?php echo $link_list; ?>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
 	<div class="home-latest-social">
 
 		<header class="home-header">
@@ -117,7 +184,7 @@
 
 	<div class="home-journal">
 		<header class="home-header">
-			<h2>Latest travel journal <i class="glyphicon glyphicon-chevron-down"></i></h2>
+			<h2>Latest travel journal <i class="glyphicon glyphicon-triangle-bottom"></i></h2>
 			<span class="follow"><a href="http://eepurl.com/PAIMP" target="_blank" title="Subscribe to Travel Journal">Subscribe</a></span>
 		</header>
 		<?php 

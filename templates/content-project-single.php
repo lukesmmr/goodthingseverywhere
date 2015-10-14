@@ -42,8 +42,6 @@
               </li>
             <?php endif; ?>
           </ul>
-          <ul class="project-meta">
-          </ul>
       </div>
     </div>
     <article <?php post_class(); ?>>

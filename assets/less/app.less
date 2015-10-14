@@ -174,7 +174,7 @@ img.alignleft, img.alignright {
     margin: 0 0 20px 20px;
   }
   @media (min-width: @screen-tablet) {
-    width: 40%;
+    width: 35%;
   }
 }
 img.portraic-pic {
@@ -193,7 +193,7 @@ img.portraic-pic {
     width: 100%;
   }
 }
-.more-content {
+.more-content, .what-else-list {
   h4 {
     font-size: 1.6em;
     color: white;
@@ -430,6 +430,131 @@ header.navbar {
 .home-content {
    font-size: 20px;
 }
+.home-cta {
+  display: inline-block;
+  width: 100%;
+  margin: 40px 0 0 0;
+  .home-options {
+    .cta {
+      padding: 0;
+      font-size: 16px;
+      @media(max-width: @screen-desktop) {
+        margin-bottom: 40px;
+      }
+      img {
+        width: 100%;
+        height: auto;
+        margin: 0 !important;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        li {
+          margin: 2px 0;
+          i {margin-right: 10px}
+        }
+      }
+      a {
+        text-decoration: none;
+        &::hover {
+          text-decoration: underline;
+          color: @good-black;
+        }
+      }
+      h2 {
+        margin-top: 0;
+        font-weight: 700;
+        margin-bottom: 20px;
+        font-size: 24px;
+        @media (min-width: @screen-phone) {
+          font-size: 30px;
+        }
+        @media(min-width: @screen-desktop) {
+          margin-bottom: 30px;
+        }
+        color: @good-grey;
+      }
+      &.cta-left {
+        @media(min-width:@screen-desktop) {
+          padding-right: 30px;
+        }
+      }
+      &.cta-middle {
+        h3 {
+          font-size: 22px;
+          margin-top: 0;
+          margin-bottom: 3px;
+        }
+      }
+      &.cta-right {
+        li {
+          font-size: 18px;
+        }
+        @media(min-width:@screen-desktop) {
+          padding-left: 30px;
+        }
+      }
+    }
+  }
+
+  .what-else-list {
+    @media(min-width: @screen-desktop) {
+      min-height: 265px;
+    }
+  }
+
+  .current-project {
+    display: block;
+    margin: 0 0 14px 0;
+    background-color: lighten(@good-grey, 3%);
+    padding: 15px 20px 10px 20px !important;
+    line-height: 1.35;
+    @media(min-width: @screen-desktop) {
+      min-height: 265px;
+    }
+    p {
+      margin: 0 0 15px 0;
+    }
+    span {
+      color: @good-orange !important;
+      text-decoration: none;
+      margin-right: 5px;
+    }
+    a {
+      text-decoration: none;
+      &:hover {
+        color: @good-orange;
+      }
+    }
+  }
+
+  .latest-portfolio {
+    @media(min-width: @screen-desktop) {
+      max-height: 265px;
+      overflow: hidden;
+    }
+    a {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      &:hover {
+        color: @good-black;
+      }
+    }
+    .project-meta {
+      display: inline-block;
+      width: 100%;
+    }
+    .project-category, .project-type {
+      float: left;
+    }
+    .project-date {
+      color: @good-grey;
+      font-style: italic;
+      float:right;
+      padding-top: 4px;
+    }
+  }
 }
 
 /* carousel styles */
@@ -966,6 +1091,9 @@ span.locpost-location {
     }
   }
 }
+.home-latest-social {
+  margin-top: 0 !important;
+}
 header.home-header {
   display: inline-block;
   width: 100%;
@@ -1060,13 +1188,6 @@ h3.home-journal-title, h3.journal-title {
   }
 }
 
-.right-now, .home-current-project {
-  width: 100%;
-  clear:both;
-}
-.home-current-project {
-  margin-bottom: 40px;
-}
 .latest-instagram {
   img {
     width: 100%;
@@ -1271,6 +1392,8 @@ h3.home-journal-title, h3.journal-title {
 }
 
 .portfolio-grid {
+  display: inline-block;
+  width: 100%;
   .grid-sizer {width: 48%;}
   .gutter-sizer {width: 4%;}
   article.project-item {
@@ -1385,20 +1508,21 @@ h3.home-journal-title, h3.journal-title {
   }
   .barter-main {
     padding: 0;
-    @media(min-width: @screen-tablet) {
+    width: 100%;
+    @media(min-width: @screen-desktop) {
       width: 60%;
     }
   }
   .barter-right {
     padding: 0;
     width: 100%;
-    @media(min-width: @screen-tablet) {
+    @media(min-width: @screen-desktop) {
       width: 40%;
     }
   }
 
   .barter-main {
-    @media(min-width: @screen-tablet) {
+    @media(min-width: @screen-desktop) {
       padding-right: 20px;
     }
     h2 {
@@ -1439,7 +1563,7 @@ h3.home-journal-title, h3.journal-title {
     background-color: lighten(@good-grey, 3%);
     padding: 15px 20px 10px 20px !important;
     line-height: 1.35;
-    @media(min-width: @screen-tablet) {
+    @media(min-width: @screen-desktop) {
       min-height: 300px;
     }
     h3 {
@@ -1648,14 +1772,15 @@ a.maps-link {
 }
 .sharing button.recommend {
   .btn;
+  .animate-transition();
   background: @good-grey;
-  color: @good-orange;
+  color: white;
   border: 1px solid darken(@good-grey, 5%);
   padding: 8px 12px 6px 12px;
   border-radius: 0;
   &:hover, &:focus {
-    color: @good-orange;
-    background: darken(@good-grey, 5px);
+    color: white;
+    background: @good-blue;
   }
   i {
     margin: 0 0 0 5px;

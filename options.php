@@ -44,20 +44,12 @@ function optionsframework_options() {
 		'std' => '',
 		'type' => 'text');
 
-
 	$options[] = array(
 		'name' => __('Current project description', 'options_check'),
 		'desc' => __('40 - 60 words.', 'options_check'),
 		'id' => 'current_project_desc',
 		'std' => '',
 		'type' => 'textarea');
-
-
-	$options[] = array(
-		'name' => __('Current project thumbnail', 'options_check'),
-		'desc' => __('Upload current project thumbnail for project page.', 'options_check'),
-		'id' => 'current_project_thumb',
-		'type' => 'upload');
 
 	$options[] = array(
 		'name' => __('Project URL', 'options_check'),
