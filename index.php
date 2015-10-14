@@ -14,8 +14,8 @@
   <?php if ($wp_query->max_num_pages > 1) : ?>
     <nav class="post-nav">
       <ul class="pager">
-        <li class="previous"><?php next_posts_link(__('&larr; Older articles', 'roots')); ?></li>
-        <li class="next"><?php previous_posts_link(__('Newer articles &rarr;', 'roots')); ?></li>
+        <li class="previous"><?php next_posts_link(__('<i class="glyphicon glyphicon-triangle-left"></i> Older articles', 'roots')); ?></li>
+        <li class="next"><?php previous_posts_link(__('Newer articles <i class="glyphicon glyphicon-triangle-right"></i>', 'roots')); ?></li>
       </ul>
     </nav>
   <?php endif; ?>

@@ -1,3 +1,7 @@
+<?php
+	$award_title = get_post_meta($post->ID, 'award_title', true);
+  $award_list = get_post_meta($post->ID, 'award_list', true);
+?>
 <div class="container">
 	<div class="portfolio-content">
 
@@ -7,44 +11,6 @@
 		<?php endwhile; ?>
 
 	</div>
-
-<!-- 		<div class="projects-current">
-
-			<h2 class="current-title">Current <i class="glyphicon glyphicon-chevron-down"></i></h2>
-
-			<?php if ( of_get_option('current_project') ) : ?>
-				<h3 class="project-title"><?php echo of_get_option('current_project') ?></h3>
-
-				<?php if (of_get_option('current_project_thumb') !== '' ) : ?>
-					<div class="current-thumb">
-						<img src="<?php echo of_get_option('current_project_thumb'); ?>" alt="Current project logo" />
-					</div>
-				<?php endif; ?>
-
-				<?php if (of_get_option('current_project_desc') !== '' ) : ?>
-				<div class="current-project-desc">
-					<?php echo of_get_option('current_project_desc'); ?>
-				</div>
-				<?php endif; ?>
-				<div class="current-meta">
-					<ul>
-						<li><i class="glyphicon glyphicon-map-marker"></i> <?php echo of_get_option('current_loc'); ?></li>
-						<?php if (of_get_option('current_project_dur') !== '' ) : ?>
-						<li><i class="glyphicon glyphicon-time"></i> <?php echo of_get_option('current_project_dur'); ?></li>
-						<?php endif; ?>
-						<?php if (of_get_option('current_url') !== '' ) : ?>
-						<li><i class="glyphicon glyphicon-link"></i> <a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php echo of_get_option('current_url'); ?></a></li>
-						<?php endif; ?>
-						<li><small>Last update: <?php echo of_get_option('last_updated'); ?></small></li>
-					</ul>
-				</div>
-			<?php else : ?>
-
-				<p>I'm currently in <?php echo of_get_option('current_loc'); ?> &ndash; making my way to my next project. See my latest work stops below. <small>(Updated: <?php echo of_get_option('last_updated'); ?>)</small></p>
-
-			<?php endif; ?>
-		</div>
-		<div class="clearfix"></div> -->
 
 	<div class="portfolio-filter">
 		<?php
@@ -65,6 +31,7 @@
 			<?php } ?>
 		</ul>
 	</div>
+
 	<div class="portfolio-grid">
 
 		<div class="grid-sizer"></div>
@@ -101,6 +68,15 @@
 	  <?php endwhile; ?>
 
 	</div>
+
+	<?php if ($award_title || $award_list): ?>
+		<div id="awards">
+			<h2><?php echo $award_title; ?></h2>
+			<div class="award-list">
+				<?php echo $award_list; ?>
+			</div>
+		</div>
+	<?php endif ?>
 
 	</div>
 </div>

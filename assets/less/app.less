@@ -169,11 +169,9 @@ img.alignleft, img.alignright {
   width: 100%;
   margin-bottom: 20px;
   @media (min-width: @screen-tablet) {
-    .about-details {
-      float: right;
-      max-width: 340px;
-      margin: 0 0 20px 20px;
-    }
+    float: right;
+    max-width: 340px;
+    margin: 0 0 20px 20px;
   }
 }
 img.portraic-pic {
@@ -183,6 +181,13 @@ img.portraic-pic {
   margin-top: 20px !important;
   @media (min-width: @screen-phone) {
     margin-top: 0 !important;
+  }
+}
+.keyvisual {
+  margin: 50px 0 20px 0;
+  img {
+    height: auto;
+    width: 100%;
   }
 }
 .more-content {
@@ -1175,61 +1180,6 @@ h3.home-journal-title, h3.journal-title {
   i {margin-right: 3px;}
 }
 
-// .projects-journal h2 {
-//   margin-bottom: 25px;
-//   font-weight: 700;
-//   color: #e1e1e1;
-//   .glyphicon {
-//     font-size: 0.7em;
-//     vertical-align: 1px;
-//   }
-// }
-// .project-post {
-//   margin: 0 0 40px 0;
-//   display: inline-block;
-// }
-// .project-content {
-//   float: right;
-//   width: 53%;
-// }
-// .project-thumbnail {
-//   float: left;
-//   width: 44%;
-//   img {
-//     width: 100%;
-//     height: auto;
-//   }
-// }
-// h3.project-title {
-//   font-weight: 800;
-//   font-size: 36px;
-//   color: @good-black;
-//   margin: 0 0 10px 0 !important;
-//   background: -webkit-linear-gradient(@good-black, lighten(@good-black, 20%));
-//   -webkit-background-clip: text;
-//   -webkit-text-fill-color: transparent;
-// }
-// .project-description {
-//   clear: both;
-//   margin-bottom: 10px;
-//   font-size:18px;
-// }
-// .project-meta {
-//   margin-bottom: 10px;
-//   display: inline-block;
-//   li {
-//     float: left;
-//     margin-right: 15px;
-//   }
-//   li, a {
-//     color: @good-blue;
-//     text-decoration: none;
-//   }
-// }
-// .project-meta a:hover, .current-meta a:hover {
-//   text-decoration: underline;
-// }
-
 /* portfolio */
 
 .portfolio-filter {
@@ -1545,14 +1495,15 @@ h3.home-journal-title, h3.journal-title {
   }
 }
 
-/*about me */
- #awards {margin-bottom: 50px;}
- .client-list, .award-list, .client-list a, .award-list a {
-  // font-size: 18px;
+#awards {margin-bottom: 50px;}
+.client-list, .award-list, .client-list a, .award-list a {
+  font-size: 26px;
+  font-style: italic;
   text-decoration: none;
- }
-.client-list a:hover, .award-list a:hover {
-  color: #CCC !important;
+  color: @good-grey;
+  &:hover {
+    color: darken(@good-grey, 10%);
+  }
 }
 .award-list ul, .award-list li {
   list-style: none;
@@ -1756,18 +1707,27 @@ a.maps-link {
   .pager li>a,
   .pager li>span {
     .animate-transition();
-    font-family: @headline-font;
-    padding: 4px 8px;
+    padding: 5px 8px 3px 8px;
     color: white;
     font-size: 14px;
     text-decoration: none;
     text-transform: uppercase;
-    background-color: darken(@good-grey, 10%);
+    background-color: @good-grey;
     border-radius: 0;
+    border: none;
     &:hover {
       background-color: @good-blue;
     }
+    i {
+      font-size: 11px;
+    }
   }
+}
+.pager .previous i {
+  margin-right: 5px;
+}
+.pager .next i {
+  margin-left: 5px;
 }
 
 .read-more {

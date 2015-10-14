@@ -211,6 +211,18 @@ $meta_boxes['project_meta'] = array(
         'type' => 'wysiwyg',
         'options' => array( 'textarea_rows' => 10 ),
       ),
+    ),
+  );
+
+  $meta_boxes['projects_meta'] = array(
+    'id'         => 'projects_meta',
+    'title'      => 'Projects Meta',
+    'object_types'      => array('page'),
+    'show_on' => array( 'key' => 'page-template', 'value' => 'page-projects.php' ),
+    'context'    => 'normal',
+    'priority'   => 'high',
+    'show_names' => true,
+    'fields'     => array(
       array(
         'name' => 'Clients Title',
         'desc' => 'Title for client list',

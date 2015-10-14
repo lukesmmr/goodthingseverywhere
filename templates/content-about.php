@@ -4,10 +4,6 @@
   $portrait_caption = get_post_meta($post->ID, 'portrait_caption', true);
 	$more_title = get_post_meta($post->ID, 'more_title', true);
   $more_list = get_post_meta($post->ID, 'more_list', true);
-  $client_list = get_post_meta($post->ID, 'client_list', true);
-  $client_title = get_post_meta($post->ID, 'client_title', true);
-	$award_list = get_post_meta($post->ID, 'award_list', true);
-	$award_title = get_post_meta($post->ID, 'award_title', true);
 ?>
 <div class="container about-content">
   <div class="about-details">
@@ -33,18 +29,8 @@
 	 <?php wp_link_pages(array('before' => '<nav class="pagination">', 'after' => '</nav>')); ?>
 	<?php endwhile; ?>
 
-	<div id="clients">
-		<h2><?php echo $client_title; ?></h2>
-		<div class="client-list">
-			<?php echo $client_list; ?>
-		</div>
-	</div>
-
-	<div id="awards">
-		<h2><?php echo $award_title; ?></h2>
-		<div class="award-list">
-			<?php echo $award_list; ?>
-		</div>
-	</div>
+  <div class="keyvisual">
+    <img src="<?php bloginfo('template_url') ?>/assets/img/good-keyvisual-gfx-940px.jpg" alt="Key Visual by Georgia Hill">
+  </div>
 
 </div>

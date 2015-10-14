@@ -16,8 +16,8 @@
       </div>
       <nav class="post-nav">
           <ul class="pager">
-            <li class="next"><?php previous_post_link('%link', 'Previous post &rarr;'); ?></li>
-            <li class="previous"><?php next_post_link('%link', '&larr; Next post'); ?> </li>
+            <li class="next"><?php previous_post_link('%link', 'Previous post <i class="glyphicon glyphicon-triangle-right"></i>'); ?></li>
+            <li class="previous"><?php next_post_link('%link', '<i class="glyphicon glyphicon-triangle-left"></i> Next post'); ?> </li>
           </ul>
         </nav>
     </article>
