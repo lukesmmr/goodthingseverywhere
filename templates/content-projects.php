@@ -53,8 +53,9 @@
 		$tax_type_terms = get_terms($tax_type);
 		$tax_cat_terms = get_terms($tax_cat);
 		?>
+		<span>Filter:</span>
 		<ul class="filter-projects filter-type">
-			<?php foreach ($tax_type_terms as $tax_term) { ?>
+		 	<?php foreach ($tax_type_terms as $tax_term) { ?>
 				<li class="<?php echo $tax_term->taxonomy ?>-<?php echo $tax_term->slug; ?>"><?php echo $tax_term->name; ?></li>
 			<?php } ?>
 		</ul>

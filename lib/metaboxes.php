@@ -147,10 +147,31 @@ $meta_boxes['project_meta'] = array(
         'options' => 'populate_thumb_select'
       ),
       array(
+        'name' => 'Select linked post',
+        'desc' => 'Choose related post for link and project output',
+        'id'   => 'project_post_select',
+        'type' => 'select',
+        'show_option_none' => true,
+        'default' => 'custom',
+        'options' => 'populate_post_select'
+      ),
+      array(
         'name' => 'Year',
         'desc' => 'When did I make this?',
         'id'   => 'project_year',
         'type' => 'text_small',
+      ),
+      array(
+        'name' => 'Link to project',
+        'desc' => 'Enter "offline" if the website is not active anymore',
+        'id'   => 'project_url',
+        'type' => 'text_medium'
+      ),
+      array(
+        'name' => 'Agency',
+        'desc' => 'Where I built this...',
+        'id'   => 'project_agency',
+        'type' => 'text_medium'
       ),
     ),
   );
@@ -274,7 +295,7 @@ $meta_boxes['post_meta'] = array(
         'name' => 'Project Link',
         'desc' => 'Project website URL without http:// (e.g. openmindprojects.org)',
         'id'   => 'post_project_url',
-        'type' => 'text_medium'
+        'type' => 'text_url'
       ),
       array(
         'name' => 'Project Thumbnail',

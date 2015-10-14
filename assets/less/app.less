@@ -1,5 +1,5 @@
 /*!
- * goodthingseverywhere.com by @goodthngs 2013 / 2014
+ * goodthingseverywhere.com by @goodthngs 2015
  */
 
 @import "bootstrap/bootstrap.less";
@@ -30,6 +30,7 @@ body {
    font-size: 16px;
    font-weight: 500;
    color: @good-black;
+   line-height: 1.5;
 }
 
 hr {
@@ -72,6 +73,9 @@ h2.entry-title a, h2.entry-title a:hover {
    font-weight: 800 !important;
    font-size: 2.2em;
    @media (min-width: @screen-phone) {
+    font-size: 2.6em;
+   }
+   @media (min-width: @screen-desktop) {
     font-size: 3.5em;
    }
    line-height: 1;
@@ -215,8 +219,10 @@ img.portraic-pic {
    position:relative;
    width: 100%;
    margin: 0 auto;
+   text-align: center;
    @media (min-width: @screen-tablet) {
     margin-top: -10px;
+    text-align: inherit;
    }
 }
 .home .navbar {
@@ -241,8 +247,10 @@ header.navbar {
   border:none;
 }
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
-  float: right;
-  padding: 0;
+  @media (min-width: @screen-tablet) {
+    float: right;
+    padding: 0;
+  }
 }
 .navbar-collapse {
   border: none;
@@ -279,7 +287,9 @@ header.navbar {
   padding: 10px 15px 10px 15px;
 }
 .nav>li:last-child>a {
-  padding: 10px 0 10px 15px;
+  @media(min-width: @screen-tablet) {
+    padding: 10px 0 10px 15px;
+  }
 }
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
    background-color: transparent;
@@ -309,8 +319,12 @@ header.navbar {
 }
 /* mobile */
 @media (max-width: @screen-tablet - 1) {
-   .navbar-default {background: transparent;border:none;}
-   .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+   .navbar-default {
+      background: transparent;
+      border:none;
+    }
+   .navbar-default .navbar-collapse,
+   .navbar-default .navbar-form {
       padding-top:0;
       width: inherit;
       margin: 0;
@@ -328,6 +342,7 @@ header.navbar {
       position:inherit;
       width: inherit;
       margin: 0;
+      text-align: center;
    }
    .navbar-nav>li {float: inherit;text-align:center;}
    .navbar-nav>li:first-child {float:inherit;padding-top:10px;}
@@ -400,13 +415,9 @@ header.navbar {
     font-size: 30px;
   }
 }
-
-
 .home-content {
    font-size: 20px;
 }
-.keyvisual {
-  margin: 80px 0 50px 0;
 }
 
 /* carousel styles */
@@ -444,6 +455,7 @@ header.navbar {
     bottom: inherit;
     left: 10%;
     right: 10%;
+    z-index: 100;
     @media (max-width: @screen-tablet) {
       top: 50%;
       -webkit-transform: translateY(-50%);
@@ -1192,27 +1204,6 @@ h3.home-journal-title, h3.journal-title {
 //   margin-bottom: 10px;
 //   font-size:18px;
 // }
-// .project-details {
-//   clear: both;
-//   display: inline-block;
-//   margin-bottom: 10px;
-//   li.project-url {
-//     margin-top: 10px;
-//   }
-//   span {
-//     color: @good-orange !important;
-//     text-decoration: none;
-//   }
-// }
-// .project-details, .project-meta {
-//   ul, li {
-//     list-style: none;
-//     padding: 0;
-//   }
-//   li i{
-//     margin-right: 3px;
-//   }
-// }
 // .project-meta {
 //   margin-bottom: 10px;
 //   display: inline-block;
@@ -1241,8 +1232,25 @@ h3.home-journal-title, h3.journal-title {
     padding: 0;
     list-style: none;
     cursor: pointer;
+    li {
+      display: inline;
+      padding: 4px 14px 3px 14px !important;
+      @media(max-width: @screen-tablet) {
+        margin-bottom: 5px;
+      }
+    }
     &.filter-type {
       float: left;
+      li {
+        .meta-labels(@good-grey);
+        &:hover {
+          background: darken(@good-grey, 20%);
+        }
+        &.active {
+          color: white !important;
+          background: darken(@good-grey, 30%);
+        }
+      }
     }
     &.filter-cat {
       float: left;
@@ -1251,22 +1259,18 @@ h3.home-journal-title, h3.journal-title {
         float: right;
         clear: none;
       }
-    }
-    li {
-      display: inline;
-      .meta-labels(lighten(@good-orange, 20%));
-      padding: 4px 14px 3px 14px !important;
-      @media(max-width: @screen-tablet) {
-        margin-bottom: 5px;
-      }
-      &:hover {
-        background: @good-orange;
-      }
-      &.active {
-        color: white !important;
-        background: darken(@good-orange, 20%);
+      li {
+        .meta-labels(lighten(@good-orange, 20%));
+        &:hover {
+          background: @good-orange;
+        }
+        &.active {
+          color: white !important;
+          background: darken(@good-orange, 20%);
+        }
       }
     }
+
     li.project-type-client {
       .meta-labels(@good-blue);
       &:hover {
@@ -1276,6 +1280,7 @@ h3.home-journal-title, h3.journal-title {
         background: darken(@good-blue, 25%);
       }
     }
+
     li.project-type-barter {
       .meta-labels(@good-turquoise);
       &:hover {
@@ -1285,9 +1290,17 @@ h3.home-journal-title, h3.journal-title {
         background: darken(@good-turquoise, 25%);
       }
     }
+
     li.project-type:first-child {
       margin-left: 20px;
     }
+  }
+
+  span {
+    float: left;
+    margin-right: 10px;
+    margin-top: 3px;
+    color: @good-grey;
   }
 }
 
@@ -1357,34 +1370,168 @@ h3.home-journal-title, h3.journal-title {
         z-index: 10;
         margin-top: 10px;
       }
-      .project-category {
-        .meta-labels(lighten(@good-orange, 20%));
-        padding: 3px 5px 2px 5px;
-        span {
-          &:after {
-            content: ", ";
-          }
-          &:last-child:after {
-            content: "";
-          }
-        }
-      }
-      .project-type {
-        .meta-labels(@good-turquoise);
-        padding: 3px 5px 2px 5px;
-        font-style: italic;
-        font-weight: 300;
-      }
-      .project-date {
-        margin-top: 10px;
-        color: white;
-        font-style: italic;
-        font-size: 14px;
-      }
     }
   }
   .project-type-client .project-type {
     .meta-labels(@good-blue) !important;
+    padding: 3px 5px 2px 5px !important;
+  }
+  .project-date {
+    margin-top: 10px;
+    color: white;
+    font-style: italic;
+    font-size: 14px;
+  }
+}
+.project-category {
+  .meta-labels(lighten(@good-orange, 20%));
+  padding: 3px 5px 2px 5px !important;
+  span {
+    &:after {
+      content: ", ";
+    }
+    &:last-child:after {
+      content: "";
+    }
+  }
+}
+.project-type {
+  .meta-labels(@good-turquoise);
+  padding: 3px 5px 2px 5px;
+  font-style: italic;
+  font-weight: 300;
+}
+// project single
+.single-project {
+  .project-meta {
+    margin-bottom: 20px;
+  }
+  .project-date {
+    color: darken(@good-grey, 10%);
+    font-style: italic;
+  }
+  .project-category {
+    float: right;
+  }
+  .barter-project {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .barter-main {
+    padding: 0;
+    @media(min-width: @screen-tablet) {
+      width: 60%;
+    }
+  }
+  .barter-right {
+    padding: 0;
+    width: 100%;
+    @media(min-width: @screen-tablet) {
+      width: 40%;
+    }
+  }
+
+  .barter-main {
+    @media(min-width: @screen-tablet) {
+      padding-right: 20px;
+    }
+    h2 {
+      margin-top: 0;
+    }
+  }
+  .barter-thumbnail {
+    margin-bottom: 15px;
+    img {
+      width: 100%;
+      height: auto;
+      margin: 0 !important;
+    }
+  }
+  ul.barter-meta {
+    margin: 15px 0 10px 0;
+    list-style: none;
+    padding: 0;
+    li {
+      margin: 5px 0;
+    }
+  }
+  .barter-more a {
+    color: white;
+    background-color: @good-blue;
+    display: block;
+    padding: 10px 20px 10px 20px !important;
+    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+      background-color: darken(@good-blue, 20%);
+    }
+  }
+  .barter-details {
+    clear: both;
+    display: block;
+    margin: 0 0 14px 0;
+    background-color: lighten(@good-grey, 3%);
+    padding: 15px 20px 10px 20px !important;
+    line-height: 1.35;
+    @media(min-width: @screen-tablet) {
+      min-height: 300px;
+    }
+    h3 {
+      margin-top: 0;
+      font-size: 22px;
+    }
+    ul, li {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 10px 0;
+    }
+    span, i {
+      color: @good-orange !important;
+      text-decoration: none;
+      margin-right: 5px;
+    }
+    i {
+      margin-right: 10px;
+    }
+    a {
+      text-decoration: none;
+      &:hover {
+        color: @good-orange;
+      }
+    }
+  }
+  .barter-description {
+    display: inline-block;
+    margin: 25px 0 15px 0;
+  }
+}
+.project-page-header {
+
+}
+.project-details {
+  text-align: center;
+  color: @good-grey;
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      display: inline;
+      &:after {
+        content: ", ";
+      }
+      &:last-child:after {
+        content: "";
+      }
+      a {
+        color: @good-grey;
+        text-decoration: none;
+        &:hover {
+          color: @good-black;
+        }
+      }
+    }
   }
 }
 

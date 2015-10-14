@@ -13,8 +13,11 @@ $project_year = get_post_meta($post->ID, 'project_year', true);
       foreach($type_list as $type_single) {
         echo '<span>' . $type_single->name . '</span>';
     } ?>
+    <?php if (is_single()): ?>Project<?php endif; ?>
   </div>
-  <div class="published project-date">
-  		<?php echo $project_year ?>
-  </div>
+  <?php if ( !is_single() ): ?>
+    <div class="published project-date">
+        <?php echo $project_year ?>
+    </div>
+  <?php endif ?>
 </div>
