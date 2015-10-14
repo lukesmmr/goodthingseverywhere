@@ -27,7 +27,7 @@ a:hover {color: @good-turquoise;}
 
 body {
    font-family: @content-font;
-   font-size: 16px;
+   font-size: 18px;
    font-weight: 500;
    color: @good-black;
    line-height: 1.5;
@@ -411,6 +411,7 @@ header.navbar {
 .home-intro {
   margin: 20px 0;
   font-size: 24px;
+  line-height: 1.4;
   @media (min-width: @screen-phone) {
     font-size: 30px;
   }
@@ -816,13 +817,16 @@ header.navbar {
 }
 .locpost-title  {
   font-family: "proxima-nova", "Helvetica Neue", Helvetica, sans-serif !important;
-  text-decoration: none;
   margin: 5px 0 !important;
   font-size: 13px !important;
   @media (min-width: @screen-phone) {
     font-size: 18px !important;
   }
+}
+.locpost-title-link {
+  text-decoration: none;
   &:hover {
+    text-decoration: none;
     color: lighten(@good-black, 10%);
   }
 }

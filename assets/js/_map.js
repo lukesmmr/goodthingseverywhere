@@ -205,10 +205,10 @@ function goodThingsMap() {
     locArray = $.makeArray(journalLocs[i]);
     var journalLocLabel = '<label class="loclabel"><span class="locnr">' + i + '</span></label>';
     var infoWindowPreview = '<span class="locpost-location">' + locArray[0] + ' - ' + locArray[7] +
-                            '</span><a class="locpost-link" href="' + locArray[3] + '"><h4 class="locpost-title">' +
+                            '</span><a class="locpost-title-link" href="' + locArray[3] + '"><h4 class="locpost-title">' +
                             locArray[6] + '</h4></a><div class="locpost-preview" style="min-height:' + infoWinMinHeight +
                             ';"><img style="width: 250px; height: auto !important;" src="' + locArray[5] + '" /><p>' +
-                            locArray[4] + '</p><a class="locpost-link" href="' + locArray[3] + '">Continue reading</a></div>';
+                            locArray[4] + '</p><a class="locpost-link" href="' + locArray[3] + '">Read article</a></div>';
     setLabelAnchor = new google.maps.Point(13, 42);
 
     // set markers
