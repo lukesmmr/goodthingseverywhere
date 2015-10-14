@@ -1,6 +1,8 @@
 <?php
 	$award_title = get_post_meta($post->ID, 'award_title', true);
   $award_list = get_post_meta($post->ID, 'award_list', true);
+ 	$client_title = get_post_meta($post->ID, 'client_title', true);
+  $client_list = get_post_meta($post->ID, 'client_list', true);
 ?>
 <div class="container">
 	<div class="portfolio-content">
@@ -74,6 +76,10 @@
 			<h2><?php echo $award_title; ?></h2>
 			<div class="award-list">
 				<?php echo $award_list; ?>
+			</div>
+			<h2><?php echo $client_title; ?></h2>
+			<div class="client-list">
+				<?php echo $client_list; ?>
 			</div>
 		</div>
 	<?php endif ?>
