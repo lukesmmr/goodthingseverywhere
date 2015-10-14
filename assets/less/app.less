@@ -168,10 +168,13 @@ img.alignleft, img.alignright {
 .about-details {
   width: 100%;
   margin-bottom: 20px;
-  @media (min-width: @screen-tablet) {
+  @media (min-width: @screen-phone) {
     float: right;
-    max-width: 340px;
+    width: 50%;
     margin: 0 0 20px 20px;
+  }
+  @media (min-width: @screen-tablet) {
+    width: 40%;
   }
 }
 img.portraic-pic {
@@ -184,7 +187,7 @@ img.portraic-pic {
   }
 }
 .keyvisual {
-  margin: 50px 0 20px 0;
+  margin: 50px 0 50px 0;
   img {
     height: auto;
     width: 100%;
@@ -195,7 +198,10 @@ img.portraic-pic {
     font-size: 1.6em;
     color: white;
   }
-  font-size: 1.1em;
+  font-size: 16px;
+  @media (min-width: @screen-tablet) {
+    font-size: 18px;
+  }
   color: white;
   max-width: 100%;
   background-color: @good-turquoise;
@@ -1496,13 +1502,16 @@ h3.home-journal-title, h3.journal-title {
 }
 
 #awards {margin-bottom: 50px;}
-.client-list, .award-list, .client-list a, .award-list a {
+.client-list, .award-list {
   font-size: 26px;
-  font-style: italic;
-  text-decoration: none;
   color: @good-grey;
-  &:hover {
-    color: darken(@good-grey, 10%);
+  font-style: italic;
+  a {
+    color: @good-grey;
+    text-decoration: none;
+    &:hover {
+      color: darken(@good-grey, 10%);
+    }
   }
 }
 .award-list ul, .award-list li {

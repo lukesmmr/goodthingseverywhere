@@ -77,6 +77,9 @@
 			<div class="award-list">
 				<?php echo $award_list; ?>
 			</div>
+	<?php endif; ?>
+	
+	<?php if ($client_title || $client_list): ?>
 			<h2><?php echo $client_title; ?></h2>
 			<div class="client-list">
 				<?php echo $client_list; ?>
