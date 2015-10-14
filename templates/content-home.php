@@ -139,7 +139,7 @@
 			</div>
 		</div>
 		<?php endwhile; ?>
-		<a href="<?php bloginfo('url') ?>/travel-journal" class="read-all-journal">See all <i class="glyphicon glyphicon-chevron-right"></i></a>
+		<a href="<?php bloginfo('url') ?>/travel-journal" class="read-all-journal">More Journal <i class="glyphicon glyphicon-triangle-right"></i></a>
 	</div>
 
 </div>

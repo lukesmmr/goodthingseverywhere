@@ -1006,15 +1006,21 @@ h3.home-journal-title, h3.journal-title {
 }
 
 .read-all-journal {
-   text-transform: uppercase;
-   color:@good-grey;
-   font-family: @headline-font;
-   text-decoration: none;
-   font-weight:600;
-   font-size: 1.2em;
-   display: block;
-   top: -5px;
-   position: relative;
+  .animate-transition();
+  margin-top: 20px;
+  display: inline-block;
+  font-family: @headline-font;
+  padding: 4px 8px;
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: darken(@good-grey, 10%);
+  &:hover {
+    color: white;
+    text-decoration: none;
+    background-color: @good-blue;
+  }
   i {
      font-size: 0.65em;
      vertical-align: 2px;
@@ -1745,8 +1751,24 @@ a.maps-link {
 .entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5 {
   clear: both;
 }
-.pager li>a, .pager li>span {font-family: @content-font; font-weight: 700; border: none; text-decoration: none; text-transform: uppercase;border-radius: 0; padding: 0;}
-.pager li>a:hover {background: transparent; color: @good-blue; text-decoration: none;}
+.post-nav {
+  margin-top: 100px;
+  .pager li>a,
+  .pager li>span {
+    .animate-transition();
+    font-family: @headline-font;
+    padding: 4px 8px;
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: darken(@good-grey, 10%);
+    border-radius: 0;
+    &:hover {
+      background-color: @good-blue;
+    }
+  }
+}
 
 .read-more {
   a {
