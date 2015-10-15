@@ -87,11 +87,11 @@ h2.entry-title a, h2.entry-title a:hover {
 
 // mixins
 .animate-transition {
-   -webkit-transition: all 0.3s ease;
-   -moz-transition: all 0.3s ease;
-   -o-transition: all 0.3s ease;
-   -ms-transition: all 0.3s ease;
-   transition: all 0.3s ease;
+   -webkit-transition: all 0.4s ease;
+   -moz-transition: all 0.4s ease;
+   -o-transition: all 0.4s ease;
+   -ms-transition: all 0.4s ease;
+   transition: all 0.4s ease;
 }
 .meta-labels(@label-color) {
   font-family: @headline-font;
@@ -105,6 +105,7 @@ h2.entry-title a, h2.entry-title a:hover {
   display: inline-block;
   text-shadow: none;
   margin-right: 5px;
+  .animate-transition();
 }
 .vertical-align(@percent) {
   position: relative;
@@ -120,7 +121,15 @@ h2.entry-title a, h2.entry-title a:hover {
   top: 0;
   left: 0;
 }
-
+.image-animate {
+  .animate-transition();
+  transform: scale(1);
+  opacity: 1;
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
 
 /* content */
 .container {
@@ -490,7 +499,7 @@ header.navbar {
         h3 {
           font-size: 22px;
           margin-top: 0;
-          margin-bottom: 3px;
+          margin-bottom: 10px;
         }
       }
       &.cta-right {
@@ -540,9 +549,13 @@ header.navbar {
       max-height: 265px;
       overflow: hidden;
     }
+    img {
+      .image-animate();
+    }
     a {
       position: relative;
       display: inline-block;
+      overflow: hidden;
       width: 100%;
       &:hover {
         color: @good-black;
@@ -694,16 +707,24 @@ header.navbar {
       top:48%;
       font-size: 16px;
     }
-    &.left span {
-      left: 10px;
-      @media (min-width: @screen-phone) {
-        left: 40px;
+    &.left {
+      #gradient > .horizontal(@start-color: rgba(0,0,0,.2); @end-color: rgba(0,0,0,.0001));
+      span {
+        opacity: 0.5;
+        left: 10px;
+        @media (min-width: @screen-phone) {
+          left: 40px;
+        }
       }
     }
-    &.right span {
-      right: 10px;
-      @media (min-width: @screen-phone) {
-        right: 40px;
+    &.right {
+      #gradient > .horizontal(@start-color: rgba(0,0,0,.0001); @end-color: rgba(0,0,0,.2));
+      span {
+        opacity: 0.5;
+        right: 10px;
+        @media (min-width: @screen-phone) {
+          right: 40px;
+        }
       }
     }
   }
@@ -714,12 +735,12 @@ header.navbar {
     bottom: 0;
     left: 0;
     background: rgba(0,0,0,0);
-    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.65) 75%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(35%, rgba(0,0,0,0)), color-stop(75%, rgba(0,0,0,0.65)));
-    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.65) 75%);
-    background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.65) 75%);
-    background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.65) 75%);
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.65) 75%);
+    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.45) 75%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(35%, rgba(0,0,0,0)), color-stop(75%, rgba(0,0,0,0.45)));
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.45) 75%);
+    background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.45) 75%);
+    background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.45) 75%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.45) 75%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
   }
 }
@@ -1184,6 +1205,7 @@ h3.home-journal-title, h3.journal-title {
     margin: 4px 0 0 10px;
   }
   a {
+    .animate-transition();
     padding: 4px 8px;
     color: white;
     font-size: 14px;
@@ -1228,6 +1250,10 @@ h3.home-journal-title, h3.journal-title {
     max-height: 450px;
   }
   .instagram-img {
+    overflow: hidden;
+    img {
+      .image-animate();
+    }
     margin-bottom: 0;
     min-height: 150px;
     @media (min-width: @screen-phone) {
@@ -1640,6 +1666,7 @@ h3.home-journal-title, h3.journal-title {
   a {
     color: @good-grey;
     text-decoration: none;
+    .animate-transition();
     &:hover {
       color: darken(@good-grey, 10%);
     }
@@ -1896,14 +1923,14 @@ footer.content-info {
   margin: 0 auto 25px auto;
   text-transform: uppercase;
   font-weight: 600;
-  .animate-transition();
   a, a:active {
-   color: @good-orange;
-   text-decoration: none;
-  }
-  a:hover {
-   color: @good-blue;
-   text-decoration: none;
+    .animate-transition();
+    color: @good-orange;
+    text-decoration: none;
+    &:hover {
+      color: @good-blue;
+      text-decoration: none;
+    }
   }
   ul {
     list-style: none;
