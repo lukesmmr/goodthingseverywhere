@@ -1,6 +1,7 @@
 /* Good Things Journal Map v0.5 - Last edit 24.11.2014
 Description: Loops through data attributes with geo data located in post meta and set up map, article & user position, connect with polylines
 and add infowindows with post previews. Necessary enhancements:
+- update infowindow marker lib
 - add location links on journal entry to open map (panTo)
 - invert select dropdown order
 - read / write marker data from json
@@ -34,15 +35,17 @@ var infowinWidth,
     userMarkerPath  = siteurl + 'wp-content/themes/goodthings/assets/img/maps-marker-user.svg',
     currentLocMsg   = 'This is my current location',
     userLocMsg      = 'This is where you are (detected by your Browser)',
-    posMatchMsg     = 'Nice, our locations match. Maybe we should meet';
+    posMatchMsg     = 'Nice, our locations match. Maybe we should meet',
+    tipArray        = ['Explore the world based on my journal entries!', 'The world is a pretty big place, right?', 'With geolocation enabled you can see your position on the map'],
+    moreArray       = ['Lots of cool photos if you continue reading, trust me!', 'Continue reading to see the whole article!', 'Have you been here yourself? Tell me about it!'];
 
 var randomTips = function () {
-  var tipArray = randomFrom(['Explore the world based on my journal entries!', 'The world is a pretty big place, right?', 'With geolocation enabled you can see your position on the map']);
-  return tipArray;
+  var tipMsg = randomFrom(tipArray);
+  return tipMsg;
 };
 var randomClickMore = function () {
-  var moreArray = randomFrom(['Lots of cool photos if you continue reading, trust me!', 'Continue reading to see the whole article!', 'Have you been here yourself? Tell me about it!']);
-  return moreArray;
+  var moreMsg = randomFrom(moreArray);
+  return moreMsg;
 };
 
 if( /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ) {
