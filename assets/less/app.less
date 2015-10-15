@@ -208,7 +208,7 @@ img.portraic-pic {
     color: white;
   }
   font-size: 16px;
-  @media (min-width: @screen-tablet) {
+  @media (min-width: @screen-desktop) {
     font-size: 18px;
   }
   color: white;
@@ -472,9 +472,9 @@ header.navbar {
       }
       a {
         text-decoration: none;
-        &::hover {
-          text-decoration: underline;
-          color: @good-black;
+        &:hover {
+          text-decoration: none;
+          color: lighten(@good-black, 25%);
         }
       }
       h2 {
