@@ -17,14 +17,15 @@
       $project_year = get_post_meta( get_the_ID(), 'project_year', true);
       $project_agency = get_post_meta( get_the_ID(), 'project_agency', true);
       $project_tech = get_post_meta( get_the_ID(), 'project_tech', true);
-      $url_trim = trim($project_url, '/');
-      // get rid of http or www
-      if (!preg_match('#^http(s)?://#', $url_trim)) {
-          $url_trim = 'http://' . $url_trim;
+      if ($project_url) {
+        $url_trim = trim($project_url, '/');
+        // get rid of http or www
+        if (!preg_match('#^http(s)?://#', $url_trim)) {
+            $url_trim = 'http://' . $url_trim;
+        }
+        $urlParts = parse_url($url_trim);
+        $project_url = preg_replace('/^www\./', '', $urlParts['host']);
       }
-      $urlParts = parse_url($url_trim);
-      $project_url = preg_replace('/^www\./', '', $urlParts['host']);
-
     ?>
     <div class="container page-header">
       <h1>
