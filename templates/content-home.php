@@ -120,11 +120,13 @@ $slider_count = wp_count_posts( 'carousel' )->publish; ?>
           $current_project_url = of_get_option('current_url');
           $url_trim = trim($current_project_url, '/');
           // get rid of http or www
-          if (!preg_match('#^http(s)?://#', $url_trim)) {
-              $url_trim = 'http://' . $url_trim;
-          }
-          $urlParts = parse_url($url_trim);
-          $current_project_url = preg_replace('/^www\./', '', $urlParts['host']);
+          if ($current_project_url) :
+            if (!preg_match('#^http(s)?://#', $url_trim)) {
+                $url_trim = 'http://' . $url_trim;
+            }
+            $urlParts = parse_url($url_trim);
+            $current_project_url = preg_replace('/^www\./', '', $urlParts['host']);
+          endif;
            ?>
           <?php if (of_get_option('current_project_desc') !== '' ) : ?>
           <p><?php echo of_get_option('current_project_desc'); ?></p>
