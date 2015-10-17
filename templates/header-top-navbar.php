@@ -64,8 +64,8 @@
 
 
 <header class="banner navbar navbar-default navbar-static-top" role="banner">
-
-  <div class="container site-head">
+  <?php $slider_count = wp_count_posts( 'carousel' )->publish; ?>
+  <div class="container site-head <?php if ($slider_count < 1) : ?>no-slides<?php endif; ?>">
 
     <div id="logo" class="logo">
       <a href="<?php echo home_url(); ?>/">

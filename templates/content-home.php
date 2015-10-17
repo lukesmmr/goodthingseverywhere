@@ -2,9 +2,10 @@
 $home_intro = get_post_meta($post->ID, 'home_intro', true);
 $link_list = get_post_meta($post->ID, 'link_list', true);
 $cta_title = get_post_meta($post->ID, 'cta_title', true);
-$cta_content = get_post_meta($post->ID, 'cta_content', true); ?>
+$cta_content = get_post_meta($post->ID, 'cta_content', true);
+$slider_count = wp_count_posts( 'carousel' )->publish; ?>
+<?php if ($slider_count > 0 ) : ?>
 <div class="home-carousel">
-	<?php $slider_count = wp_count_posts( 'carousel' )->publish; ?>
 
     <div id="goodthings-carousel" class="carousel slide" data-ride="carousel">
       <?php if ($slider_count > 1 ) : ?>
@@ -91,6 +92,11 @@ $cta_content = get_post_meta($post->ID, 'cta_content', true); ?>
    </div>
 
 </div>
+<?php else : ?>
+  <div class="center container keyvisual">
+    <img src="<?php bloginfo('template_url') ?>/assets/img/good-keyvisual-gfx-940px.jpg" alt="Key Visual by Georgia Hill">
+  </div>
+<?php endif; ?>
 <div class="container">
 
 	<div class="home-intro">
