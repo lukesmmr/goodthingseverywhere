@@ -1,15 +1,6 @@
 
 <?php get_template_part('templates/page', 'header'); ?>
 <div class="container">
-	<div class="alert alert-warning">
-	  <?php _e('Sorry, but the page you were trying to view does not exist.', 'roots'); ?>
-	</div>
-
-	<p><?php _e('It looks like this was the result of either:', 'roots'); ?></p>
-	<ul>
-	  <li><?php _e('a mistyped address', 'roots'); ?></li>
-	  <li><?php _e('an out-of-date link', 'roots'); ?></li>
-	</ul>
-
-	<?php get_search_form(); ?>
+	<p class="home-intro"><?php _e('Sorry, the page you wanted to view has vanished in the void.', 'roots'); ?></p>
+	<p><?php _e('This could be because of a mistyped address or an out-of-date link. <br/> If this is troubling you, consider having a Nature-moment.', 'roots'); ?></p>
 </div>
