@@ -1545,14 +1545,12 @@ h3.home-journal-title, h3.journal-title {
 // project single
 .single-project {
   .project-meta {
+    display: inline-block;
     margin-bottom: 20px;
   }
   .project-date {
     color: darken(@good-grey, 10%);
     font-style: italic;
-  }
-  .project-category {
-    float: right;
   }
   .barter-project {
     display: inline-block;
@@ -2047,8 +2045,11 @@ figure.thumbnail {
 .entry-content-asset {
     position: relative;
     padding-bottom: 56.25%;
-    padding-top: 30px; height: 0; overflow: hidden;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
     margin-bottom: 20px;
+    margin-top: 25px;
 }
 .entry-content-asset:last-child {
     margin-bottom: 0px;
