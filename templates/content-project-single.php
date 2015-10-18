@@ -87,8 +87,8 @@
       </div>
       <nav class="post-nav">
           <ul class="pager">
-            <li class="next"><?php previous_post_link('%link', 'Previous project <i class="glyphicon glyphicon-triangle-right"></i>'); ?></li>
             <li class="previous"><?php next_post_link('%link', '<i class="glyphicon glyphicon-triangle-left"></i> Next project'); ?> </li>
+            <li class="next"><?php previous_post_link('%link', 'Previous project <i class="glyphicon glyphicon-triangle-right"></i>'); ?></li>
           </ul>
         </nav>
     </article>

@@ -72,6 +72,9 @@ h2.entry-title a, h2.entry-title a:hover {
    text-align: center;
    font-weight: 800 !important;
    font-size: 2.2em;
+   @media (max-width: @screen-phone) {
+    font-size: 1.8em;
+   }
    @media (min-width: @screen-phone) {
     font-size: 2.6em;
    }
@@ -211,6 +214,9 @@ img.portraic-pic {
     color: white;
   }
   font-size: 16px;
+  @media (min-width: @screen-phone) and (max-width: @screen-tablet) {
+    font-size: 14px;
+  }
   @media (min-width: @screen-desktop) {
     font-size: 18px;
   }
@@ -239,14 +245,14 @@ img.portraic-pic {
 
 /* navigation */
 #menu-main-navigation {
-   position:relative;
-   width: 100%;
-   margin: 0 auto;
-   text-align: center;
-   @media (min-width: @screen-tablet) {
+  position:relative;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  @media (min-width: @screen-tablet) {
     margin-top: -10px;
     text-align: inherit;
-   }
+  }
 }
 .home .navbar {
   @media (min-width: @screen-tablet) {
@@ -259,7 +265,7 @@ header.navbar {
 }
 @media (max-width: @screen-tablet) {
   .navbar-header {
-    margin-top: -10px !important;
+    margin-top: -15px !important;
   }
 }
 .navbar {
@@ -315,7 +321,10 @@ header.navbar {
 
 .navbar-nav>li {float: inherit;}
 .nav>li>a {
-  padding: 10px 15px 10px 15px;
+  padding: 10px 15px;
+  @media(max-width: @screen-tablet) {
+    padding: 8px 15px;
+  }
 }
 .nav>li:last-child>a {
   @media(min-width: @screen-tablet) {
@@ -328,18 +337,21 @@ header.navbar {
 }
 .navbar-default .navbar-collapse {border-color: @good-grey;}
 .navbar-default .navbar-toggle {
+  @media(max-width: @screen-tablet) {
+    margin-top: 0 !important;
+  }
   border:none;
   &:focus {
     outline: 0;
   }
 }
 .navbar-default .navbar-toggle .icon-bar {
-   background-color: @good-black;
+  background-color: @good-black;
+  width: 40px;
+  height: 5px;
 }
-.navbar-toggle .icon-bar {
-   width: 25px;
-   height: 3px;
-   border-radius: 0;
+.navbar-toggle .icon-bar + .icon-bar {
+  margin-top: 6px;
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
@@ -365,15 +377,9 @@ header.navbar {
       padding: 0 !important;
    }
    .nav>li>a {
-    padding: 0 !important;
-    margin: 0 0 10px 0 !important;
-    display: inline-block;
-   }
-   #menu-main-navigation {
-      position:inherit;
-      width: inherit;
-      margin: 0;
-      text-align: center;
+      padding: 0 !important;
+      margin: 0 0 10px 0 !important;
+      display: inline-block;
    }
    .navbar-nav>li {float: inherit;text-align:center;}
    .navbar-nav>li:first-child {float:inherit;padding-top:10px;}
@@ -385,6 +391,9 @@ header.navbar {
   z-index: 2;
   position: relative;
   margin-top: 10px;
+  @media (max-width: @screen-tablet) {
+    display: inline-block;
+  }
   @media (min-width: @screen-tablet) {
     margin-top: 40px;
   }
@@ -392,9 +401,11 @@ header.navbar {
     font-family: 'ff-prater-script-web', 'Helvetica Neue', Helvetica;
     display: inline-block;
     text-align: left;
-    font-size: 42px;
+    font-size: 40px;
     padding: 5px 3px 11px 0;
+    margin-left: -4px;
     @media (min-width: @screen-tablet) {
+      letter-spacing: -0.03em;
       font-size: 60px;
       height: 80px;
       padding: 25px 25px 35px 0;
@@ -405,10 +416,13 @@ header.navbar {
     font-size: 7px;
     margin-left: 15px;
     margin-top: -12px;
+    text-align: left;
+    width: 75px;
     @media (min-width: @screen-tablet) {
-      margin-top: -24px;
-      margin-left: 3px;
+      margin-top: -25px;
+      margin-left: 21px;
       font-size: 10px;
+      width: inherit;
     }
   }
   a {
@@ -472,7 +486,7 @@ header.navbar {
   .home-options {
     .cta {
       padding: 0;
-      font-size: 16px;
+      font-size: 18px;
       @media(max-width: @screen-desktop) {
         margin-bottom: 40px;
       }
@@ -485,7 +499,7 @@ header.navbar {
         list-style: none;
         padding: 0;
         li {
-          margin: 2px 0;
+          margin: 5px 0;
           i {margin-right: 10px}
         }
       }
@@ -1070,6 +1084,21 @@ span.locpost-location {
     }
     margin-right: 10px;
     pointer-events: all;
+    .dropdown-toggle {
+      border-radius: 0;
+      padding: 6px 10px 4px 10px;
+      color: @good-black;
+      background-color: lighten(@good-grey, 15%);
+      text-transform: uppercase;
+      font-weight: 600;
+      &:hover {
+        background-color: @good-grey;
+      }
+      .caret {
+        border-bottom-color: @good-black;
+        border-top-color: @good-black;
+      }
+    }
     .dropdown-menu {
       max-height: 200px !important;
       max-width: 220px;
@@ -1088,6 +1117,17 @@ span.locpost-location {
   .me-you-btn-group {
     margin-left: 10px;
     pointer-events: all;
+    button {
+      border-radius: 0;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 6px 10px 4px 10px;
+      color: @good-black;
+      background-color: lighten(@good-grey, 15%);
+      &:hover {
+        background-color: @good-grey;
+      }
+    }
   }
 }
 
@@ -1394,7 +1434,7 @@ h3.home-journal-title, h3.journal-title {
     &.filter-cat {
       float: left;
       clear: left;
-      @media(min-width: @screen-tablet) {
+      @media(min-width: @screen-desktop) {
         float: right;
         clear: none;
       }
@@ -1555,6 +1595,11 @@ h3.home-journal-title, h3.journal-title {
   }
   .project-category {
     float: right;
+    @media(max-width: @screen-phone) {
+      float: none;
+      display: inline-block;
+      margin-top: 5px;
+    }
   }
   .barter-project {
     display: inline-block;
@@ -1909,6 +1954,11 @@ a.maps-link {
     }
     i {
       font-size: 11px;
+    }
+    @media(max-width: @screen-phone) {
+      display: block;
+      width: 100%;
+      margin: 5px 0;
     }
   }
 }

@@ -251,6 +251,7 @@ function goodThingsMap() {
       $('#user-loc-btn').prop('disabled', false);
       $('#user-loc-btn').on('click', function() {
         posMsg(userPos, userLocMsg);
+        map.setZoom(12);
         $('.selectpicker').selectpicker('deselectAll');
       });
       if (distanceToMe < 20) {
@@ -262,11 +263,11 @@ function goodThingsMap() {
           icon: new google.maps.MarkerImage(userMarkerPath, null, null, null, null),
           draggable: false,
           map: map,
-          labelContent: "You're only " + distanceToMe.toFixed(2) + "km away!",
+          labelContent: "",
           labelAnchor: new google.maps.Point(-20, 22),
           labelClass: "marker-label-user",// label css class
           labelInBackground: false
-        });
+       });
 
       } else {
 
@@ -335,6 +336,7 @@ function goodThingsMap() {
   $('#current-loc-btn').on('click', function() {
     yourPos = new google.maps.LatLng($('#loc-settings').data('lat'), $('#loc-settings').data('lng'));
     posMsg(yourPos, currentLocMsg);
+    map.setZoom(12);
     $('.selectpicker').selectpicker('deselectAll');
   });
 
