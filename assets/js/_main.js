@@ -50,7 +50,7 @@ var GoodThingsSite = {
         interval: 10000
       });
       // get latest instagram image
-       $.getScript(siteurl + "wp-content/themes/goodthings/assets/js/keys.js", function() {
+       $.getScript(template_dir + "/assets/js/keys.js", function() {
          $.ajax({
             type: "GET",
             dataType: "jsonp",

@@ -16,7 +16,8 @@ require_once locate_template('/lib/comments.php');        // Custom comments mod
 require_once locate_template('/lib/relative-urls.php');   // Root relative URLs
 require_once locate_template('/lib/widgets.php');         // Sidebars and widgets
 require_once locate_template('/lib/scripts.php');         // Scripts and stylesheets
-require_once locate_template('/lib/metaboxes.php');          // Custom functions
-require_once locate_template('/lib/cpts.php');          // Custom functions
-require_once locate_template('/lib/taxonomies.php');          // Custom functions
+require_once locate_template('/lib/metaboxes.php');       // Custom metaboxes
+require_once locate_template('/lib/map.php');       			// Generate MAP data
+require_once locate_template('/lib/cpts.php');          	// Custom post types
+require_once locate_template('/lib/taxonomies.php');      // Custom Taxonomies
 require_once locate_template('/lib/custom.php');          // Custom functions

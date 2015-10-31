@@ -7,4 +7,5 @@ assets/css/app.css
 assets/css/app.css.map
 assets/css/*main*.css
 assets/js/*scripts*.js
+assets/json/*
 assets/manifest.json

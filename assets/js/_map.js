@@ -1,43 +1,39 @@
-/* Good Things Journal Map v0.5 - Last edit 24.11.2014
-Description: Loops through data attributes with geo data located in post meta and set up map, article & user position, connect with polylines
-and add infowindows with post previews. Necessary enhancements:
-- update infowindow marker lib
+/* Good Things Journal Map v0.6 @lukassommer / @goodthngs
+Description: Loops through Wordpress genereated JSON file with marker data written by post meta. Plaeces markers on a styled Google Map map, article & user position, connects markers with colored polylines
+and add infowindows with post previews. To-do:
 - add location links on journal entry to open map (panTo)
-- invert select dropdown order
-- read / write marker data from json
 */
-
-var infowinWidth,
-    infoWinMinHeight,
-    newMapHeight,
-    captiontimer,
-    maptimer,
-    map_id,
-    currentPosMarker,
-    matchPosMarker,
-    userPosMarker,
-    userPos,
-    distanceToMe,
-    marker_array,
-    marker,
+var markerData      = template_dir + '/assets/json/markers.json',
+    markerImg       = template_dir + '/assets/img/maps-marker.svg',
+    userMarkerImg   = template_dir + '/assets/img/maps-marker-user.svg',
     markers         = [],
+    markerPath      = [],
+    markerCounter   = 0,
+    infowindow      = null,
     posLocated      = false,
     mapLoaded       = false,
     posDenied       = false,
     mapOpen         = false,
     mapResized      = false,
     mapHeight       = $(window).height() - 120,
-    infowindow      = null,
     currentPos      = new google.maps.LatLng($('#loc-settings').data('lat'), $('#loc-settings').data('lng')),
     zoomLevel       = $('#loc-settings').data('zoom-level'),
     polylineColor   = $('#loc-settings').data('polyline-color'),
-    markerPath      = siteurl + 'wp-content/themes/goodthings/assets/img/maps-marker.svg',
-    userMarkerPath  = siteurl + 'wp-content/themes/goodthings/assets/img/maps-marker-user.svg',
     currentLocMsg   = 'This is my current location',
     userLocMsg      = 'This is where you are (detected by your Browser)',
     posMatchMsg     = 'Nice, our locations match. Maybe we should meet',
     tipArray        = ['Explore the world based on my journal entries!', 'The world is a pretty big place, right?', 'With geolocation enabled you can see your position on the map'],
-    moreArray       = ['Lots of cool photos if you continue reading, trust me!', 'Continue reading to see the whole article!', 'Have you been here yourself? Tell me about it!'];
+    moreArray       = ['Lots of cool photos if you continue reading, trust me!', 'Continue reading to see the whole article!', 'Have you been here yourself? Tell me about it!'],
+    infowinWidth,
+    infoWinMinHeight,
+    newMapHeight,
+    captiontimer,
+    maptimer,
+    currentPosMarker,
+    matchPosMarker,
+    userPosMarker,
+    userPos,
+    distanceToMe;
 
 var randomTips = function () {
   var tipMsg = randomFrom(tipArray);
@@ -78,7 +74,7 @@ function getCurrentLocation(callback) {
    if("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
          callback(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-       }, error);
+       }, error, {enableHighAccuracy:false, timeout:60000, maximumAge:600000}); // 1 min timeout, 10 min cache
     } else {
        error('Geolocation not supported!');
     }
@@ -108,7 +104,8 @@ function bindInfoWindow(marker, map, infowindow, html) {
 
 function goodThingsMap() {
 
-  if(mapLoaded) {console.log("map already loaded"); return;}
+  // don't load the map if it's already loaded
+  if(mapLoaded) {return;}
   mapLoaded = true;
 
   // set map styles
@@ -165,36 +162,8 @@ function goodThingsMap() {
     disableDefaultUI: false
   };
 
-  // build array from data attributes
-  var journalLocs = [];
-  $('select.marker-coords > option').each(function(){
-    var $this = $(this);
-    journalLocs.push([ $this.data('post-loc'), $this.data('post-loc-lat'), $this.data('post-loc-lng'), $this.data('post-url'), $this.data('post-excerpt'), $this.data('post-thumb'), $this.data('post-title'), $this.data('post-date') ]);
-  });
-
-  // set arrays
-  var journalCoords = [],
-      coordsArray = [],
-      locArray = [];
-
-  // get coords only for polylines
-  for(var y = 1; y < journalLocs.length; y++) {
-      coordsArray = $.makeArray( journalLocs[y] );
-      journalCoords.push(new google.maps.LatLng(coordsArray[1], coordsArray[2]));
-  }
-
-  // polylines
-  var travelItinerary = new google.maps.Polyline({
-    path: $.merge(journalCoords, [currentPos]),
-    geodesic: true,
-    strokeColor: polylineColor,
-    strokeOpacity: 1.0,
-    strokeWeight: 2
-  });
-
   // set map
-  var map = new google.maps.Map(document.getElementById("map-canvas"),
-      mapOptions);
+  var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
   // set infowindow
   infowindow = new google.maps.InfoWindow({
@@ -202,109 +171,134 @@ function goodThingsMap() {
       maxWidth: infowinWidth
   });
 
-  // loop for markers and infowindows
-  for (var i = 1; i < journalLocs.length; i++) {
-    // make array from key value pairs
-    locArray = $.makeArray(journalLocs[i]);
-    var journalLocLabel = '<label class="loclabel"><span class="locnr">' + i + '</span></label>';
-    var infoWindowPreview = '<span class="locpost-location">' + locArray[0] + ' - ' + locArray[7] +
-                            '</span><a class="locpost-title-link" href="' + locArray[3] + '"><h4 class="locpost-title">' +
-                            locArray[6] + '</h4></a><div class="locpost-preview" style="min-height:' + infoWinMinHeight +
-                            ';"><img style="width: 250px; height: auto !important;" src="' + locArray[5] + '" /><p>' +
-                            locArray[4] + '</p><a class="locpost-link" href="' + locArray[3] + '">Read article</a></div>';
-    setLabelAnchor = new google.maps.Point(13, 42);
+  // get marker data
+  $.getJSON(markerData, function(data) {
 
-    // set markers
-    markers[i] = new MarkerWithLabel({
-      icon : new google.maps.MarkerImage(markerPath, null, null, null, null),
-      position: new google.maps.LatLng( locArray[1], locArray[2] ),
-      map: map,
-      draggable: false,
-      labelContent: journalLocLabel,
-      labelAnchor: setLabelAnchor,
-      labelClass: "marker-label",// the CSS class for the label
-      labelZIndex: i+1,
-      html: infoWindowPreview,
-      url: locArray[3],
-      zIndex: i
-    });
+    // loop through JSON project data
+    $.each( data, function(i) {
 
-    bindInfoWindow(markers[i], map, infowindow, markers[i].html);
-  }
+      // check if marker should be placed
+      if (data[i].add_marker) {
 
-  // get current loc
-  currentPosMarker = new MarkerWithLabel({
-    position: currentPos,
-    icon: new google.maps.MarkerImage(markerPath, null, null, null, null),
-    draggable: false,
-    map: map,
-    labelContent: "Current",
-    labelAnchor: new google.maps.Point(-20, 22),
-    labelClass: "marker-label", // label css class
-    labelInBackground: false
-  });
+        //  label numbering
+        markerCounter++;
 
-  if ("geolocation" in navigator) {
+        // make path array for polylines
+        markerPath.push(new google.maps.LatLng(data[i].info.latitude, data[i].info.longitude));
 
-    getCurrentLocation(function(userPos)
-    {
-      $('#user-loc-btn').prop('disabled', false);
-      $('#user-loc-btn').on('click', function() {
-        posMsg(userPos, userLocMsg);
-        map.setZoom(12);
-        $('.selectpicker').selectpicker('deselectAll');
-      });
-      if (distanceToMe < 20) {
+        // marker and info window markup
+        var journalLocLabel = '<label class="loclabel"><span class="locnr">' + markerCounter + '</span></label>';
+        var infoWindowPreview = '<span class="locpost-location">' + data[i].info.post_location + ' - ' + data[i].info.post_date +
+                                '</span><a class="locpost-title-link" href="' + data[i].info.post_url + '"><h4 class="locpost-title">' +
+                                data[i].info.post_title + '</h4></a><div class="locpost-preview" style="min-height:' + infoWinMinHeight +
+                                ';"><img style="width: 250px; height: auto !important;" src="' + data[i].info.post_thumb + '" /><p>' +
+                                data[i].info.post_excerpt + '</p><a class="locpost-link" href="' + data[i].info.post_url + '">Read article</a></div>';
+        setLabelAnchor = new google.maps.Point(13, 42);
 
-        currentPosMarker.setMap(null);
-        //console.log("Cool, you're really close to where i am!");
-        matchPosMarker = new MarkerWithLabel({
-          position: currentPos,
-          icon: new google.maps.MarkerImage(userMarkerPath, null, null, null, null),
-          draggable: false,
+        // create markers on the map
+        markers[markerCounter] = new MarkerWithLabel({
+          icon : new google.maps.MarkerImage(markerImg, null, null, null, null),
+          position: new google.maps.LatLng( data[i].info.latitude, data[i].info.longitude ),
           map: map,
-          labelContent: "",
-          labelAnchor: new google.maps.Point(-20, 22),
-          labelClass: "marker-label-user",// label css class
-          labelInBackground: false
-       });
-
-      } else {
-
-        currentPosMarker.setMap(null);
-        currentPosMarker = new MarkerWithLabel({
-          position: currentPos,
-          icon: new google.maps.MarkerImage(markerPath, null, null, null, null),
           draggable: false,
-          map: map,
-          labelContent: "My position",
-          labelAnchor: new google.maps.Point(-20, 32),
-          labelClass: "marker-label",// label css class
-          labelInBackground: false
+          labelContent: journalLocLabel,
+          labelAnchor: setLabelAnchor,
+          labelClass: "marker-label",// the CSS class for the label
+          labelZIndex: markerCounter+1,
+          html: infoWindowPreview,
+          url: data[i].info.post_url,
+          zIndex: markerCounter
         });
 
-        userPosMarker = new MarkerWithLabel({
-          position: userPos,
-          icon: new google.maps.MarkerImage(userMarkerPath, null, null, null, null),
-          draggable: false,
-          map: map,
-          labelContent: "You",
-          labelAnchor: new google.maps.Point(-20, 22),
-          labelClass: "marker-label-user",// label css class
-          labelInBackground: false
-        });
+        // bind info windows
+        bindInfoWindow(markers[markerCounter], map, infowindow, markers[markerCounter].html);
+
       }
     });
-  } else {
-      error('Geolocation not supported!');
-  }
 
-  // add map styles
-  map.mapTypes.set('map_style', customStyles);
-  map.setMapTypeId('map_style');
+    // set current position marker
+    currentPosMarker = new MarkerWithLabel({
+      position: currentPos,
+      icon: new google.maps.MarkerImage(markerImg, null, null, null, null),
+      draggable: false,
+      map: map,
+      labelContent: "Current",
+      labelAnchor: new google.maps.Point(-20, 22),
+      labelClass: "marker-label", // label css class
+      labelInBackground: false
+    });
 
-  // add polyline
-  travelItinerary.setMap(map);
+    if ("geolocation" in navigator) {
+
+      getCurrentLocation(function(userPos)
+      {
+        $('#user-loc-btn').prop('disabled', false);
+        $('#user-loc-btn').on('click', function() {
+          posMsg(userPos, userLocMsg);
+          map.setZoom(12);
+          $('.selectpicker').selectpicker('deselectAll');
+        });
+        if (distanceToMe < 20) {
+
+          currentPosMarker.setMap(null);
+          //console.log("Cool, you're really close to where i am!");
+          matchPosMarker = new MarkerWithLabel({
+            position: currentPos,
+            icon: new google.maps.MarkerImage(userMarkerImg, null, null, null, null),
+            draggable: false,
+            map: map,
+            labelContent: "",
+            labelAnchor: new google.maps.Point(-20, 22),
+            labelClass: "marker-label-user",// label css class
+            labelInBackground: false
+         });
+
+        } else {
+
+          currentPosMarker.setMap(null);
+          currentPosMarker = new MarkerWithLabel({
+            position: currentPos,
+            icon: new google.maps.MarkerImage(markerImg, null, null, null, null),
+            draggable: false,
+            map: map,
+            labelContent: "My position",
+            labelAnchor: new google.maps.Point(-20, 32),
+            labelClass: "marker-label",// label css class
+            labelInBackground: false
+          });
+
+          userPosMarker = new MarkerWithLabel({
+            position: userPos,
+            icon: new google.maps.MarkerImage(userMarkerImg, null, null, null, null),
+            draggable: false,
+            map: map,
+            labelContent: "You",
+            labelAnchor: new google.maps.Point(-20, 22),
+            labelClass: "marker-label-user",// label css class
+            labelInBackground: false
+          });
+        }
+      });
+    } else {
+        error('Geolocation not supported!');
+    }
+
+    // add map styles
+    map.mapTypes.set('map_style', customStyles);
+    map.setMapTypeId('map_style');
+
+    // polylines
+    var travelItinerary = new google.maps.Polyline({
+      path: $.merge(markerPath, [currentPos]),
+      geodesic: true,
+      strokeColor: polylineColor,
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+
+    travelItinerary.setMap(map);
+
+  });
 
   // dropdown
   $( "select.marker-coords" ).change(function() {
@@ -312,8 +306,8 @@ function goodThingsMap() {
       // var
       var marker_lat  = $(this).find(':selected').data('post-loc-lat'),
           marker_lng  = $(this).find(':selected').data('post-loc-lng'),
-          marker_id     = $(this).find(':selected').data('marker'),
-          marker_loc    = $(this).find(':selected').data('post-loc');
+          marker_id   = $(this).find(':selected').data('marker'),
+          marker_loc  = $(this).find(':selected').data('post-loc');
       // set map
       map.setZoom(8);
       map.panTo( new google.maps.LatLng(marker_lat, marker_lng) );
@@ -330,6 +324,7 @@ function goodThingsMap() {
       captiontimer = setTimeout(function() {
             $('#journal-map-notification').delay(200).slideUp(300);
       }, 6000);
+
   });
 
   // custom btn group click events
