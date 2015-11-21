@@ -9,14 +9,19 @@ add_action('save_post', 'savePost');
 add_action('admin_head-post.php', 'notifyMsg'); // called after save_post redirect
 
 function savePost () {
-  if (writeJSON()) {
-    update_option('json_save_msg', 'Map markers updated');
-    update_option('json_save_class', 'updated');
+  global $post;
+  if ($post->post_type != 'post'){
+      return;
   } else {
-    update_option('json_save_msg', 'Error. JSON write failed.');
-    update_option('json_save_class', 'error');
+    if (writeJSON()) {
+      update_option('json_save_msg', 'Map markers updated');
+      update_option('json_save_class', 'updated');
+    } else {
+      update_option('json_save_msg', 'Error. JSON write failed.');
+      update_option('json_save_class', 'error');
+    }
+    update_option('json_save_status', 1); // turn on the message
   }
-  update_option('json_save_status', 1); // turn on the message
 }
 
 function notifyMsg() {
