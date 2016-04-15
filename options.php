@@ -38,8 +38,15 @@ function optionsframework_options() {
 		'type' => 'heading');
 
 	$options[] = array(
+		'name' => __('Show current project', 'options_check'),
+		'desc' => __('Enable current project', 'options_check'),
+		'id' => 'show_current',
+		'std' => '',
+		'type' => 'checkbox');
+
+	$options[] = array(
 		'name' => __('Current project', 'options_check'),
-		'desc' => __('HIDES WHOLE CURRENT PROJECT SECTION IF EMPTY.', 'options_check'),
+		'desc' => __('Name of current project', 'options_check'),
 		'id' => 'current_project',
 		'std' => '',
 		'type' => 'text');

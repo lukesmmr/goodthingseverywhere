@@ -112,42 +112,44 @@ $slider_count = wp_count_posts( 'carousel' )->publish; ?>
 
   <div class="home-cta">
     <div class="home-options">
+      <?php if (of_get_option('show_current')): ?>
 
-      <div class="cta cta-left col-md-4">
-        <h2>Current project</h2>
-        <div class="current-project">
-          <?php
-          $current_project_url = of_get_option('current_url');
-          $url_trim = trim($current_project_url, '/');
-          // get rid of http or www
-          if ($current_project_url) :
-            if (!preg_match('#^http(s)?://#', $url_trim)) {
-                $url_trim = 'http://' . $url_trim;
-            }
-            $urlParts = parse_url($url_trim);
-            $current_project_url = preg_replace('/^www\./', '', $urlParts['host']);
-          endif;
-           ?>
-          <?php if (of_get_option('current_project_desc') !== '' ) : ?>
-          <p><?php echo of_get_option('current_project_desc'); ?></p>
-          <?php endif; ?>
-          <ul>
-            <?php if (of_get_option('current_project') !== '' ) : ?>
-            <li><span>For whom</span> <?php echo of_get_option('current_project'); ?></li>
+        <div class="cta cta-left col-md-4">
+          <h2>Current project</h2>
+          <div class="current-project">
+            <?php
+            $current_project_url = of_get_option('current_url');
+            $url_trim = trim($current_project_url, '/');
+            // get rid of http or www
+            if ($current_project_url) :
+              if (!preg_match('#^http(s)?://#', $url_trim)) {
+                  $url_trim = 'http://' . $url_trim;
+              }
+              $urlParts = parse_url($url_trim);
+              $current_project_url = preg_replace('/^www\./', '', $urlParts['host']);
+            endif;
+             ?>
+            <?php if (of_get_option('current_project_desc') !== '' ) : ?>
+            <p><?php echo of_get_option('current_project_desc'); ?></p>
             <?php endif; ?>
-            <li><span>Where</span> <?php echo of_get_option('current_loc'); ?></li>
-            <?php if (of_get_option('current_project_dur') !== '' ) : ?>
-            <li><span>How long</span> <?php echo of_get_option('current_project_dur'); ?></li>
-            <?php endif; ?>
-            <?php if (of_get_option('current_url') !== '' ) : ?>
-            <li><span>Their website</span> <a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php echo $current_project_url ?></a></li>
-            <?php endif; ?>
-            <!-- <li><small>Last update: <?php echo of_get_option('last_updated'); ?></small></li> -->
-          </ul>
+            <ul>
+              <?php if (of_get_option('current_project') !== '' ) : ?>
+              <li><span>For whom</span> <?php echo of_get_option('current_project'); ?></li>
+              <?php endif; ?>
+              <li><span>Where</span> <?php echo of_get_option('current_loc'); ?></li>
+              <?php if (of_get_option('current_project_dur') !== '' ) : ?>
+              <li><span>How long</span> <?php echo of_get_option('current_project_dur'); ?></li>
+              <?php endif; ?>
+              <?php if (of_get_option('current_url') !== '' ) : ?>
+              <li><span>Their website</span> <a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php echo $current_project_url ?></a></li>
+              <?php endif; ?>
+              <!-- <li><small>Last update: <?php echo of_get_option('last_updated'); ?></small></li> -->
+            </ul>
+          </div>
         </div>
-      </div>
+      <?php endif ?>
 
-      <div class="cta cta-middle col-md-4">
+      <div class="cta <?php if (of_get_option('show_current')) : ?>cta-middle col-md-4<?php else : ?>cta-left col-md-8<?php endif;  ?>">
         <h2>Latest Work</h2>
          <div class="latest-portfolio">
             <?php $latest_project = null;
@@ -164,7 +166,7 @@ $slider_count = wp_count_posts( 'carousel' )->publish; ?>
          </div>
       </div>
 
-      <div class="cta cta-right col-md-4">
+      <div class="cta <?php if (of_get_option('show_current')) : ?>cta-right col-md-4<?php else : ?>cta-right col-md-4<?php endif;  ?>">
         <h2>What else?</h2>
         <div class="what-else-list">
           <?php echo $link_list; ?>
