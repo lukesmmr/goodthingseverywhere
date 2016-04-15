@@ -157,10 +157,9 @@ $slider_count = wp_count_posts( 'carousel' )->publish; ?>
             while ($latest_project->have_posts()) : $latest_project->the_post(); ?>
               <h3><?php the_title(); ?></h3>
               <?php get_template_part('templates/project-meta'); ?>
-              <a href="<?php the_permalink(); ?>" title="Link to <?php the_title(); ?>">
-                <?php if ( has_post_thumbnail() ) {
-                  the_post_thumbnail('journal-main-thumb');
-                } ?>
+              <?php $thumb_id = get_post_thumbnail_id();
+                    $thumb_src = wp_get_attachment_image_src($thumb_id,'journal-main-thumb', true);  ?>
+              <a href="<?php the_permalink(); ?>" title="Link to <?php the_title(); ?>" style="background: transparent url('<?php echo $thumb_src[0]; ?>') center center no-repeat scroll;">
               </a>
             <?php endwhile; ?>
          </div>
