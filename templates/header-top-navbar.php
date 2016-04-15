@@ -6,7 +6,9 @@
       <i class="map-icon glyphicon glyphicon-info-sign"></i>
     </span>
     <div class="me-you-btn-group btn-group">
-      <button id="current-loc-btn" type="button" class="btn btn-default">Me</button>
+      <?php if (of_get_option('current_loc')): ?>
+        <button id="current-loc-btn" type="button" class="btn btn-default">Me</button>
+      <?php endif; ?>
       <button id="user-loc-btn" type="button" class="btn btn-default">You</button>
     </div>
     <select class="selectpicker show-tick marker-coords" data-width="180px" data-live-search="false">
@@ -48,13 +50,15 @@
   <div class="journal-location-details">
     <div class="container">
       <ul>
-       <li class="display-loc"><i class="glyphicon glyphicon-map-marker"></i><em>I'm in</em> <?php echo of_get_option('current_loc'); ?></li>
-        <?php if ( of_get_option('current_project') ) : ?>
-        <li class="current-project"> for
-          <?php if (of_get_option('current_url') !== '' ) : ?><a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php endif; ?><?php echo of_get_option('current_project') ?><?php if( of_get_option('current_url') !== '' ) : ?></a><?php endif; ?>
-          <?php //if( of_get_option('last_updated') !== '' ) : echo ' (' . of_get_option('last_updated') . ')'; endif; ?>
-        </li>
-        <?php endif; ?>
+        <?php if (of_get_option('current_loc')): ?>
+           <li class="display-loc"><i class="glyphicon glyphicon-map-marker"></i><em>I'm in</em> <?php echo of_get_option('current_loc'); ?></li>
+            <?php if ( of_get_option('current_project') ) : ?>
+            <li class="current-project"> for
+              <?php if (of_get_option('current_url') !== '' ) : ?><a href="<?php echo of_get_option('current_url'); ?>" target="_blank" title="Project link"><?php endif; ?><?php echo of_get_option('current_project') ?><?php if( of_get_option('current_url') !== '' ) : ?></a><?php endif; ?>
+              <?php //if( of_get_option('last_updated') !== '' ) : echo ' (' . of_get_option('last_updated') . ')'; endif; ?>
+            </li>
+            <?php endif; ?>
+        <?php endif ?>
         <li class="next-loc">
         <i class="glyphicon glyphicon-plane"></i>
         <?php if (of_get_option('next_loc')): ?>

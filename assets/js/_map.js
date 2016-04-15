@@ -16,7 +16,9 @@ var markerData      = template_dir + '/assets/json/markers.json',
     mapOpen         = false,
     mapResized      = false,
     mapHeight       = $(window).height() - 120,
-    currentPos      = new google.maps.LatLng($('#loc-settings').data('lat'), $('#loc-settings').data('lng')),
+    currentLat      = $('#loc-settings').data('lat'),
+    currentLng      = $('#loc-settings').data('lng'),
+    currentPos      = new google.maps.LatLng(currentLat, currentLng),
     zoomLevel       = $('#loc-settings').data('zoom-level'),
     polylineColor   = $('#loc-settings').data('polyline-color'),
     currentLocMsg   = 'This is my current location',
@@ -32,9 +34,13 @@ var markerData      = template_dir + '/assets/json/markers.json',
     currentPosMarker,
     matchPosMarker,
     userPosMarker,
+    polyPath,
     userPos,
     distanceToMe;
 
+if (!currentLat || !currentLng) {
+  currentPos = new google.maps.LatLng(24.264493, 76.508789);
+}
 var randomTips = function () {
   var tipMsg = randomFrom(tipArray);
   return tipMsg;
@@ -63,10 +69,12 @@ function error(err) {
 }
 
 function calculateDistance(userPos) {
-  if (posDenied === false) {
-      distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
-      $(".distance-to-me").text( "You're " + distanceToMe.toFixed(2) + " Kms away!");
-      return distanceToMe;
+  if (currentLat && currentLng) {
+    if (posDenied === false) {
+        distanceToMe =  (google.maps.geometry.spherical.computeDistanceBetween (userPos, currentPos)) / 1000;
+        $(".distance-to-me").text( "You're " + distanceToMe.toFixed(2) + " Kms away!");
+        return distanceToMe;
+    }
   }
 }
 
@@ -176,7 +184,7 @@ function goodThingsMap() {
 
     // loop through JSON project data
     $.each( data, function(i) {
-
+      console.log(data);
       // check if marker should be placed
       if (data[i].add_marker) {
 
@@ -217,16 +225,18 @@ function goodThingsMap() {
     });
 
     // set current position marker
-    currentPosMarker = new MarkerWithLabel({
-      position: currentPos,
-      icon: new google.maps.MarkerImage(markerImg, null, null, null, null),
-      draggable: false,
-      map: map,
-      labelContent: "Current",
-      labelAnchor: new google.maps.Point(-20, 22),
-      labelClass: "marker-label", // label css class
-      labelInBackground: false
-    });
+    if (currentLat && currentLng) {
+      currentPosMarker = new MarkerWithLabel({
+        position: currentPos,
+        icon: new google.maps.MarkerImage(markerImg, null, null, null, null),
+        draggable: false,
+        map: map,
+        labelContent: "Current",
+        labelAnchor: new google.maps.Point(-20, 22),
+        labelClass: "marker-label", // label css class
+        labelInBackground: false
+      });
+    }
 
     if ("geolocation" in navigator) {
 
@@ -238,7 +248,7 @@ function goodThingsMap() {
           map.setZoom(12);
           $('.selectpicker').selectpicker('deselectAll');
         });
-        if (distanceToMe < 20) {
+        if (distanceToMe < 20 && (currentLat && currentLng)) {
 
           currentPosMarker.setMap(null);
           //console.log("Cool, you're really close to where i am!");
@@ -255,17 +265,19 @@ function goodThingsMap() {
 
         } else {
 
-          currentPosMarker.setMap(null);
-          currentPosMarker = new MarkerWithLabel({
-            position: currentPos,
-            icon: new google.maps.MarkerImage(markerImg, null, null, null, null),
-            draggable: false,
-            map: map,
-            labelContent: "My position",
-            labelAnchor: new google.maps.Point(-20, 32),
-            labelClass: "marker-label",// label css class
-            labelInBackground: false
-          });
+          if (currentLat || currentLng) {
+            currentPosMarker.setMap(null);
+            currentPosMarker = new MarkerWithLabel({
+              position: currentPos,
+              icon: new google.maps.MarkerImage(markerImg, null, null, null, null),
+              draggable: false,
+              map: map,
+              labelContent: "My position",
+              labelAnchor: new google.maps.Point(-20, 32),
+              labelClass: "marker-label",// label css class
+              labelInBackground: false
+            });
+          }
 
           userPosMarker = new MarkerWithLabel({
             position: userPos,
@@ -288,8 +300,14 @@ function goodThingsMap() {
     map.setMapTypeId('map_style');
 
     // polylines
+    if(currentLat && currentLng) {
+      polyPath = $.merge(markerPath, [currentPos]);
+    } else {
+      polyPath = markerPath;
+    }
+
     var travelItinerary = new google.maps.Polyline({
-      path: $.merge(markerPath, [currentPos]),
+      path: polyPath,
       geodesic: true,
       strokeColor: polylineColor,
       strokeOpacity: 1.0,

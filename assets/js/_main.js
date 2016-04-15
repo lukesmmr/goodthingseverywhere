@@ -15,7 +15,11 @@ var GoodThingsSite = {
       }
 
       // locate
-      distanceToUser();
+      var currentLat = $('#loc-settings').data('lat');
+      var currentLng = $('#loc-settings').data('lng');
+      if (currentLat && currentLng) {
+        distanceToUser();
+      }
 
       // bootstrap select
       $('span.map-msg').text(randomTips());
