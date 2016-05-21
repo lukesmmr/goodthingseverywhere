@@ -63,7 +63,7 @@ var GoodThingsSite = {
             success: function(data) {
               $('.insta-pic').html('');
               for (i = 0; i < 2; i++) {
-                $('.insta-pic').append('<div class="insta-container"><div class="insta-meta"><i class="glyphicon glyphicon-map-marker"></i> <div class="insta-date">' + timeAgo(data.data[i].caption.created_time) + '</div> <div class="insta-loc"><span>' + ( data.data[i].location.name !== undefined ? 'in ' + data.data[i].location.name : '' ) + '</span></div></div><a href="' + data.data[i].link +'" title="Link to latest Instagram Photo" target="_blank" class="insta-link"><div class="instagram-img"><img src="' + data.data[i].images.standard_resolution.url + '" alt="" /></div></a><figcaption class="caption insta-caption wp-caption-text">' + data.data[i].caption.text + '</figcaption></div>');
+                $('.insta-pic').append('<div class="insta-container"><div class="insta-meta"><i class="glyphicon glyphicon-map-marker"></i> <div class="insta-date">' + timeAgo(data.data[i].caption.created_time) + '</div> <div class="insta-loc"><span>' + ( data.data[i].location.name !== undefined ? 'in ' + data.data[i].location.name : '' ) + '</span></div></div><a href="' + data.data[i].link +'" title="Link to latest Instagram Photo" target="_blank" class="insta-link"><div class="instagram-img" style="background-image: url(' + data.data[i].images.standard_resolution.url + ');"></div></a><figcaption class="caption insta-caption wp-caption-text">' + data.data[i].caption.text + '</figcaption></div>');
               }
             }
          });
