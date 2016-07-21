@@ -63,7 +63,15 @@ var GoodThingsSite = {
             success: function(data) {
               $('.insta-pic').html('');
               for (i = 0; i < 2; i++) {
-                $('.insta-pic').append('<div class="insta-container"><div class="insta-meta"><i class="glyphicon glyphicon-map-marker"></i> <div class="insta-date">' + timeAgo(data.data[i].caption.created_time) + '</div> <div class="insta-loc"><span>' + ( data.data[i].location.name !== undefined ? 'in ' + data.data[i].location.name : '' ) + '</span></div></div><a href="' + data.data[i].link +'" title="Link to latest Instagram Photo" target="_blank" class="insta-link"><div class="instagram-img" style="background-image: url(' + data.data[i].images.standard_resolution.url + ');"></div></a><figcaption class="caption insta-caption wp-caption-text">' + data.data[i].caption.text + '</figcaption></div>');
+                var createdAt = timeAgo(data.data[i].caption.created_time);
+                var locationName = '';
+                if (typeof(data.data[i].location) !== "undefined" && data.data[i].location !== null) {
+                  locationName = 'in ' + data.data[i].location.name;
+                }
+                var instaLink = data.data[i].link;
+                var instaImgSrc = data.data[i].images.standard_resolution.url;
+                var captionText = data.data[i].caption.text;
+                $('.insta-pic').append('<div class="insta-container"><div class="insta-meta"><i class="glyphicon glyphicon-map-marker"></i> <div class="insta-date">' + createdAt + '</div> <div class="insta-loc"><span>' + locationName + '</span></div></div><a href="' + instaLink +'" title="Link to latest Instagram Photo" target="_blank" class="insta-link"><div class="instagram-img" style="background-image: url(' + instaImgSrc + ');"></div></a><figcaption class="caption insta-caption wp-caption-text">' + captionText + '</figcaption></div>');
               }
             }
          });
